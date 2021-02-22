@@ -18,6 +18,10 @@ elif [[ -x /usr/local/Homebrew/bin ]]; then
     eval $(/usr/local/Homebrew/bin/brew shellenv)
 fi
 
+if [[ -d /usr/local/go ]]; then
+    export PATH="$PATH:/usr/local/go/bin"
+fi
+
 # Baseline manpath
 if [[ "$(uname)" == "Darwin" ]] && [[ -x /usr/libexec/path_helper ]]; then
     [[ -z "${MANPATH}" ]] && export MANPATH=""
