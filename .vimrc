@@ -176,7 +176,7 @@ filetype plugin indent on
 
 augroup filetypedetect
   autocmd BufNewFile,BufRead *.hcl    setlocal expandtab shiftwidth=2 tabstop=2
-  autocmd BufNewFile,BufRead *.html   setlocal noet ts=4 sw=4
+  autocmd BufNewFile,BufRead *.html   setlocal expandtab ts=2 sw=2
   autocmd BufNewFile,BufRead *.ino    setlocal noet ts=4 sw=4 sts=4
   autocmd BufNewFile,BufRead *.proto  setlocal expandtab shiftwidth=2 tabstop=2
   autocmd BufNewFile,BufRead *.txt    setlocal noet ts=4 sw=4
