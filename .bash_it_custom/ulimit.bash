@@ -1,7 +1,11 @@
 # shellcheck shell=bash
 # vi: set ft=sh:
 
-ulimit -n 8192 || true
+if [[ "$(ulimit -Hn)" == "unlimited" ]] || (( $(ulimit -Hn) > 8192)) ; then
+  ulimit -Sn 8192 || true
+else
+  ulimit -Sn "$(ulimit -Hn)" || true
+fi
 
 # macOS Yosemite+
 #

@@ -1,3 +1,7 @@
 # vi: set ft=zsh:
 
-ulimit -n 8192 || true
+if [ "$(ulimit -Hn)" == "unlimited" ] || (( $(ulimit -Hn) > 8192)) ; then
+  ulimit -Sn 8192 || true
+else
+  ulimit -Sn "$(ulimit -Hn)" || true
+fi
