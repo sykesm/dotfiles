@@ -27,6 +27,10 @@
 	pretty = full
 [github]
 	user = sykesm
+[http "https://gopkg.in"]
+	followRedirects = true
+[init]
+	defaultBranch = main
 [push]
 	default = current
 	recurseSubmodules = on-demand
@@ -34,15 +38,13 @@
 	submoduleSummary = true
 [submodule]
 	fetchJobs = 0
-[user]
-	name = Matthew Sykes
-	email = matthew.sykes@gmail.com
 [url "git@github.com:"]
 	pushInsteadOf = https://github.com/
 [url "git@github.ibm.com:"]
 	insteadOf = https://github.ibm.com/
-[http "https://gopkg.in"]
-	followRedirects = true
+[user]
+	name = Matthew Sykes
+	email = matthew.sykes@gmail.com
 [versionsort]
 	prereleaseSuffix = -alpha
 	prereleaseSuffix = -beta
