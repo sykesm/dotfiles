@@ -1,0 +1,11 @@
+# Configuration for Alacritty, the GPU enhanced terminal emulator.
+import:
+  - ~/.config/alacritty/colorschemes.yml
+  - ~/.config/alacritty/fonts.yml
+env:
+  TERM: xterm-256color
+bell:
+  duration: 10
+  animation: EaseOutExpo
+key_bindings:
+  - { key: Q, mods: Control, chars: "\x11" }

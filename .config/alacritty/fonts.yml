@@ -1,0 +1,23 @@
+fonts:
+  inconsolata-dz-powerline: &inconsolata-dz-powerline
+    size: 12
+    normal:
+      family: "Inconsolata-dz for Powerline"
+  jetbrains-mono: &jetbrains-mono
+    size: 12
+    use_thin_strokes: false
+    normal:
+      family: "JetBrains Mono"
+      style: Regular
+    italic:
+      family: "JetBrains Mono"
+      style: Italic
+    bold:
+      family: "JetBrains Mono"
+      style: Bold
+    bold_italic:
+      family: "JetBrains Mono"
+      style: Bold Italic
+
+#font: *inconsolata-dz-powerline
+font: *jetbrains-mono
