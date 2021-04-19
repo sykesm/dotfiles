@@ -40,8 +40,6 @@
 	fetchJobs = 0
 [url "git@github.com:"]
 	pushInsteadOf = https://github.com/
-[url "git@github.ibm.com:"]
-	insteadOf = https://github.ibm.com/
 [user]
 	name = Matthew Sykes
 	email = matthew.sykes@gmail.com
