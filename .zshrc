@@ -94,3 +94,4 @@ fi
 
 export LESS="-RX"
 bindkey \^U backward-kill-line   # default is to kill the whole line
+unsetopt share_history

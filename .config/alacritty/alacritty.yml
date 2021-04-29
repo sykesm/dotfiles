@@ -2,7 +2,12 @@
 import:
   - ~/.config/alacritty/colorschemes.yml
   - ~/.config/alacritty/fonts.yml
+live_config_reload: true
+cursor:
+  style:
+    shape: block
 env:
+  LC_TERMINAL: alacritty
   TERM: xterm-256color
 bell:
   duration: 10

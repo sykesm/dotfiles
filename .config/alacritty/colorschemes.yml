@@ -39,6 +39,8 @@ schemes:
       white:   '0x828282'
 
   arthur: &arthur
+    cursor:
+      cursor: '0xe8c9f2'
     primary:
       background: '0x252525'
       foreground: '0xe3f0e3'

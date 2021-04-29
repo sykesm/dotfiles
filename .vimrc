@@ -166,6 +166,7 @@ endif
 if has('gui_running')
   " Use curly underline for spelling
   highlight SpellBad term=underline gui=undercurl guifg=NONE guibg=NONE guisp=Red
+  set vb t_vb= " no visual bell & flash
   set mouse=a
   behave xterm
 end
