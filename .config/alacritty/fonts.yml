@@ -1,23 +1,48 @@
 fonts:
-  inconsolata-dz-powerline: &inconsolata-dz-powerline
+  fira-code-mono: &fira-code-mono
     size: 12
     normal:
-      family: "Inconsolata-dz for Powerline"
+      family: "FiraCode Nerd Font Mono"
+      style: Regular
+    bold:
+      family: "FiraCode Nerd Font Mono"
+      style: Bold
+  hack: &hack
+    size: 12
+    normal:
+      family: "Hack Nerd Font Mono"
+      style: Regular
+    italic:
+      family: "Hack Nerd Font Mono"
+      style: Italic
+    bold:
+      family: "Hack Nerd Font Mono"
+      style: Bold
+    bold_italic:
+      family: "Hack Nerd Font Mono"
+      style: Bold Italic
+  inconsolata: &inconsolata
+    size: 14
+    normal:
+      family: "InconsolataGo Nerd Font"
+      style: Regular
+    bold:
+      family: "InconsolataGo Nerd Font"
+      style: Bold
   jetbrains-mono: &jetbrains-mono
     size: 12
     use_thin_strokes: false
     normal:
-      family: "JetBrains Mono"
+      family: "JetBrainsMono Nerd Font Mono"
       style: Regular
     italic:
-      family: "JetBrains Mono"
+      family: "JetBrainsMono Nerd Font Mono"
       style: Italic
     bold:
-      family: "JetBrains Mono"
+      family: "JetBrainsMono Nerd Font Mono"
       style: Bold
     bold_italic:
-      family: "JetBrains Mono"
+      family: "JetBrainsMono Nerd Font Mono"
       style: Bold Italic
 
-#font: *inconsolata-dz-powerline
 font: *jetbrains-mono

@@ -278,7 +278,7 @@ endif
 " Setup a good font for macvim
 if has('gui_macvim')
   set antialias
-  set guifont=Inconsolata-dz\ for\ Powerline:h12
+  set guifont=JetBrainsMonoNerdFontCompleteM-Regular:h12
   let g:airline_powerline_fonts = 1
 elseif !empty($POWERLINE)
   let g:airline_powerline_fonts = 1
