@@ -133,8 +133,8 @@ if &t_Co > 2 || has('gui_running')
   syntax on
 endif
 
-" enable 24 bit colors in iTerm
-if has('termguicolors') && ($LC_TERMINAL =~ 'iTerm' || !empty($WT_SESSION))
+" enable 24 bit colors where supported
+if has('termguicolors') && ($COLORTERM =~ 'truecolor' || !empty($WT_SESSION))
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
