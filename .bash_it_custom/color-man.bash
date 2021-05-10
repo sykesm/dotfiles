@@ -1,13 +1,8 @@
 # shellcheck shell=bash
 # vi: set ft=sh:
 
-# Test if we should support color
+# Color man pages if the terminal supports colors
 if [ -n "$TERM" ] && [ -t 1 ] && [ "$(tput colors)" -ge "8" ]; then
-    color_terminal="true"
-fi
-
-# Color man pages
-if [ -n "$color_terminal" ]; then
     # mb=begin blinking
     # md=begin bold
     # mr=begin reverse

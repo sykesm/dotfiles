@@ -134,7 +134,7 @@ if &t_Co > 2 || has('gui_running')
 endif
 
 " enable 24 bit colors where supported
-if has('termguicolors') && ($COLORTERM =~ 'truecolor' || !empty($WT_SESSION))
+if has('termguicolors') && ($COLORTERM =~ 'truecolor')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
@@ -167,9 +167,9 @@ if has('gui_running')
   " Use curly underline for spelling
   highlight SpellBad term=underline gui=undercurl guifg=NONE guibg=NONE guisp=Red
   set vb t_vb= " no visual bell & flash
-  set mouse=a
   behave xterm
 end
+set mouse=a
 
 "=====================================================
 "============== FILETYPE DETECTION ===================
