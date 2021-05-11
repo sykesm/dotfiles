@@ -1,6 +1,8 @@
 # Ignored from dotfiles.
 # sorted by `sort -f`
 
+.DS_Store
+/.Trash/
 /.bash_it/
 /.cache/
 /.cargo/
@@ -12,7 +14,6 @@
 /.rustup/
 /.tmux/plugins/
 /.tokens/
-/.Trash/
 /.vagrant.d/
 /.vim/backups/
 /.vim/plugged/
@@ -21,11 +22,11 @@
 /Desktop/
 /Documents/
 /Downloads/
-/go/bin/
-/go/pkg/
 /Library/
 /Movies/
 /Music/
 /Pictures/
 /Public/
+/go/bin/
+/go/pkg/
 /workspace/
