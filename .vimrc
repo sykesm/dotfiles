@@ -48,6 +48,7 @@ Plug 'fatih/molokai'                        " color scheme
 Plug 'w0ng/vim-hybrid'                      " color scheme
 
 Plug 'kien/ctrlp.vim'                       " fuzzy file open
+Plug 'tomlion/vim-solidity'                 " Solidity syntax highlighting
 call plug#end()
 
 "=====================================================
