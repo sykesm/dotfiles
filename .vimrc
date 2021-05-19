@@ -98,6 +98,7 @@ set modeline                           " support modelines in files
 set modelines=5                        " number of lines checked for set commands
 set number                             " turn on line numbers
 set numberwidth=5                      " minimum number columns to use for line number
+set noswapfile                         " disable swap files
 set pumheight=10                       " max size of completion popup
 set ruler                              " show the cursor position all the time
 set shiftround                         " round indent to a multiple of shiftwidth
