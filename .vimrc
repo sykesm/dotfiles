@@ -22,12 +22,12 @@ Plug 'mileszs/ack.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'racer-rust/vim-racer', {'for': 'rust'}
-Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
-Plug 'sykesm/vim-osc52'
-Plug 't9md/vim-choosewin'
 if !has('gui_running')
   Plug 'roxma/vim-tmux-clipboard'
 endif
+Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
+Plug 'sykesm/vim-osc52'
+Plug 't9md/vim-choosewin'
 Plug 'tmux-plugins/vim-tmux', {'for': 'tmux'}
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-commentary'
@@ -37,18 +37,23 @@ Plug 'tpope/vim-surround'
 
 Plug 'ervandew/supertab'
 
-Plug 'bling/vim-airline'                    " improved status bar
-Plug 'vim-airline/vim-airline-themes'       " color schemes for vim-airline
+Plug 'altercation/vim-colors-solarized'     " color scheme
 Plug 'andymass/vim-matchup'                 " extended matching
+Plug 'bling/vim-airline'                    " improved status bar
+Plug 'fatih/molokai'                        " color scheme
+Plug 'kien/ctrlp.vim'                       " fuzzy file open
 Plug 'majutsushi/tagbar'                    " code tree
 Plug 'mhinz/vim-signify'                    " line markers
 Plug 'scrooloose/syntastic'                 " syntax checking
-Plug 'altercation/vim-colors-solarized'     " color scheme
-Plug 'fatih/molokai'                        " color scheme
+Plug 'tomlion/vim-solidity'                 " Solidity syntax highlighting
+Plug 'vim-airline/vim-airline-themes'       " color schemes for vim-airline
 Plug 'w0ng/vim-hybrid'                      " color scheme
 
-Plug 'kien/ctrlp.vim'                       " fuzzy file open
-Plug 'tomlion/vim-solidity'                 " Solidity syntax highlighting
+Plug 'jparise/vim-graphql'                  " GraphQL syntax
+Plug 'leafgarland/typescript-vim'           " TypeScript syntax
+Plug 'maxmellon/vim-jsx-pretty'             " JS and JSX syntax
+Plug 'pangloss/vim-javascript'              " JavaScript support
+
 call plug#end()
 
 "=====================================================
@@ -96,6 +101,7 @@ set lazyredraw                         " skip redraw when running macros
 set maxmempattern=20000                " max memory for highlighting large files
 set modeline                           " support modelines in files
 set modelines=5                        " number of lines checked for set commands
+set mouse=a                            " enable mouse in all modes
 set number                             " turn on line numbers
 set numberwidth=5                      " minimum number columns to use for line number
 set noswapfile                         " disable swap files
@@ -153,7 +159,6 @@ set background=dark
 
 " Alter colorscheme based on available terminal colors
 if &t_Co >= 256
-  " let g:molokai_original = 1
   " let g:rehash256 = 1
   " silent! colorscheme molokai
   silent! colorscheme hybrid
@@ -171,7 +176,6 @@ if has('gui_running')
   set vb t_vb= " no visual bell & flash
   behave xterm
 end
-set mouse=a
 
 "=====================================================
 "============== FILETYPE DETECTION ===================
@@ -189,6 +193,7 @@ augroup filetypedetect
   autocmd BufNewFile,BufRead *.hcl    setfiletype conf
   autocmd BufNewFile,BufRead .nginx.conf*,nginx.conf* setfiletype nginx
   autocmd BufNewFile,BufRead .tmux.conf*,tmux.conf* setfiletype tmux
+  autocmd BufNewFile,BufRead .eslintrc setfiletype json
 
   autocmd FileType json     setlocal expandtab shiftwidth=2 tabstop=2
   autocmd FileType markdown setlocal expandtab shiftwidth=4 tabstop=4 spell textwidth=78
