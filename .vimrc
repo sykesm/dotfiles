@@ -39,7 +39,7 @@ Plug 'ervandew/supertab'
 
 Plug 'bling/vim-airline'                    " improved status bar
 Plug 'vim-airline/vim-airline-themes'       " color schemes for vim-airline
-Plug 'vim-scripts/matchit.zip'              " extending matching
+Plug 'andymass/vim-matchup'                 " extended matching
 Plug 'majutsushi/tagbar'                    " code tree
 Plug 'mhinz/vim-signify'                    " line markers
 Plug 'scrooloose/syntastic'                 " syntax checking
@@ -292,10 +292,14 @@ let g:ctrlp_working_path_mode = '0'
 let g:ctrlp_show_hidden = 1
 nnoremap <leader>e :CtrlPBuffer<cr>
 
-" ======================= niji =======================
+" ===================== niji =======================
 let g:niji_matching_filetypes = ['lisp', 'ruby', 'python', 'go', 'java']
 
-" ==================== NERDTree ====================
+" ==================== matchup ======================
+let g:matchup_matchparen_enabled = 0 " override with :DoMatchParen
+let g:matchup_matchparen_offscreen = {}
+
+" =================== NERDTree ======================
 " For toggling
 noremap <Leader>n :NERDTreeToggle<cr>
 noremap <Leader>f :NERDTreeFind<cr>
