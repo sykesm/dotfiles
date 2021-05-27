@@ -33,6 +33,7 @@ if [[ -x "$(command -v grc)" ]]; then
         ip
         iptables
         iwconfig
+        kubectl
         last
         ld
         ldap
