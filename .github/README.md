@@ -36,6 +36,14 @@ ssh-agent, the following will clone the dotfiles, populate `$HOME`, install
         git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
         ~/.tmux/plugins/tpm/bin/install_plugins
     fi
+
+    if [ "$(uname)" == "Darwin" ] && [ ! -x ~/.cargo/bin/rustup ]; then
+        rustup-init --no-modify-path -y
+        source $HOME/.cargo/env
+        rustup toolchain add nightly
+        rustup component add rust-src
+        cargo +nightly install racer
+    fi
 ```
 
 If the repo is private and the SSH key is available as a file and not loaded
@@ -191,20 +199,12 @@ material.
         set -eu -o pipefail
         set -x
     
-        mkdir -p "$HOME/.ssh"
-        cat <<'EOK' > "$HOME/.ssh/id_rsa_deploy"
-        -----BEGIN RSA PRIVATE KEY-----
-        ...
-        -----END RSA PRIVATE KEY-----
-        EOK
-        chmod 0600 "$HOME/.ssh/id_rsa_deploy"
-    
         github_host_key="github.com ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
         github_host_key_hashed="|1|xxuE72vU0fTiddeOeBoHSlvFriE=|zoU/xBvKeSAhBrp5s3IDoLKpUCk= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ=="
         echo "$github_host_key" >> "$HOME/.ssh/known_hosts"
         echo "$github_host_key_hashed" >> "$HOME/.ssh/known_hosts"
     
-        GIT_SSH_COMMAND="ssh -i $HOME/.ssh/id_rsa_deploy" git clone --bare git@github.com:sykesm/dotfiles "$HOME/.dotfiles"
+        git clone --bare https://github.com/sykesm/dotfiles "$HOME/.dotfiles"
         git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" config --local status.showUntrackedFiles no
         git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" config --local core.excludesFile "$HOME/.dot-gitignore"
         git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME" checkout -f
@@ -232,7 +232,7 @@ material.
         softhsm2-util --init-token --slot 0 --label "ForFabric" --so-pin 1234 --pin 98765432
 
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
-        export PATH="$HOME/.cargo/bin:$PATH"
+        source $HOME/.cargo/env
         rustup toolchain add nightly
         rustup component add rust-src
         cargo +nightly install racer
