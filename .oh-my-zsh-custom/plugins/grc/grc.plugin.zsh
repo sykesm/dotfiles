@@ -32,6 +32,7 @@ if (( $+commands[grc] )); then
         ip
         iptables
         iwconfig
+        kubectl
         last
         ld
         ldap
