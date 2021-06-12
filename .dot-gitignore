@@ -4,11 +4,16 @@
 .DS_Store
 /.Trash/
 /.bash_it/
+/.bash_sessions/
+/.bundle/
 /.cache/
 /.cargo/
 /.dotfiles/
+/.gem/
 /.gotools/
 /.kube/
+/.local/
+/.npm/
 /.oh-my-zsh/
 /.rbenv/
 /.rustup/
@@ -18,6 +23,9 @@
 /.vim/backups/
 /.vim/plugged/
 /.vim/undo/
+/.zcompdump*
+/.zsh_sessions/
+/.zsh-syntax-highlighting/
 /Applications/
 /Desktop/
 /Documents/
@@ -29,4 +37,5 @@
 /Public/
 /go/bin/
 /go/pkg/
+/projects/
 /workspace/
