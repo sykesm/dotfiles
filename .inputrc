@@ -39,6 +39,9 @@ set input-meta on
 set output-meta on
 set convert-meta off
 
+# Bracketed paste
+set enable-bracketed-paste on
+
 # Flip through autocompletion matches with Shift-Tab.
 "\e[Z": menu-complete
 
