@@ -9,7 +9,6 @@ call plug#begin(stdpath('data') . '/site/plugged')
 
 Plug 'neovim/nvim-lspconfig'                " common config for builtin lsp client
 Plug 'kabouzeid/nvim-lspinstall'            " conveniently install language servers
-" Plug 'glepnir/lspsaga.nvim'                 " lsp UI improvements
 Plug 'hrsh7th/nvim-compe'                   " auto completion plugin for neovim
 
 Plug 'nvim-lua/popup.nvim'                  " telescope dependency
@@ -22,6 +21,7 @@ Plug 'nvim-treesitter/playground'           " view treesitter info
 Plug 'bling/vim-airline'                    " improved status bar
 Plug 'fatih/molokai'                        " color scheme
 Plug 'w0ng/vim-hybrid'                      " color scheme
+Plug 'bluz71/vim-nightfly-guicolors'        " color scheme that supports treesitter
 Plug 'vim-airline/vim-airline-themes'       " color schemes for vim-airline
 
 Plug 'tpope/vim-commentary'                 " extended commenting of blocks and objects
@@ -41,9 +41,7 @@ Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
 call plug#end()
 
-lua require("lsp")
-lua require("tscope")
-lua require("treesitter")
+lua require("sykesm")
 
 "=====================================================
 "===================== SETTINGS ======================
@@ -108,22 +106,29 @@ if !isdirectory(&undodir)   | call mkdir(&undodir, 'p') | endif
 
 "=====================================================
 "=====================  Colors  ======================
-" let g:rehash256 = 1
-" silent! colorscheme molokai
-silent! colorscheme hybrid
+" Tell syntax we're using a dark background
+set background=dark
+
 " enable 24 bit colors
 if ($COLORTERM =~ 'truecolor')
   set termguicolors
 endif
 
-" Tell syntax we're using a dark background
-set background=dark
+" silent! colorscheme molokai
+" silent! colorscheme hybrid
 
-" Configuration for all graphical front ends
-if has('gui_running')
-  " Use curly underline for spelling
-  highlight SpellBad term=underline gui=undercurl guifg=NONE guibg=NONE guisp=Red
-end
+" nightfly is a 24-bit color scheme with LSP support
+silent! colorscheme nightfly
+let g:nightflyUndercurls = 1
+
+" Setup default highlighting for references.
+" Go only responds with LspReferenceText.
+highlight default link LspReferenceText  CursorLine
+highlight default link LspReferenceWrite CursorLine
+highlight default link LspReferenceRead  Cursorline
+
+" Use curly underline for spelling
+highlight SpellBad term=underline cterm=undercurl gui=undercurl guifg=NONE guibg=NONE guisp=Red
 
 "=====================================================
 "================ Powerline Fonts ====================
@@ -180,15 +185,6 @@ if has('terminal')
   tnoremap <leader>tt <C-w>:tabnew<cr>:term ++curwin<CR>
 endif
 
-nnoremap <C-p> :lua require('telescope.builtin').git_files()<CR>
-nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
-nnoremap <Leader>pf :lua require('telescope.builtin').find_files()<CR>
-
-nnoremap <leader>pw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
-nnoremap <leader>pb :lua require('telescope.builtin').buffers()<CR>
-nnoremap <leader>vh :lua require('telescope.builtin').help_tags()<CR>
-
-
 " Time out on key codes but not mappings.
 " Basically this makes terminal Vim work sanely.
 if !has('gui_running')
@@ -219,7 +215,8 @@ augroup vimrc_todo
   autocmd!
   autocmd Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX|MJS)/ containedin=.*Comment,vimCommentTitle
 augroup END
-hi def link MyTodo Todo
+" This does not seem to play well with TreeSitter
+" hi def link MyTodo Todo
 
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -234,7 +231,7 @@ let g:airline#extensions#tabline#enabled = 1
 
 "====================================================
 "==================== matchup =======================
-let g:matchup_matchparen_enabled = 0 " override with :DoMatchParen
+let g:matchup_matchparen_enabled = 1 " override with :DoMatchParen,:NoMatchParen
 let g:matchup_matchparen_offscreen = {}
 
 "====================================================
@@ -273,7 +270,7 @@ let use_xhtml=1
 "====== https://github.com/hrsh7th/nvim-compe ========
 let g:compe = {}
 let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
+let g:compe.autocomplete = v:false
 let g:compe.debug = v:false
 let g:compe.min_length = 1
 let g:compe.preselect = 'enable'
@@ -297,3 +294,8 @@ let g:compe.source.treesitter = v:false
 let g:compe.source.ultisnips = v:false
 let g:compe.source.vsnip = v:false
 
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
+inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
+inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })

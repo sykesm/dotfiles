@@ -2,7 +2,18 @@
 -- Treesitter
 ---------------------------------------------------------------------
 require('nvim-treesitter.configs').setup {
-  ensure_installed = { "c", "go", "gomod", "rust", "python", "ruby" },
+  ensure_installed = {
+    "c",
+    "go",
+    "gomod",
+    "graphql",
+    "lua",
+    "rust",
+    "python",
+    "ruby",
+    "toml",
+    "yaml"
+  },
   ignore_install = { "javascript" }, -- List of parsers to ignore installing
   highlight = {
     enable = true,  -- false will disable the whole extension
