@@ -113,9 +113,8 @@ function _G.go_organize_imports_sync(timeout_ms)
   end
 end
 
-local go_settings = {
-  -- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-  gopls = {
+local function go_settings()
+  local gopls = {
     -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
     analyses = {
       fieldalignment = false,
@@ -123,12 +122,13 @@ local go_settings = {
       unusedparams = true,
     },
     buildFlags = {},       -- []string
-    -- env = {},              -- map[string]string
     directoryFilters = {}, -- []string
     gofumpt = true,
     staticcheck = true,    -- experimental
-  },
-}
+  }
+  -- gopls['local'] = "local-imports"
+  return { gopls }
+end
 
 -- Configure lua language server for neovim development
 local lua_settings = {
@@ -197,7 +197,7 @@ local function setup_servers()
 
     -- language specific config
     if server == "go" then
-      config.settings = go_settings
+      config.settings = go_settings()
     elseif server == "lua" then
       config.settings = lua_settings
     end

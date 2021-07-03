@@ -15,7 +15,6 @@ telescope.setup {
       'ag',
       '--vimgrep',
     },
-    prompt_position = "bottom",
     prompt_prefix = "> ",
     selection_caret = "> ",
     entry_prefix = "  ",
@@ -23,7 +22,10 @@ telescope.setup {
     selection_strategy = "reset",
     sorting_strategy = "descending",
     layout_strategy = "horizontal",
-    layout_defaults = {
+    layout_config = {
+      preview_cutoff = 120,
+      prompt_position = "bottom",
+      width = 0.75,
       horizontal = {
         mirror = false,
       },
@@ -36,10 +38,6 @@ telescope.setup {
     generic_sorter =  require('telescope.sorters').get_generic_fuzzy_sorter,
     shorten_path = true,
     winblend = 0,
-    width = 0.75,
-    preview_cutoff = 120,
-    results_height = 1,
-    results_width = 0.8,
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
     color_devicons = true,

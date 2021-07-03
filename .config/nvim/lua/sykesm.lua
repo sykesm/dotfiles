@@ -18,3 +18,8 @@ local hastodo, _ = pcall(require, 'todo-comments')
 if hastodo then
   require('site/todo')
 end
+
+local hascompe, _ = pcall(require, 'compe')
+if hascompe then
+  require('site/compe')
+end
