@@ -301,7 +301,7 @@ nnoremap <leader>e :CtrlPBuffer<cr>
 let g:niji_matching_filetypes = ['lisp', 'ruby', 'python', 'go', 'java']
 
 " ==================== matchup ======================
-let g:matchup_matchparen_enabled = 0 " override with :DoMatchParen
+let g:matchup_matchparen_enabled = 1 " override with :NoMatchParen,:DoMatchParen
 let g:matchup_matchparen_offscreen = {}
 
 " =================== NERDTree ======================
@@ -323,6 +323,15 @@ let g:syntastic_sh_shellcheck_args='-x -e SC1090 -e SC1091'
 
 " ===================== tagbar  ====================
 nmap <F8> :TagbarToggle<CR>
+let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+    \ ]
+  \ }
 
 " ===================== ToHTML  ====================
 let html_use_css=1
@@ -349,9 +358,9 @@ autocmd FocusLost * silent! wa
 
 " Return to last edit position when opening files
 autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-      \   exe "normal! g`\"" |
-      \ endif
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
 
 " ==================== vim-go ====================
 " disables the 197 return code on focus
