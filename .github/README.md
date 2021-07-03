@@ -74,6 +74,9 @@ material.
       sources:
         vim:
           source: "ppa:jonathonf/vim"
+        nvim:
+          # switch to stable once 0.5 shows up
+          source: "ppa:neovim-ppa/unstable"
     
     packages:
     - apt-transport-https
@@ -98,6 +101,7 @@ material.
     - man
     - mosh
     - ncat
+    - neovim
     - nmap
     - openssh-server
     - pkg-config
