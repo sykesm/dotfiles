@@ -5,6 +5,9 @@ if !filereadable(stdpath('data') . '/site/autoload/plug.vim')
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" Set the mapleader before any mappings that reference it are created.
+let mapleader = ','
+
 call plug#begin(stdpath('data') . '/site/plugged')
 
 Plug 'neovim/nvim-lspconfig'                " common config for builtin lsp client
@@ -139,8 +142,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 "=====================================================
 "===================== MAPPINGS ======================
-let mapleader = ','
-
 " space clears search string highlighting
 nnoremap <silent> <space> :nohl<cr><space>
 
