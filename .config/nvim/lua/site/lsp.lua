@@ -152,6 +152,24 @@ local lua_settings = {
   }
 }
 
+local function efm_settings()
+  local sh_config = {
+    lintCommand = 'shellcheck -f gcc -x',
+    lintSource = 'shellcheck',
+    lintFormats = {
+      '%f:%l:%c: %trror: %m',
+      '%f:%l:%c: %tarning: %m',
+      '%f:%l:%c: %tote: %m',
+    },
+  }
+  return {
+    rootMarkers = { '.git/' },
+    languages = {
+      sh = { sh_config },
+    },
+  }
+end
+
 -- config that activates keymaps and enables snippet support
 local function make_config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -165,6 +183,7 @@ end
 local required_language_servers = {
   "bash",
   "dockerfile",
+  "efm",
   "go",
   "lua",
   "python",
@@ -196,16 +215,18 @@ local function setup_servers()
     local config = make_config()
 
     -- language specific config
-    if server == "go" then
+    if server == "clangd" then
+      config.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
+    elseif server == "efm" then
+      config.init_options = { documentFormatting = true }
+      config.filetypes = { 'sh' }
+      config.settings = efm_settings()
+    elseif server == "go" then
       config.settings = go_settings()
     elseif server == "lua" then
       config.settings = lua_settings
-    end
-    if server == "sourcekit" then
+    elseif server == "sourcekit" then
       config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
-    end
-    if server == "clangd" then
-      config.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
     end
 
     lspconfig[server].setup(config)
