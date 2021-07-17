@@ -1,5 +1,5 @@
 # shellcheck shell=bash disable=SC1090,SC1091,SC2139
-# vi: set ft=bash:
+# vi: set ft=sh:
 
 # setup grc if the config file exists
 if [[ -x "$(command -v grc)" ]]; then
