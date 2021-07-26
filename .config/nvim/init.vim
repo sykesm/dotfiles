@@ -199,6 +199,12 @@ if !has('gui_running')
   augroup END
 endif
 
+" save on focus loss in tmux and gui
+augroup SaveFocusLost
+  autocmd!
+  autocmd FocusLost * silent! wa
+augroup END
+
 " Return to last edit position when opening files
 autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
