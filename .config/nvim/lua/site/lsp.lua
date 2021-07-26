@@ -167,6 +167,7 @@ local function efm_settings()
     languages = {
       sh = { sh_config },
     },
+    -- log_level = 2,
   }
 end
 
@@ -180,22 +181,11 @@ local function make_config()
   }
 end
 
-local required_language_servers = {
-  "bash",
-  "dockerfile",
-  "efm",
-  "go",
-  "lua",
-  "python",
-  "rust",
-  "typescript",
-  "vim",
-  "yaml",
-}
-
 -- lsp-install
 local function setup_servers()
   local lspinstall = require('lspinstall')
+  local lspconfig = require('lspconfig')
+
   lspinstall.setup()
 
   -- get all installed servers and add manually installed servers
@@ -203,14 +193,6 @@ local function setup_servers()
   table.insert(servers, "clangd")
   table.insert(servers, "sourcekit")
 
-  -- install missing language servers
-  for _, server in pairs(required_language_servers) do
-    if not lspinstall.is_server_installed(server) then
-      lspinstall.install_server(server)
-    end
-  end
-
-  local lspconfig = require('lspconfig')
   for _, server in pairs(servers) do
     local config = make_config()
 
@@ -218,17 +200,32 @@ local function setup_servers()
     if server == "clangd" then
       config.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
     elseif server == "efm" then
-      config.init_options = { documentFormatting = true }
-      config.filetypes = { 'sh' }
+      config.init_options = { documentFormatting = true, codeAction = true }
+      config.filetypes = { 'elixir', 'sh' }
       config.settings = efm_settings()
+    elseif server == "elixir" then
+      config.settings = {
+        elixirLS = {
+          dialyzerEnabled = true,
+          fetchDeps = true,
+        }
+      }
     elseif server == "go" then
       config.settings = go_settings()
     elseif server == "lua" then
       config.settings = lua_settings
     elseif server == "sourcekit" then
       config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
+    elseif server == "yaml" then
+      config.settings = {
+        yaml = {
+          schemas = { kubernetes = "*.yaml" },
+        }
+      }
     end
 
+    -- print(server)
+    -- print(vim.inspect(config))
     lspconfig[server].setup(config)
   end
 end
@@ -239,5 +236,37 @@ require('lspinstall').post_install_hook = function ()
   vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
 end
 
+local required_language_servers = {
+  "bash",
+  "dockerfile",
+  "efm",
+  "elixir",
+  "go",
+  "lua",
+  "python",
+  "rust",
+  "typescript",
+  "vim",
+  "yaml",
+}
+
+local function install_required_language_servers()
+  -- install missing language servers
+  local lspinstall = require('lspinstall')
+  for _, server in pairs(required_language_servers) do
+    if not lspinstall.is_server_installed(server) then
+      lspinstall.install_server(server)
+    end
+  end
+end
+
+-- TODO: Find a way to make this check for requirements before installing
+-- things and then create a command that does this when called instead of
+-- automatically.
+--
+-- Right now it can be invoked with :lua InstallAllLanguageServers
+_G.InstallAllLanguageServers = install_required_language_servers
+
+-- vim.lsp.set_log_level(0)
 setup_servers()
 vim.api.nvim_command("au BufWritePre *.go lua go_organize_imports_sync(1000)")
