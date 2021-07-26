@@ -77,6 +77,7 @@ plugins=(
     git
     golang
     grc
+    rbenv
 )
 
 source "$ZSH/oh-my-zsh.sh"
