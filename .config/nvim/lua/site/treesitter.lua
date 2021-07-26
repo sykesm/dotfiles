@@ -4,6 +4,7 @@
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
     "c",
+    "elixir",
     "go",
     "gomod",
     "graphql",
