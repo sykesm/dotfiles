@@ -206,10 +206,14 @@ augroup SaveFocusLost
 augroup END
 
 " Return to last edit position when opening files
-autocmd BufReadPost *
-  \ if line("'\"") > 0 && line("'\"") <= line("$") |
-  \   exe "normal! g`\"" |
-  \ endif
+augroup restore_position
+  autocmd!
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+  autocmd FileType gitcommit autocmd! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+augroup END
 
 " briefly flash what's beeen yanked
 augroup highlight_yank
