@@ -131,26 +131,28 @@ local function go_settings()
 end
 
 -- Configure lua language server for neovim development
-local lua_settings = {
-  Lua = {
-    runtime = {
-      -- LuaJIT in the case of Neovim
-      version = 'LuaJIT',
-      path = vim.split(package.path, ';'),
-    },
-    diagnostics = {
-      -- Get the language server to recognize the `vim` global
-      globals = {'vim'},
-    },
-    workspace = {
-      -- Make the server aware of Neovim runtime files
-      library = {
-        [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-        [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+local function lua_settings ()
+  return {
+    Lua = {
+      runtime = {
+        -- LuaJIT in the case of Neovim
+        version = 'LuaJIT',
+        path = vim.split(package.path, ';'),
       },
-    },
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = {'vim'},
+      },
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = {
+          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+        },
+      },
+    }
   }
-}
+end
 
 local function efm_settings()
   local sh_config = {
@@ -162,10 +164,30 @@ local function efm_settings()
       '%f:%l:%c: %tote: %m',
     },
   }
+
+  local elixir_config = {
+    lintCommand = 'MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}',
+    rootMarkers = {
+      'mix.lock',
+      'mix.exs',
+    },
+    lintStdin = true,
+    lintFormats = {
+      '%f:%l:%c: %t: %m',
+      '%f:%l: %t: %m',
+    },
+    lintCategoryMap = {
+      ['R'] = 'H', -- hint
+      ['D'] = 'I', -- info
+      ['F'] = 'E', -- error
+      ['W'] = 'W', -- warning
+    },
+  }
   return {
     rootMarkers = { '.git/' },
     languages = {
       sh = { sh_config },
+      elixir = { elixir_config },
     },
     -- log_level = 2,
   }
@@ -207,13 +229,13 @@ local function setup_servers()
       config.settings = {
         elixirLS = {
           dialyzerEnabled = true,
-          fetchDeps = true,
+          fetchDeps = false,
         }
       }
     elseif server == "go" then
       config.settings = go_settings()
     elseif server == "lua" then
-      config.settings = lua_settings
+      config.settings = lua_settings()
     elseif server == "sourcekit" then
       config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
     elseif server == "yaml" then
@@ -269,4 +291,3 @@ _G.InstallAllLanguageServers = install_required_language_servers
 
 -- vim.lsp.set_log_level(0)
 setup_servers()
-vim.api.nvim_command("au BufWritePre *.go lua go_organize_imports_sync(1000)")

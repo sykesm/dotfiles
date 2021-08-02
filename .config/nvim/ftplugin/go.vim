@@ -4,6 +4,10 @@ setlocal softtabstop=2
 setlocal tabstop=2
 
 if has("nvim")
-  " Format prior to save using LSP
-  autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+  augroup NvimGoLsp
+    autocmd!
+    " Format prior to save using LSP
+    autocmd BufWritePre *.go lua go_organize_imports_sync(1000)
+    autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+  augroup END
 endif
