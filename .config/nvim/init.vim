@@ -277,6 +277,10 @@ let g:terraform_fmt_on_save=1
 let html_use_css=1
 let use_xhtml=1
 
+"====================================================
+" Shrug ¯\_(ツ)_/¯
+inoremap <leader>S ¯\_(ツ)_/¯
+
 "=====================================================
 "====== https://github.com/hrsh7th/nvim-compe ========
 inoremap <silent><expr> <C-Space> compe#complete()
