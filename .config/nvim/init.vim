@@ -40,6 +40,7 @@ Plug 'majutsushi/tagbar'                    " code tree
 Plug 'mhinz/vim-signify'                    " line markers for changes
 Plug 'plasticboy/vim-markdown'              " extended markdown
 Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
+Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
 call plug#end()

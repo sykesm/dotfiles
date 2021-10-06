@@ -228,7 +228,7 @@ local function setup_servers()
     elseif server == "elixir" then
       config.settings = {
         elixirLS = {
-          dialyzerEnabled = true,
+          dialyzerEnabled = false,
           fetchDeps = false,
         }
       }
