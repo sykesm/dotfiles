@@ -31,4 +31,18 @@ require('nvim-treesitter.configs').setup {
     use_virtual_text = true,
     lint_events = {"BufWrite", "CursorHold"},
   },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = 10000,
+    colors = {
+      "#fc514e",
+      "#a1cd5e",
+      "#e3d18a",
+      "#82aaff",
+      "#c792ea",
+      "#7fdbca",
+      "#a1aab8",
+    },
+  },
 }

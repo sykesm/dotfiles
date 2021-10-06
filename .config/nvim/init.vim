@@ -20,6 +20,7 @@ Plug 'nvim-telescope/telescope.nvim'        " fuzzy-finder on steroids
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " AST based syntax highlighting
 Plug 'nvim-treesitter/playground'           " view treesitter info
+Plug 'p00f/nvim-ts-rainbow'                 " rainbow parens
 
 Plug 'bling/vim-airline'                    " improved status bar
 Plug 'fatih/molokai'                        " color scheme
