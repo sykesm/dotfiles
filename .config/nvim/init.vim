@@ -136,13 +136,6 @@ highlight default link LspReferenceRead  Cursorline
 highlight SpellBad term=underline cterm=undercurl gui=undercurl guifg=NONE guibg=NONE guisp=Red
 
 "=====================================================
-"================ Powerline Fonts ====================
-if !empty($POWERLINE)
-  let g:airline_powerline_fonts = 1
-endif
-let g:airline#extensions#tabline#enabled = 1
-
-"=====================================================
 "===================== MAPPINGS ======================
 " space clears search string highlighting
 nnoremap <silent> <space> :nohl<cr><space>
@@ -282,13 +275,7 @@ let use_xhtml=1
 inoremap <leader>S ¯\_(ツ)_/¯
 
 "=====================================================
-"====== https://github.com/hrsh7th/nvim-compe ========
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
-inoremap <silent><expr> <C-e>     compe#close('<C-e>')
-inoremap <silent><expr> <C-f>     compe#scroll({ 'delta': +4 })
-inoremap <silent><expr> <C-d>     compe#scroll({ 'delta': -4 })
-
+" TMUX clipboard configuration
 if !empty($TMUX)
   let g:clipboard = {
     \   'name': 'myClipboard',
