@@ -23,3 +23,7 @@ local hascompe, _ = pcall(require, 'compe')
 if hascompe then
   require('site/compe')
 end
+
+require('lsp_signature').setup({
+  hint_prefix = "¦ ",
+})
