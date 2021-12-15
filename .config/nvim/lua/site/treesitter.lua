@@ -15,10 +15,14 @@ require('nvim-treesitter.configs').setup {
     "toml",
     "yaml"
   },
-  ignore_install = { "javascript" }, -- List of parsers to ignore installing
+  ignore_install = { -- List of parsers to ignore installing
+    "javascript",
+  },
   highlight = {
     enable = true,  -- false will disable the whole extension
-    disable = { },  -- list of language that will be disabled
+    disable = {
+      "elixir",
+    },  -- list of language that will be disabled
   },
   indent = {
     enable = false,

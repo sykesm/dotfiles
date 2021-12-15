@@ -11,7 +11,7 @@ let mapleader = ','
 call plug#begin(stdpath('data') . '/site/plugged')
 
 Plug 'neovim/nvim-lspconfig'                " common config for builtin lsp client
-Plug 'kabouzeid/nvim-lspinstall'            " conveniently install language servers
+Plug 'williamboman/nvim-lsp-installer'      " conveniently install language servers
 Plug 'hrsh7th/nvim-compe'                   " auto completion plugin for neovim
 Plug 'ray-x/lsp_signature.nvim'             " provide function signature help
 

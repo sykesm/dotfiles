@@ -1,6 +1,5 @@
 ---------------------------------------------------------------------
 -- Language Server Protocol
--- https://github.com/kabouzeid/nvim-lspinstall/wiki
 ---------------------------------------------------------------------
 -- keymaps
 local function on_attach(client, bufnr)
@@ -203,81 +202,82 @@ local function make_config()
   }
 end
 
--- lsp-install
 local function setup_servers()
-  local lspinstall = require('lspinstall')
-  local lspconfig = require('lspconfig')
+  local lsp_installer = require('nvim-lsp-installer')
 
-  lspinstall.setup()
-
-  -- get all installed servers and add manually installed servers
-  local servers = lspinstall.installed_servers()
-  table.insert(servers, "clangd")
-  table.insert(servers, "sourcekit")
-
-  for _, server in pairs(servers) do
+  lsp_installer.on_server_ready(function(server)
     local config = make_config()
 
     -- language specific config
-    if server == "clangd" then
+    if server.name == "clangd" then
       config.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
-    elseif server == "efm" then
+    elseif server.name == "efm" then
       config.init_options = { documentFormatting = true, codeAction = true }
       config.filetypes = { 'elixir', 'sh' }
       config.settings = efm_settings()
-    elseif server == "elixir" then
+    elseif server.name == "elixirls" then
       config.settings = {
         elixirLS = {
           dialyzerEnabled = false,
           fetchDeps = false,
         }
       }
-    elseif server == "go" then
+    elseif server.name == "gopls" then
       config.settings = go_settings()
-    elseif server == "lua" then
+    elseif server.name == "sumneko_lua" then
       config.settings = lua_settings()
-    elseif server == "sourcekit" then
+    elseif server.name == "sourcekit" then
       config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
-    elseif server == "yaml" then
+    elseif server.name == "yamlls" then
       config.settings = {
         yaml = {
-          schemas = { kubernetes = "*.yaml" },
+          completion = true,
+          schemas = {
+            kubernetes = "/*.yaml",
+          },
+          schemaStore = {
+            enable = true,
+          },
+          schemaDownload = {
+            enable = true,
+          },
+          trace = {
+            server = "verbose",
+          },
+          validate = true,
         }
       }
     end
 
-    -- print(server)
-    -- print(vim.inspect(config))
-    lspconfig[server].setup(config)
-  end
-end
-
--- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
-require('lspinstall').post_install_hook = function ()
-  setup_servers()    -- reload installed servers
-  vim.cmd("bufdo e") -- this triggers the FileType autocmd that starts the server
+    -- print(vim.inspect(server.name))
+    server:setup(config)
+  end)
 end
 
 local required_language_servers = {
-  "bash",
-  "dockerfile",
+  "bashls",
+  "dockerls",
   "efm",
-  "elixir",
-  "go",
-  "lua",
-  "python",
-  "rust",
-  "typescript",
-  "vim",
-  "yaml",
+  "elixirls",
+  "gopls",
+  "sumneko_lua",
+  "pylsp",
+  "rust_analyzer",
+  "tsserver",
+  "vimls",
+  "yamlls@1.2.2",
 }
 
 local function install_required_language_servers()
-  -- install missing language servers
-  local lspinstall = require('lspinstall')
-  for _, server in pairs(required_language_servers) do
-    if not lspinstall.is_server_installed(server) then
-      lspinstall.install_server(server)
+  local lsp_installer = require('nvim-lsp-installer')
+
+  for _, name in pairs(required_language_servers) do
+    local server_is_found, server = lsp_installer.get_server(name)
+    if server_is_found then
+      if not server:is_installed() then
+        print("Installing " .. name)
+        server:install()
+      end
     end
   end
 end
@@ -304,13 +304,6 @@ end
 
 vim.api.nvim_set_keymap('n', '<leader>tt', ':call v:lua.toggle_diagnostics()<CR>',  {noremap = true, silent = true})
 
-
--- TODO: Find a way to make this check for requirements before installing
--- things and then create a command that does this when called instead of
--- automatically.
---
--- Right now it can be invoked with :lua InstallAllLanguageServers
-_G.InstallAllLanguageServers = install_required_language_servers
-
--- vim.lsp.set_log_level(0)
+-- vim.lsp.set_log_level('trace')
+install_required_language_servers()
 setup_servers()
