@@ -230,19 +230,15 @@ local function setup_servers()
       config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
     elseif server.name == "yamlls" then
       config.settings = {
+        redhat = {
+          telemetry = {
+            enabled = false,
+          },
+        },
         yaml = {
           completion = true,
           schemas = {
-            kubernetes = "/*.yaml",
-          },
-          schemaStore = {
-            enable = true,
-          },
-          schemaDownload = {
-            enable = true,
-          },
-          trace = {
-            server = "verbose",
+            Kubernetes = "/*.yaml",
           },
           validate = true,
         }
@@ -250,6 +246,7 @@ local function setup_servers()
     end
 
     -- print(vim.inspect(server.name))
+    -- print(vim.inspect(config))
     server:setup(config)
   end)
 end
