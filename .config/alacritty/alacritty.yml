@@ -13,7 +13,8 @@ env:
 bell:
   duration: 10
   animation: EaseOutExpo
-background_opacity: 0.9
+window:
+  opacity: 0.9
 key_bindings:
   - { key: F,    mods: Command|Control, action: ToggleFullscreen }
   - { key: Q,    mods: Control, chars: "\x11" }
