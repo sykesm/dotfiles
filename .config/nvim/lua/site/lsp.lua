@@ -24,10 +24,10 @@ local function on_attach(client, bufnr)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<leader>qf', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap('n', '<leader>qf', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
@@ -39,12 +39,15 @@ local function on_attach(client, bufnr)
   -- Set autocommands conditional on server_capabilities
   if client.resolved_capabilities.document_highlight then
     vim.api.nvim_exec([[
-    augroup lsp_document_highlight
-    autocmd! * <buffer>
-    autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-    autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-    autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-    augroup END
+      highlight! default link LspReferenceText  Visual
+      highlight! default link LspReferenceWrite Visual
+      highlight! default link LspReferenceRead  Visual
+      augroup lsp_document_highlight
+        autocmd! * <buffer>
+        autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
     ]], false)
   end
 end
@@ -119,14 +122,44 @@ local function go_settings()
       fieldalignment = false,
       nilness = true,
       unusedparams = true,
+      shadow = true,
     },
     buildFlags = {},       -- []string
+    codelenses = {
+      generate = true,     -- show the `go generate` lens.
+      gc_details = true,   -- Show a code lens toggling the display of gc's choices.
+      test = true,
+      tidy = true,
+    },
     directoryFilters = {}, -- []string
     gofumpt = true,
     staticcheck = true,    -- experimental
   }
   -- gopls['local'] = "local-imports"
   return { gopls }
+end
+
+local function rust_settings()
+  return {
+    ["rust-analyzer"] = {
+      assist = {
+        importMergeBehavior = "last",
+        importPrefix = "by_self",
+      },
+      diagnostics = {
+        disabled = { "unresolved-import" },
+      },
+      cargo = {
+        loadOutDirsFromCheck = true,
+      },
+      procMacro = {
+        enabled = true,
+      },
+      checkOnSave = {
+        command = "clippy",
+      },
+    }
+  }
 end
 
 -- Configure lua language server for neovim development
@@ -210,9 +243,12 @@ local function setup_servers()
 
     -- language specific config
     if server.name == "clangd" then
-      config.filetypes = {"c", "cpp"}; -- we don't want objective-c and objective-cpp!
+      config.filetypes = {"c", "cpp"} -- we don't want objective-c and objective-cpp!
     elseif server.name == "efm" then
-      config.init_options = { documentFormatting = true, codeAction = true }
+      config.init_options = {
+        documentFormatting = true,
+        codeAction = true,
+      }
       config.filetypes = { 'elixir', 'sh' }
       config.settings = efm_settings()
     elseif server.name == "elixirls" then
@@ -223,11 +259,24 @@ local function setup_servers()
         }
       }
     elseif server.name == "gopls" then
+      config.filetypes = {
+        "go",
+        "gomod",
+        "gohtmltmpl",
+        "gotexttmpl",
+      }
       config.settings = go_settings()
     elseif server.name == "sumneko_lua" then
       config.settings = lua_settings()
+    elseif server.name == "rust-analyzer" then
+      config.settings = rust_settings()
     elseif server.name == "sourcekit" then
-      config.filetypes = {"swift", "objective-c", "objective-cpp"}; -- we don't want c and cpp!
+      -- we don't want c and cpp!
+      config.filetypes = {
+        "swift",
+        "objective-c",
+        "objective-cpp"
+      }
     elseif server.name == "yamlls" then
       config.settings = {
         redhat = {

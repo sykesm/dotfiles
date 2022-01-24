@@ -127,12 +127,6 @@ endif
 silent! colorscheme nightfly
 let g:nightflyUndercurls = 1
 
-" Setup default highlighting for references.
-" Go only responds with LspReferenceText.
-highlight default link LspReferenceText  CursorLine
-highlight default link LspReferenceWrite CursorLine
-highlight default link LspReferenceRead  Cursorline
-
 " Use curly underline for spelling
 highlight SpellBad term=underline cterm=undercurl gui=undercurl guifg=NONE guibg=NONE guisp=Red
 
