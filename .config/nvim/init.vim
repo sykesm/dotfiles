@@ -41,6 +41,7 @@ Plug 'hashivim/vim-hashicorp-tools'
 Plug 'majutsushi/tagbar'                    " code tree
 Plug 'mhinz/vim-signify'                    " line markers for changes
 Plug 'plasticboy/vim-markdown'              " extended markdown
+Plug 'ray-x/go.nvim'                        " go language stuff w/o vim-go
 Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
 Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
@@ -226,6 +227,7 @@ if !empty($POWERLINE)
   let g:airline_powerline_fonts = 1
 endif
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tagbar#enabled = 0
 
 "====================================================
 "==================== matchup =======================

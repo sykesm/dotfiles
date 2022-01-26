@@ -27,3 +27,8 @@ end
 require('lsp_signature').setup({
   hint_prefix = "¦ ",
 })
+
+local has_nvim_go, _ = pcall(require, 'go')
+if has_nvim_go then
+  require('go').setup()
+end
