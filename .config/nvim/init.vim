@@ -7,6 +7,7 @@ endif
 
 " Set the mapleader before any mappings that reference it are created.
 let mapleader = ','
+let g:nightflyTransparent = 1
 
 call plug#begin(stdpath('data') . '/site/plugged')
 
