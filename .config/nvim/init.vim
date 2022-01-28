@@ -5,9 +5,10 @@ if !filereadable(stdpath('data') . '/site/autoload/plug.vim')
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Set the mapleader before any mappings that reference it are created.
+" Set mapleader before any mappings that reference it are created.
 let mapleader = ','
 let g:nightflyTransparent = 1
+let g:nightflyUndercurls = 1
 
 call plug#begin(stdpath('data') . '/site/plugged')
 
@@ -127,7 +128,6 @@ endif
 
 " nightfly is a 24-bit color scheme with LSP support
 silent! colorscheme nightfly
-let g:nightflyUndercurls = 1
 
 " Use curly underline for spelling
 highlight SpellBad term=underline cterm=undercurl gui=undercurl guifg=NONE guibg=NONE guisp=Red
