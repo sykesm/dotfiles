@@ -164,12 +164,16 @@ end
 
 -- Configure lua language server for neovim development
 local function lua_settings ()
+  local runtime_path = vim.split(package.path, ';')
+  table.insert(runtime_path, 'lua/?.lua')
+  table.insert(runtime_path, 'lua/?/init.lua')
+
   return {
     Lua = {
       runtime = {
         -- LuaJIT in the case of Neovim
         version = 'LuaJIT',
-        path = vim.split(package.path, ';'),
+        path = runtime_path,
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
@@ -177,10 +181,14 @@ local function lua_settings ()
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
-        library = {
-          [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-          [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        },
+        library = vim.api.nvim_get_runtime_file('', true),
+        -- library = {
+        --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+        --   [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+        -- },
+      },
+      telemetry = {
+        enable = false,
       },
     }
   }
@@ -229,6 +237,13 @@ end
 local function make_config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+  -- nvim-cmp supports additional completion capabilities
+  local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
+  if has_cmp_nvim_lsp then
+    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+  end
+
   return {
     capabilities = capabilities, -- enable snippet support
     on_attach = on_attach,       -- map buffer local keybindings when the language server attaches
@@ -243,7 +258,11 @@ local function setup_servers()
 
     -- language specific config
     if server.name == "clangd" then
-      config.filetypes = {"c", "cpp"} -- we don't want objective-c and objective-cpp!
+      -- we don't want objective-c and objective-cpp!
+      config.filetypes = {
+        "c",
+        "cpp",
+      }
     elseif server.name == "efm" then
       config.init_options = {
         documentFormatting = true,

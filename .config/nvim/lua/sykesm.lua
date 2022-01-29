@@ -19,14 +19,17 @@ if hastodo then
   require('site/todo')
 end
 
-local hascompe, _ = pcall(require, 'compe')
-if hascompe then
-  require('site/compe')
+local hascmp, _ = pcall(require, 'cmp')
+if hascmp then
+  require('site/cmp')
 end
 
-require('lsp_signature').setup({
-  hint_prefix = "¦ ",
-})
+local haslspsig, _ = pcall(require, 'lsp-signature')
+if haslspsig then
+  require('lsp_signature').setup({
+    hint_prefix = "¦ ",
+  })
+end
 
 local has_nvim_go, _ = pcall(require, 'go')
 if has_nvim_go then

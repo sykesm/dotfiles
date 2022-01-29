@@ -14,7 +14,12 @@ call plug#begin(stdpath('data') . '/site/plugged')
 
 Plug 'neovim/nvim-lspconfig'                " common config for builtin lsp client
 Plug 'williamboman/nvim-lsp-installer'      " conveniently install language servers
-Plug 'hrsh7th/nvim-compe'                   " auto completion plugin for neovim
+Plug 'hrsh7th/cmp-buffer'                   " comletion from buffers
+Plug 'hrsh7th/cmp-nvim-lsp'                 " LSP completion
+Plug 'hrsh7th/cmp-path'                     " completion from paths
+Plug 'hrsh7th/cmp-vsnip'                    " completion from snippets
+Plug 'hrsh7th/vim-vsnip'                    " snippets engine required by nvim-cmp
+Plug 'hrsh7th/nvim-cmp'                     " auto completion plugin for neovim
 Plug 'ray-x/lsp_signature.nvim'             " provide function signature help
 
 Plug 'nvim-lua/popup.nvim'                  " telescope dependency
@@ -48,6 +53,8 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
 Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
+Plug 'github/copilot.vim'
+
 call plug#end()
 
 lua require("sykesm")
@@ -62,7 +69,7 @@ set cursorline                         " highlight the current line
 set clipboard^=unnamed                 " yank to and paste from the system clipboard by default
 set clipboard^=unnamedplus             " yank to and paste from the system clipboard by default
 set complete-=i                        " don't search included files for completion
-set completeopt=menuone,noselect       " use popup menu for one or more matches, force selection
+set completeopt=menu,menuone,noselect  " use popup menu for one or more matches, force selection
 set display+=lastline                  " display as much as possible of the last line
 set expandtab                          " use spaces instead of tabs in insert mode
 set foldmethod=indent                  " syntax highlighting items specify folds
