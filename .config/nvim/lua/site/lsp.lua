@@ -23,6 +23,7 @@ local function on_attach(client, bufnr)
   buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', '<leader>cr', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
@@ -116,27 +117,28 @@ function _G.go_organize_imports_sync(timeout_ms)
 end
 
 local function go_settings()
-  local gopls = {
-    -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
-    analyses = {
-      fieldalignment = false,
-      nilness = true,
-      unusedparams = true,
-      shadow = true,
-    },
-    buildFlags = {},       -- []string
-    codelenses = {
-      generate = true,     -- show the `go generate` lens.
-      gc_details = true,   -- Show a code lens toggling the display of gc's choices.
-      test = true,
-      tidy = true,
-    },
-    directoryFilters = {}, -- []string
-    gofumpt = true,
-    staticcheck = true,    -- experimental
+  return {
+    gopls = {
+      -- https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
+      analyses = {
+        fieldalignment = false,
+        nilness = true,
+        unusedparams = true,
+        shadow = true,
+      },
+      buildFlags = {},       -- []string
+      codelenses = {
+        generate = true,     -- show the `go generate` lens.
+        gc_details = false,  -- Show a code lens toggling the display of gc's choices.
+        test = true,
+        tidy = true,
+      },
+      directoryFilters = {}, -- []string
+      gofumpt = true,
+      staticcheck = true,    -- experimental
+      -- local = "local-imports",
+    }
   }
-  -- gopls['local'] = "local-imports"
-  return { gopls }
 end
 
 local function rust_settings()
@@ -259,10 +261,7 @@ local function setup_servers()
     -- language specific config
     if server.name == "clangd" then
       -- we don't want objective-c and objective-cpp!
-      config.filetypes = {
-        "c",
-        "cpp",
-      }
+      config.filetypes = { "c", "cpp" }
     elseif server.name == "efm" then
       config.init_options = {
         documentFormatting = true,

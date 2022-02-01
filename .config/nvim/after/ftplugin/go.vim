@@ -2,6 +2,7 @@ setlocal noexpandtab
 setlocal shiftwidth=2
 setlocal softtabstop=2
 setlocal tabstop=2
+setlocal textwidth=80
 
 if has("nvim")
   augroup NvimGoLsp

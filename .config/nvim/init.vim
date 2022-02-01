@@ -69,7 +69,7 @@ set cursorline                            " highlight the current line
 set clipboard^=unnamed                    " yank to and paste from the system clipboard by default
 set clipboard^=unnamedplus                " yank to and paste from the system clipboard by default
 set complete-=i                           " don't search included files for completion
-set completeopt=menuone,noinsert,noselect " use popup menu for one or more matches, force selection
+set completeopt=menuone,noinsert,noselect " use popup menu for one or more matches, no selection
 set display+=lastline                     " display as much as possible of the last line
 set expandtab                             " use spaces instead of tabs in insert mode
 set foldmethod=indent                     " syntax highlighting items specify folds
