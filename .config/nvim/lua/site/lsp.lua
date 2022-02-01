@@ -148,17 +148,21 @@ local function rust_settings()
         importMergeBehavior = "last",
         importPrefix = "by_self",
       },
-      diagnostics = {
-        disabled = { "unresolved-import" },
-      },
       cargo = {
         loadOutDirsFromCheck = true,
       },
-      procMacro = {
-        enabled = true,
-      },
       checkOnSave = {
         command = "clippy",
+      },
+      diagnostics = {
+        disabled = { "unresolved-import" },
+      },
+      lens = {
+        -- Revisit if https://github.com/simrat39/rust-tools.nvim gets configured.
+        enable = false,
+      },
+      procMacro = {
+        enabled = true,
       },
     }
   }
@@ -184,10 +188,6 @@ local function lua_settings ()
       workspace = {
         -- Make the server aware of Neovim runtime files
         library = vim.api.nvim_get_runtime_file('', true),
-        -- library = {
-        --   [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-        --   [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
-        -- },
       },
       telemetry = {
         enable = false,
