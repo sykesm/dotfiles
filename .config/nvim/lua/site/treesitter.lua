@@ -19,10 +19,10 @@ require('nvim-treesitter.configs').setup {
     "javascript",
   },
   highlight = {
-    enable = true,  -- false will disable the whole extension
-    disable = {
+    enable = true,   -- false will disable the whole extension
+    disable = {      -- list of languages to disabled
       "elixir",
-    },  -- list of language that will be disabled
+    },
   },
   indent = {
     enable = false,
@@ -47,6 +47,38 @@ require('nvim-treesitter.configs').setup {
       "#c792ea",
       "#7fdbca",
       "#a1aab8",
+    },
+  },
+  textobjects = {
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+    select = {
+      enable = true,
+      lookahead = true,
+      keymaps = {
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
     },
   },
 }

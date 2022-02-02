@@ -27,6 +27,7 @@ Plug 'nvim-lua/plenary.nvim'                " telescope dependency
 Plug 'nvim-telescope/telescope.nvim'        " fuzzy-finder on steroids
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} " AST based syntax highlighting
+Plug 'nvim-treesitter/nvim-treesitter-textobjects' " text objects
 Plug 'nvim-treesitter/playground'           " view treesitter info
 Plug 'p00f/nvim-ts-rainbow'                 " rainbow parens
 
