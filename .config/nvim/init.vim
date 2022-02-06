@@ -282,12 +282,30 @@ inoremap <leader>S ¯\_(ツ)_/¯
 
 "=====================================================
 " TMUX clipboard configuration
-if !empty($TMUX)
+"
+" Try to use tmux buffers instead GUI for clipboard
+" integration when running in tmux. If the tmux version
+" is new enough, send copied text to the terminal client
+" with OSC 52.
+if !empty($TMUX) && executable('tmux') && system('tmux -V') =~ '3\.[2-9]'
   let g:clipboard = {
     \   'name': 'myClipboard',
     \   'copy': {
     \      '+': ['tmux', 'load-buffer', '-w', '-'],
     \      '*': ['tmux', 'load-buffer', '-w', '-'],
+    \    },
+    \   'paste': {
+    \      '+': ['tmux', 'save-buffer', '-'],
+    \      '*': ['tmux', 'save-buffer', '-'],
+    \   },
+    \   'cache_enabled': 1,
+    \ }
+elseif !empty($TMUX) && executable('tmux')
+  let g:clipboard = {
+    \   'name': 'myClipboard',
+    \   'copy': {
+    \      '+': ['tmux', 'load-buffer', '-'],
+    \      '*': ['tmux', 'load-buffer', '-'],
     \    },
     \   'paste': {
     \      '+': ['tmux', 'save-buffer', '-'],
