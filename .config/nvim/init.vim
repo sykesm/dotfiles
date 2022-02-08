@@ -58,6 +58,7 @@ Plug 'github/copilot.vim'
 
 call plug#end()
 
+let g:copilot_enabled = 0
 lua require("sykesm")
 
 "=====================================================
