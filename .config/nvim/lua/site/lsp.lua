@@ -107,7 +107,7 @@ function _G.go_organize_imports_sync(timeout_ms)
       -- should be executed first.
       if action.edit or type(action.command) == "table" then
         if action.edit then
-          vim.lsp.util.apply_workspace_edit(action.edit)
+          vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
         end
         if type(action.command) == "table" then
           vim.lsp.buf.execute_command(action.command)
@@ -127,7 +127,7 @@ local function go_settings()
         fieldalignment = false,
         nilness = true,
         unusedparams = true,
-        shadow = true,
+        shadow = false,
       },
       buildFlags = {},       -- []string
       codelenses = {
@@ -280,6 +280,39 @@ local function setup_servers()
         }
       }
     elseif server.name == "gopls" then
+      -- https://github.com/ray-x/go.nvim#lsp-cmp-support
+      config.capabilities = {
+        textDocument = {
+          completion = {
+            completionItem = {
+              commitCharactersSupport = true,
+              deprecatedSupport = true,
+              documentationFormat = {
+                "markdown",
+                "plaintext",
+              },
+              preselectSupport = true,
+              insertReplaceSupport = true,
+              labelDetailsSupport = true,
+              snippetSupport = true,
+              tagSupport = true,
+              resolveSupport = {
+                properties = {
+                  "documentation",
+                  "details",
+                  "additionalTextEdits",
+                },
+              },
+            },
+            contextSupport = true,
+            dynamicRegistration = true,
+          },
+        },
+      }
+      config.cmd = {
+        "gopls", -- share the gopls instance if there is one already
+        "-remote.debug=:0",
+      }
       config.filetypes = {
         "go",
         "gomod",
