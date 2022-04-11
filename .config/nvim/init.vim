@@ -51,6 +51,7 @@ Plug 'mhinz/vim-signify'                    " line markers for changes
 Plug 'plasticboy/vim-markdown'              " extended markdown
 Plug 'ray-x/go.nvim'                        " go language stuff w/o vim-go
 Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
+Plug 'folke/lua-dev.nvim'                   " LSP configuration for nvim lua
 Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 

@@ -4,27 +4,28 @@
 -- keymaps
 local function on_attach(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap=true, silent=true }
+  local opts = { noremap = true, silent = true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD',         '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd',         '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K',          '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi',         '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<leader>S',  '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<leader>D',  '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', '<leader>cr', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
-  buf_set_keymap('n', 'gr',         '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<leader>e',  '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '[d',         '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d',         '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   buf_set_keymap('n', '<leader>qf', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
 
@@ -69,7 +70,7 @@ local function get_lsp_client()
 
   for _, client in pairs(clients) do
     local filetypes = client.config.filetypes
-    if filetypes and vim.fn.index(filetypes,buf_ft) ~= -1 then
+    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
       return client
     end
   end
@@ -129,16 +130,16 @@ local function go_settings()
         unusedparams = true,
         shadow = false,
       },
-      buildFlags = {},       -- []string
+      buildFlags = {}, -- []string
       codelenses = {
-        generate = true,     -- show the `go generate` lens.
-        gc_details = false,  -- Show a code lens toggling the display of gc's choices.
+        generate = true, -- show the `go generate` lens.
+        gc_details = false, -- Show a code lens toggling the display of gc's choices.
         test = true,
         tidy = true,
       },
       directoryFilters = {}, -- []string
       gofumpt = true,
-      staticcheck = true,    -- experimental
+      staticcheck = true, -- experimental
       -- local = "local-imports",
     }
   }
@@ -172,7 +173,7 @@ local function rust_settings()
 end
 
 -- Configure lua language server for neovim development
-local function lua_settings ()
+local function lua_settings()
   local runtime_path = vim.split(package.path, ';')
   table.insert(runtime_path, 'lua/?.lua')
   table.insert(runtime_path, 'lua/?/init.lua')
@@ -186,7 +187,7 @@ local function lua_settings ()
       },
       diagnostics = {
         -- Get the language server to recognize the `vim` global
-        globals = {'vim'},
+        globals = { 'vim' },
       },
       workspace = {
         -- Make the server aware of Neovim runtime files
@@ -251,7 +252,7 @@ local function make_config()
 
   return {
     capabilities = capabilities, -- enable snippet support
-    on_attach = on_attach,       -- map buffer local keybindings when the language server attaches
+    on_attach = on_attach, -- map buffer local keybindings when the language server attaches
   }
 end
 
@@ -401,7 +402,7 @@ function _G.toggle_diagnostics()
   end
 end
 
-vim.api.nvim_set_keymap('n', '<leader>tt', ':call v:lua.toggle_diagnostics()<CR>',  {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<leader>tt', ':call v:lua.toggle_diagnostics()<CR>', { noremap = true, silent = true })
 
 -- vim.lsp.set_log_level('trace')
 install_required_language_servers()
