@@ -58,7 +58,7 @@ cmp.setup {
   completion = {
     completeopt = 'menu,menuone,noinsert,noselect',
   },
-  mapping = cmp_mapping(),
+  mapping = cmp.mapping.preset.insert(cmp_mapping()),
   preselect = cmp.PreselectMode.None,
   snippet = {
     expand = function(args)

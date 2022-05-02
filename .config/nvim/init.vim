@@ -223,15 +223,6 @@ augroup highlight_yank
   autocmd TextYankPost * silent! lua require('vim.highlight').on_yank({timeout = 100})
 augroup end
 
-" https://stackoverflow.com/questions/4097259/in-vim-how-do-i-highlight-todo-and-fixme
-augroup vimrc_todo
-  autocmd!
-  autocmd Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX|MJS)/ containedin=.*Comment,vimCommentTitle
-augroup END
-" This does not seem to play well with TreeSitter and highlights the matches
-" everywhere: identifiers, strings, and comments.
-" hi def link MyTodo Todo
-
 "=====================================================
 "===================== Airline =======================
 if !empty($POWERLINE)

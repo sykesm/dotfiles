@@ -4,6 +4,7 @@
 require('nvim-treesitter.configs').setup {
   ensure_installed = {
     "c",
+    "comment",
     "elixir",
     "go",
     "gomod",
@@ -19,8 +20,9 @@ require('nvim-treesitter.configs').setup {
     "javascript",
   },
   highlight = {
-    enable = true,   -- false will disable the whole extension
-    disable = {      -- list of languages to disabled
+    enable = true, -- false will disable the whole extension
+    additional_vim_regex_highlighting = false,
+    disable = { -- list of languages to disabled
       "elixir",
     },
   },
@@ -33,7 +35,7 @@ require('nvim-treesitter.configs').setup {
   query_linter = {
     enable = true,
     use_virtual_text = true,
-    lint_events = {"BufWrite", "CursorHold"},
+    lint_events = { "BufWrite", "CursorHold" },
   },
   rainbow = {
     enable = true,
