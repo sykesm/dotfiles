@@ -35,14 +35,14 @@ local function on_attach(client, bufnr)
   buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.document_formatting then
     buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
+  elseif client.server_capabilities.document_range_formatting then
     buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
   end
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
+  if client.server_capabilities.document_highlight then
     vim.api.nvim_exec([[
       highlight! default link LspReferenceText  Visual
       highlight! default link LspReferenceWrite Visual
@@ -63,7 +63,7 @@ end
 local function get_lsp_client()
   -- Get lsp client for current buffer
   local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-  local clients = vim.lsp.buf_get_clients()
+  local clients = vim.lsp.get_active_clients()
   if next(clients) == nil then
     return nil
   end
@@ -342,7 +342,10 @@ local function setup_servers()
         yaml = {
           completion = true,
           schemas = {
-            Kubernetes = "/*.yaml",
+            -- Kubernetes = "/*.yaml",
+          },
+          schemaStore = {
+            enable = false,
           },
           validate = true,
         }
@@ -393,11 +396,11 @@ function _G.toggle_diagnostics()
     vim.g.diagnostics_active = true
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = true,
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-      }
+      virtual_text = true,
+      signs = true,
+      underline = true,
+      update_in_insert = false,
+    }
     )
   end
 end

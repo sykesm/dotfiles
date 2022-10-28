@@ -31,7 +31,6 @@ fonts:
       style: Bold
   jetbrains-mono: &jetbrains-mono
     size: 12
-    use_thin_strokes: false
     normal:
       family: "JetBrainsMono Nerd Font Mono"
       style: Regular

@@ -50,12 +50,13 @@ Plug 'majutsushi/tagbar'                    " code tree
 Plug 'mhinz/vim-signify'                    " line markers for changes
 Plug 'plasticboy/vim-markdown'              " extended markdown
 Plug 'ray-x/go.nvim'                        " go language stuff w/o vim-go
+Plug 'ray-x/guihua.lua'                     " float term, go.nvim gui support
 Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
 Plug 'folke/lua-dev.nvim'                   " LSP configuration for nvim lua
 Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
 
 call plug#end()
 
