@@ -1,26 +1,40 @@
 ---------------------------------------------------------------------
 -- Language Server Protocol
 ---------------------------------------------------------------------
+require('nvim-lsp-installer').setup({
+  automatic_installation = false,
+  ensure_installed = {
+    "bashls",
+    "dockerls",
+    "efm",
+    "elixirls",
+    "gopls",
+    "sumneko_lua",
+    "pylsp",
+    "rust_analyzer",
+    "tsserver",
+    "vimls",
+    "yamlls",
+  },
+})
+
 -- keymaps
 local function on_attach(client, bufnr)
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { noremap = true, silent = true }
-
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<leader>S', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', 'gh', "<Cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
   buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
   buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('v', '<leader>ca', "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   buf_set_keymap('n', '<leader>cr', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
   buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
@@ -87,34 +101,20 @@ end
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
 -- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-849865673
 ---------------------------------------------------------------------
-function _G.go_organize_imports_sync(timeout_ms)
-  local context = { source = { organizeImports = true } }
-  vim.validate { context = { context, "t", true } }
-
+function _G.organize_imports(timeout_ms)
   local params = vim.lsp.util.make_range_params()
-  params.context = context
+  params.context = { only = { "source.organizeImports" } }
 
   local client = get_lsp_client()
   if not client then return end
-  local result = client.request_sync("textDocument/codeAction", params, timeout_ms, 0)
-  if not result then return end
-  local actions = result.result
-  if not actions then return end
 
-  for _, action in pairs(actions) do
-    if action.kind and action.kind == "source.organizeImports" then
-      -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
-      -- is a CodeAction, it can have either an edit, a command or both. Edits
-      -- should be executed first.
-      if action.edit or type(action.command) == "table" then
-        if action.edit then
-          vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
-        end
-        if type(action.command) == "table" then
-          vim.lsp.buf.execute_command(action.command)
-        end
+  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
+  for _, res in pairs(result or {}) do
+    for _, r in pairs(res.result or {}) do
+      if r.edit then
+        vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
       else
-        vim.lsp.buf.execute_command(action)
+        vim.lsp.buf.execute_command(r.command)
       end
     end
   end
@@ -174,7 +174,7 @@ end
 
 -- Configure lua language server for neovim development
 local function lua_settings()
-  local runtime_path = vim.split(package.path, ';')
+  local runtime_path = vim.split(package.path, ';', { plain = true })
   table.insert(runtime_path, 'lua/?.lua')
   table.insert(runtime_path, 'lua/?/init.lua')
 
@@ -247,7 +247,7 @@ local function make_config()
   -- nvim-cmp supports additional completion capabilities
   local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
   if has_cmp_nvim_lsp then
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+    capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
   end
 
   return {
@@ -257,132 +257,125 @@ local function make_config()
 end
 
 local function setup_servers()
-  local lsp_installer = require('nvim-lsp-installer')
+  local lspconfig = require('lspconfig')
+  local util = require('lspconfig.util')
+  util.default_config = vim.tbl_extend(
+    'force',
+    util.default_config,
+    make_config()
+  )
 
-  lsp_installer.on_server_ready(function(server)
-    local config = make_config()
+  lspconfig.bashls.setup({})
 
-    -- language specific config
-    if server.name == "clangd" then
-      -- we don't want objective-c and objective-cpp!
-      config.filetypes = { "c", "cpp" }
-    elseif server.name == "efm" then
-      config.init_options = {
-        documentFormatting = true,
-        codeAction = true,
+  lspconfig.clangd.setup({
+    filetypes = { "c", "cpp" }
+  })
+
+  lspconfig.dockerls.setup({})
+
+  lspconfig.efm.setup({
+    init_options = {
+      documentFormatting = true,
+      codeAction = true,
+    },
+    filetypes = { 'elixir', 'sh' },
+    settings = efm_settings(),
+  })
+
+  lspconfig.elixirls.setup({
+    settings = {
+      elixirLS = {
+        dialyzerEnabled = false,
+        fetchDeps = false,
       }
-      config.filetypes = { 'elixir', 'sh' }
-      config.settings = efm_settings()
-    elseif server.name == "elixirls" then
-      config.settings = {
-        elixirLS = {
-          dialyzerEnabled = false,
-          fetchDeps = false,
-        }
-      }
-    elseif server.name == "gopls" then
-      -- https://github.com/ray-x/go.nvim#lsp-cmp-support
-      config.capabilities = {
-        textDocument = {
-          completion = {
-            completionItem = {
-              commitCharactersSupport = true,
-              deprecatedSupport = true,
-              documentationFormat = {
-                "markdown",
-                "plaintext",
-              },
-              preselectSupport = true,
-              insertReplaceSupport = true,
-              labelDetailsSupport = true,
-              snippetSupport = true,
-              tagSupport = true,
-              resolveSupport = {
-                properties = {
-                  "documentation",
-                  "details",
-                  "additionalTextEdits",
-                },
+    }
+  })
+
+  lspconfig.gopls.setup({
+    -- https://github.com/ray-x/go.nvim#lsp-cmp-support
+    capabilities = {
+      textDocument = {
+        completion = {
+          completionItem = {
+            commitCharactersSupport = true,
+            deprecatedSupport = true,
+            documentationFormat = {
+              "markdown",
+              "plaintext",
+            },
+            preselectSupport = true,
+            insertReplaceSupport = true,
+            labelDetailsSupport = true,
+            snippetSupport = true,
+            tagSupport = { valueSet = { 1 } },
+            resolveSupport = {
+              properties = {
+                "documentation",
+                "details",
+                "additionalTextEdits",
               },
             },
-            contextSupport = true,
-            dynamicRegistration = true,
           },
+          contextSupport = true,
+          dynamicRegistration = true,
         },
-      }
-      config.cmd = {
-        "gopls", -- share the gopls instance if there is one already
-        "-remote.debug=:0",
-      }
-      config.filetypes = {
-        "go",
-        "gomod",
-        "gohtmltmpl",
-        "gotexttmpl",
-      }
-      config.settings = go_settings()
-    elseif server.name == "sumneko_lua" then
-      config.settings = lua_settings()
-    elseif server.name == "rust-analyzer" then
-      config.settings = rust_settings()
-    elseif server.name == "sourcekit" then
-      -- we don't want c and cpp!
-      config.filetypes = {
-        "swift",
-        "objective-c",
-        "objective-cpp"
-      }
-    elseif server.name == "yamlls" then
-      config.settings = {
-        redhat = {
-          telemetry = {
-            enabled = false,
-          },
+      },
+    },
+    cmd = {
+      "gopls", -- share the gopls instance if there is one already
+      "-remote.debug=:0",
+    },
+    filetypes = {
+      "go",
+      "gomod",
+      "gohtmltmpl",
+      "gotexttmpl",
+    },
+    settings = go_settings(),
+  })
+
+  lspconfig.pylsp.setup({})
+
+  lspconfig.sumneko_lua.setup({
+    settings = lua_settings()
+  })
+
+  lspconfig.rust_analyzer.setup({
+    settings = rust_settings()
+  })
+
+  lspconfig.sourcekit.setup({
+    -- we don't want c and cpp!
+    filetypes = {
+      "swift",
+      "objective-c",
+      "objective-cpp"
+    }
+  })
+
+  lspconfig.vimls.setup({})
+
+  lspconfig.yamlls.setup({
+    settings = {
+      redhat = { telemetry = { enabled = false } },
+      yaml = {
+        completion = true,
+        validate = true,
+        format = { enable = true },
+        hover = true,
+        schemaStore = {
+          enable = false,
+          url = "https://www.schemastore.org/api/json/catalog.json",
         },
-        yaml = {
-          completion = true,
-          schemas = {
-            -- Kubernetes = "/*.yaml",
-          },
-          schemaStore = {
-            enable = false,
-          },
-          validate = true,
-        }
+        schemas = {
+          ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.22.4-standalone-strict/all.json"] = "deploy/**/*.yaml",
+        },
+        trace = { server = "debug" },
       }
-    end
+    }
+  })
 
-    -- print(vim.inspect(server.name))
-    -- print(vim.inspect(config))
-    server:setup(config)
-  end)
-end
-
-local required_language_servers = {
-  "bashls",
-  "dockerls",
-  "efm",
-  "elixirls",
-  "gopls",
-  "sumneko_lua",
-  "pylsp",
-  "rust_analyzer",
-  "tsserver",
-  "vimls",
-  "yamlls@1.2.2",
-}
-
-local function install_required_language_servers()
-  local lsp_installer = require('nvim-lsp-installer')
-
-  for _, name in pairs(required_language_servers) do
-    local server_is_found, server = lsp_installer.get_server(name)
-    if server_is_found then
-      if not server:is_installed() then
-        server:install()
-      end
-    end
-  end
+  lspconfig.tsserver.setup({})
 end
 
 -- https://np.reddit.com/r/backtickbot/comments/ng3qz4/httpsnpredditcomrneovimcommentsng0dj0lsp/
@@ -400,13 +393,11 @@ function _G.toggle_diagnostics()
       signs = true,
       underline = true,
       update_in_insert = false,
-    }
-    )
+    })
   end
 end
 
 vim.api.nvim_set_keymap('n', '<leader>tt', ':call v:lua.toggle_diagnostics()<CR>', { noremap = true, silent = true })
 
 -- vim.lsp.set_log_level('trace')
-install_required_language_servers()
 setup_servers()

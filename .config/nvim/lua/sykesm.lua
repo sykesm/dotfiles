@@ -24,7 +24,7 @@ if hascmp then
   require('site/cmp')
 end
 
-local haslspsig, _ = pcall(require, 'lsp-signature')
+local haslspsig, _ = pcall(require, 'lsp_signature')
 if haslspsig then
   require('lsp_signature').setup({
     hint_prefix = "¦ ",

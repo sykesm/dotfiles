@@ -42,8 +42,11 @@ Plug 'tpope/vim-fugitive'                   " git integration
 Plug 'tpope/vim-repeat'                     " extend '.' to plugin map
 Plug 'tpope/vim-surround'                   " change surrounding quotes and tags
 
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'theHamsta/nvim-dap-virtual-text'
+
 Plug 'andymass/vim-matchup'                 " extended matching
-Plug 'fatih/vim-hclfmt'                     " hashicorp configuration language
 Plug 'fatih/vim-nginx', {'for': 'nginx'}    " nginx config
 Plug 'hashivim/vim-hashicorp-tools'
 Plug 'majutsushi/tagbar'                    " code tree
@@ -54,6 +57,7 @@ Plug 'ray-x/guihua.lua'                     " float term, go.nvim gui support
 Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
 Plug 'folke/lua-dev.nvim'                   " LSP configuration for nvim lua
 Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
+
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
 " Plug 'github/copilot.vim'

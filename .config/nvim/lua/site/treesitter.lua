@@ -52,6 +52,15 @@ require('nvim-treesitter.configs').setup {
     },
   },
   textobjects = {
+    -- syntax-aware textobjects
+    enable = true,
+    lsp_interop = {
+      enable = true,
+      peek_definition_code = {
+        ["<leader>df"] = "@function.outer",
+        ["<leader>dF"] = "@class.outer"
+      }
+    },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
@@ -80,6 +89,15 @@ require('nvim-treesitter.configs').setup {
         ["if"] = "@function.inner",
         ["ac"] = "@class.outer",
         ["ic"] = "@class.inner",
+      },
+    },
+    swap = {
+      enable = true,
+      swap_next = {
+        ["<leader>a"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["<leader>A"] = "@parameter.inner",
       },
     },
   },
