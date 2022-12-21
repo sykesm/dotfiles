@@ -94,6 +94,10 @@ if [ -d "$HOME/.zsh-syntax-highlighting" ]; then
     source "$HOME/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi
 
+if [ -d "${HOME}/.krew/bin" ]; then
+    export PATH="${PATH}:${HOME}/.krew/bin"
+fi
+
 unsetopt share_history          # keep terminal histories separate
 bindkey \^U backward-kill-line  # default is to kill the whole line
 LESS="-FRX"                     # ANSI colors, no termcap init, quit one screen
