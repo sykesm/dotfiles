@@ -1,6 +1,7 @@
 local haslspconfig, _ = pcall(require, 'lspconfig')
-local haslspinstall, _ = pcall(require, 'nvim-lsp-installer')
-if haslspconfig and haslspinstall then
+local has_mason, _ = pcall(require, 'mason')
+local has_mason_lspconfig, _ = pcall(require, 'mason-lspconfig')
+if haslspconfig and has_mason and has_mason_lspconfig then
   require('site/lsp')
 end
 

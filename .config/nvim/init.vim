@@ -12,8 +12,10 @@ let g:nightflyUndercurls = 1
 
 call plug#begin(stdpath('data') . '/site/plugged')
 
+Plug 'williamboman/mason.nvim'              " Installer for LSPs (and more)
+Plug 'williamboman/mason-lspconfig.nvim'    " mason extensions for LSPs
 Plug 'neovim/nvim-lspconfig'                " common config for builtin lsp client
-Plug 'williamboman/nvim-lsp-installer'      " conveniently install language servers
+
 Plug 'hrsh7th/cmp-buffer'                   " comletion from buffers
 Plug 'hrsh7th/cmp-nvim-lsp'                 " LSP completion
 Plug 'hrsh7th/cmp-path'                     " completion from paths

@@ -1,7 +1,8 @@
 ---------------------------------------------------------------------
 -- Language Server Protocol
 ---------------------------------------------------------------------
-require('nvim-lsp-installer').setup({
+require("mason").setup()
+require("mason-lspconfig").setup({
   automatic_installation = false,
   ensure_installed = {
     "bashls",
@@ -140,7 +141,8 @@ local function go_settings()
       directoryFilters = {}, -- []string
       gofumpt = true,
       staticcheck = true, -- experimental
-      -- local = "local-imports",
+      vulncheck = "Imports",
+      ['local'] = "",
     }
   }
 end
@@ -352,6 +354,8 @@ local function setup_servers()
       "objective-cpp"
     }
   })
+
+  lspconfig.terraformls.setup({})
 
   lspconfig.vimls.setup({})
 
