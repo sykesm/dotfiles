@@ -8,5 +8,7 @@ if [[ -z "$COLORTERM" ]]; then
     export COLORTERM="truecolor"
   elif [[ -n "$WT_SESSION" ]]; then
     export COLORTERM="truecolor"
+  elif [[ -n "$SSH_TTY" ]] && [[ "$TERM" == *"256color"* ]]; then
+    export COLORTERM="truecolor"
   fi
 fi
