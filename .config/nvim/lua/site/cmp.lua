@@ -1,8 +1,7 @@
 -- compe was deprecated and this is the replacement.
 --
 -- The wiki has some information about getting it to work like supertab
--- but I've had some issues getting it to work. Things became even more
--- broken with copilot so I'm bailing on tab completion for now.
+-- but I've had some issues getting it to work.
 --
 -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#vim-vsnip has
 -- outlines the configuration if I ever get around to it.
@@ -29,27 +28,25 @@ local function cmp_mapping()
     ['<CR>'] = cmp.mapping.confirm({ select = false }),
   }
 
-  if vim.g.copilot_enabled and vim.api.nvim_get_var('copilot_enabled') == 0 then
-    mapping['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif vim.fn['vsnip#available'](1) == 1 then
-        feedkey('<Plug>(vsnip-expand-or-jump)', '')
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { 'i', 's' })
+  mapping['<Tab>'] = cmp.mapping(function(fallback)
+    if cmp.visible() then
+      cmp.select_next_item()
+    elseif vim.fn['vsnip#available'](1) == 1 then
+      feedkey('<Plug>(vsnip-expand-or-jump)', '')
+    elseif has_words_before() then
+      cmp.complete()
+    else
+      fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+    end
+  end, { 'i', 's' })
 
-    mapping['<S-Tab>'] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif vim.fn['vsnip#jumpable'](-1) == 1 then
-        feedkey('<Plug>(vsnip-jump-prev)', '')
-      end
-    end, { 'i', 's' })
-  end
+  mapping['<S-Tab>'] = cmp.mapping(function()
+    if cmp.visible() then
+      cmp.select_prev_item()
+    elseif vim.fn['vsnip#jumpable'](-1) == 1 then
+      feedkey('<Plug>(vsnip-jump-prev)', '')
+    end
+  end, { 'i', 's' })
 
   return mapping
 end

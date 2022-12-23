@@ -36,3 +36,8 @@ local has_nvim_go, _ = pcall(require, 'go')
 if has_nvim_go then
   require('go').setup()
 end
+
+local has_gitsigns, _ = pcall(require, 'gitsigns')
+if has_gitsigns then
+  require('site/gitsigns')
+end

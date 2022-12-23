@@ -52,21 +52,18 @@ Plug 'andymass/vim-matchup'                 " extended matching
 Plug 'fatih/vim-nginx', {'for': 'nginx'}    " nginx config
 Plug 'hashivim/vim-hashicorp-tools'
 Plug 'majutsushi/tagbar'                    " code tree
-Plug 'mhinz/vim-signify'                    " line markers for changes
+Plug 'lewis6991/gitsigns.nvim'              " line markers for git changes
 Plug 'plasticboy/vim-markdown'              " extended markdown
 Plug 'ray-x/go.nvim'                        " go language stuff w/o vim-go
 Plug 'ray-x/guihua.lua'                     " float term, go.nvim gui support
 Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
-Plug 'folke/lua-dev.nvim'                   " LSP configuration for nvim lua
+Plug 'folke/neodev.nvim'                    " LSP configuration for nvim lua
 Plug 'elixir-editors/vim-elixir', {'for': 'elixir'}
 
 Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
-" Plug 'github/copilot.vim'
-
 call plug#end()
 
-let g:copilot_enabled = 0
 lua require("sykesm")
 
 "=====================================================
@@ -167,7 +164,7 @@ nnoremap <silent> <C-j> <c-w>j
 nnoremap <leader>o :only<CR>
 
 " macOS dictionary
-if has('mac') || has('macunix') || (has('unix') && system('uname') =~ 'Darwin')
+if has('macunix') || (has('unix') && system('uname') =~ 'Darwin')
   nmap <silent> <Leader>d :!open dict://<cword><CR><CR>
 endif
 
@@ -225,10 +222,12 @@ augroup restore_position
 augroup END
 
 " briefly flash what's beeen yanked
-augroup highlight_yank
-  autocmd!
-  autocmd TextYankPost * silent! lua require('vim.highlight').on_yank({timeout = 100})
-augroup end
+if has('nvim')
+  augroup highlight_yank
+    autocmd!
+    autocmd TextYankPost * silent! lua require('vim.highlight').on_yank({timeout = 100})
+  augroup end
+endif
 
 "=====================================================
 "===================== Airline =======================

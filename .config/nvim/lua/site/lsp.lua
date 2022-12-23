@@ -1,23 +1,19 @@
 ---------------------------------------------------------------------
 -- Language Server Protocol
 ---------------------------------------------------------------------
-require("mason").setup()
-require("mason-lspconfig").setup({
-  automatic_installation = false,
-  ensure_installed = {
-    "bashls",
-    "dockerls",
-    "efm",
-    "elixirls",
-    "gopls",
-    "sumneko_lua",
-    "pylsp",
-    "rust_analyzer",
-    "tsserver",
-    "vimls",
-    "yamlls",
-  },
-})
+local servers = {
+  "bashls",
+  "dockerls",
+  "efm",
+  "elixirls",
+  "gopls",
+  "sumneko_lua",
+  "pylsp",
+  "rust_analyzer",
+  "tsserver",
+  "vimls",
+  "yamlls",
+}
 
 -- keymaps
 local function on_attach(client, bufnr)
@@ -72,55 +68,6 @@ local function on_attach(client, bufnr)
   end
 end
 
----------------------------------------------------------------------
--- https://github.com/neovim/neovim/issues/14618#issuecomment-846549867
----------------------------------------------------------------------
-local function get_lsp_client()
-  -- Get lsp client for current buffer
-  local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-  local clients = vim.lsp.get_active_clients()
-  if next(clients) == nil then
-    return nil
-  end
-
-  for _, client in pairs(clients) do
-    local filetypes = client.config.filetypes
-    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
-      return client
-    end
-  end
-
-  return nil
-end
-
----------------------------------------------------------------------
--- Try to invoke the source.organizeImports action on save.
---
--- This was cobbled together with some help from these links and
--- probably isn't the best implementation.
---
--- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
--- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-849865673
----------------------------------------------------------------------
-function _G.organize_imports(timeout_ms)
-  local params = vim.lsp.util.make_range_params()
-  params.context = { only = { "source.organizeImports" } }
-
-  local client = get_lsp_client()
-  if not client then return end
-
-  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
-  for _, res in pairs(result or {}) do
-    for _, r in pairs(res.result or {}) do
-      if r.edit then
-        vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
-      else
-        vim.lsp.buf.execute_command(r.command)
-      end
-    end
-  end
-end
-
 local function go_settings()
   return {
     gopls = {
@@ -142,7 +89,7 @@ local function go_settings()
       gofumpt = true,
       staticcheck = true, -- experimental
       vulncheck = "Imports",
-      ['local'] = "",
+      -- ['local'] = "",
     }
   }
 end
@@ -176,24 +123,10 @@ end
 
 -- Configure lua language server for neovim development
 local function lua_settings()
-  local runtime_path = vim.split(package.path, ';', { plain = true })
-  table.insert(runtime_path, 'lua/?.lua')
-  table.insert(runtime_path, 'lua/?/init.lua')
-
   return {
     Lua = {
-      runtime = {
-        -- LuaJIT in the case of Neovim
-        version = 'LuaJIT',
-        path = runtime_path,
-      },
-      diagnostics = {
-        -- Get the language server to recognize the `vim` global
-        globals = { 'vim' },
-      },
       workspace = {
-        -- Make the server aware of Neovim runtime files
-        library = vim.api.nvim_get_runtime_file('', true),
+        checkThirdParty = false,
       },
       telemetry = {
         enable = false,
@@ -382,12 +315,61 @@ local function setup_servers()
   lspconfig.tsserver.setup({})
 end
 
+---------------------------------------------------------------------
+-- https://github.com/neovim/neovim/issues/14618#issuecomment-846549867
+---------------------------------------------------------------------
+local function get_lsp_client()
+  -- Get lsp client for current buffer
+  local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+  local clients = vim.lsp.get_active_clients()
+  if next(clients) == nil then
+    return nil
+  end
+
+  for _, client in pairs(clients) do
+    local filetypes = client.config.filetypes
+    if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+      return client
+    end
+  end
+
+  return nil
+end
+
+---------------------------------------------------------------------
+-- Try to invoke the source.organizeImports action on save.
+--
+-- This was cobbled together with some help from these links and
+-- probably isn't the best implementation.
+--
+-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
+-- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-849865673
+---------------------------------------------------------------------
+function _G.organize_imports(timeout_ms)
+  local params = vim.lsp.util.make_range_params()
+  params.context = { only = { "source.organizeImports" } }
+
+  local client = get_lsp_client()
+  if not client then return end
+
+  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
+  for _, res in pairs(result or {}) do
+    for _, r in pairs(res.result or {}) do
+      if r.edit then
+        vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
+      else
+        vim.lsp.buf.execute_command(r.command)
+      end
+    end
+  end
+end
+
 -- https://np.reddit.com/r/backtickbot/comments/ng3qz4/httpsnpredditcomrneovimcommentsng0dj0lsp/
 vim.g.diagnostics_active = true
 function _G.toggle_diagnostics()
   if vim.g.diagnostics_active then
     vim.g.diagnostics_active = false
-    vim.lsp.diagnostic.clear(0)
+    vim.diagnostic.hide()
     vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
   else
     vim.g.diagnostics_active = true
@@ -398,10 +380,17 @@ function _G.toggle_diagnostics()
       underline = true,
       update_in_insert = false,
     })
+    vim.diagnostic.show()
   end
 end
 
 vim.api.nvim_set_keymap('n', '<leader>tt', ':call v:lua.toggle_diagnostics()<CR>', { noremap = true, silent = true })
 
 -- vim.lsp.set_log_level('trace')
+require("mason").setup()
+require("mason-lspconfig").setup({
+  automatic_installation = false,
+  ensure_installed = servers, -- vim.tbl_keys(servers),
+})
+require("neodev").setup()
 setup_servers()
