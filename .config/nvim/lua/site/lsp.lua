@@ -53,7 +53,7 @@ local function on_attach(client, bufnr)
   end
 
   -- Set autocommands conditional on server_capabilities
-  if client.server_capabilities.document_highlight then
+  if client.server_capabilities.documentHighlightProvider then
     vim.api.nvim_exec([[
       highlight! default link LspReferenceText  Visual
       highlight! default link LspReferenceWrite Visual
