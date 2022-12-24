@@ -29,6 +29,12 @@ require('nvim-treesitter.configs').setup {
   indent = {
     enable = false,
   },
+  matchup = {
+    enable = true,
+    disable = {}, -- "c", "ruby"
+    disable_virtual_text = false,
+    include_match_words = false,
+  },
   playground = {
     enable = true,
   },
