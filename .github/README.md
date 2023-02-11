@@ -37,12 +37,10 @@ ssh-agent, the following will clone the dotfiles, populate `$HOME`, install
         ~/.tmux/plugins/tpm/bin/install_plugins
     fi
 
-    if [ "$(uname)" == "Darwin" ] && [ ! -x ~/.cargo/bin/rustup ]; then
+    if [[ "$(uname)" == "Darwin" ]] && [[ ! -x ~/.cargo/bin/rustup ]]; then
         rustup-init --no-modify-path -y
         source $HOME/.cargo/env
-        rustup toolchain add nightly
         rustup component add rust-src
-        cargo +nightly install racer
     fi
 ```
 
