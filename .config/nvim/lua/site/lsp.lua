@@ -7,7 +7,7 @@ local servers = {
   "efm",
   "elixirls",
   "gopls",
-  "sumneko_lua",
+  "lua_ls",
   "pylsp",
   "rust_analyzer",
   "tsserver",
@@ -54,17 +54,28 @@ local function on_attach(client, bufnr)
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
-    vim.api.nvim_exec([[
+    vim.cmd [[
       highlight! default link LspReferenceText  Visual
       highlight! default link LspReferenceWrite Visual
       highlight! default link LspReferenceRead  Visual
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
+    ]]
+    vim.api.nvim_create_augroup('lsp_document_highlight', {
+      clear = false
+    })
+    vim.api.nvim_clear_autocmds({
+      buffer = bufnr,
+      group = 'lsp_document_highlight',
+    })
+    vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+      group = 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = vim.lsp.buf.document_highlight,
+    })
+    vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+      group = 'lsp_document_highlight',
+      buffer = bufnr,
+      callback = vim.lsp.buf.clear_references,
+    })
   end
 end
 
@@ -271,7 +282,7 @@ local function setup_servers()
 
   lspconfig.pylsp.setup({})
 
-  lspconfig.sumneko_lua.setup({
+  lspconfig.lua_ls.setup({
     settings = lua_settings()
   })
 
@@ -370,16 +381,19 @@ function _G.toggle_diagnostics()
   if vim.g.diagnostics_active then
     vim.g.diagnostics_active = false
     vim.diagnostic.hide()
-    vim.lsp.handlers["textDocument/publishDiagnostics"] = function() end
+    ---@diagnostic disable-next-line: duplicate-set-field
+    vim.lsp.handlers["textDocument/publishDiagnostics"] = function()
+    end
   else
     vim.g.diagnostics_active = true
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = true,
-      signs = true,
-      underline = true,
-      update_in_insert = false,
-    })
+        virtual_text = true,
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+      }
+    )
     vim.diagnostic.show()
   end
 end
