@@ -2,7 +2,7 @@
 # vi: set ft=sh:
 
 if [[ "$(uname)" == "Darwin" ]] && [[ -x "$(command -v brew)" ]]; then
-    PKCS11_LIB="$(brew list -lv1 --formula softhsm | grep libsofthsm2.so)"
+    PKCS11_LIB="$(brew list -lv1 --formula softhsm 2>/dev/null | grep libsofthsm2.so)"
 else
     PKCS11_LIB="$(find /usr/lib -name libsofthsm2.so | head -1)"
 fi
