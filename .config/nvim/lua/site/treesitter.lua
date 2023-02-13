@@ -10,10 +10,11 @@ require('nvim-treesitter.configs').setup {
     "gomod",
     "graphql",
     "lua",
-    "rust",
     "python",
     "ruby",
+    "rust",
     "toml",
+    "vim",
     "yaml"
   },
   ignore_install = { -- List of parsers to ignore installing
