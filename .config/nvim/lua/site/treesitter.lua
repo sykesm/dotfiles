@@ -8,6 +8,8 @@ require('nvim-treesitter.configs').setup {
     "elixir",
     "go",
     "gomod",
+    "gosum",
+    "gowork",
     "graphql",
     "lua",
     "python",

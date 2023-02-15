@@ -54,7 +54,9 @@ Plug 'hashivim/vim-hashicorp-tools'
 Plug 'majutsushi/tagbar'                    " code tree
 Plug 'lewis6991/gitsigns.nvim'              " line markers for git changes
 Plug 'plasticboy/vim-markdown'              " extended markdown
-Plug 'ray-x/go.nvim'                        " go language stuff w/o vim-go
+" ray-x/go.nvim commit 470349c does something weird with defer_fn that clears the
+" screen during startup. It got reverted in cfa1089 and then restored in 1b3d21a.
+Plug 'ray-x/go.nvim', {'commit': 'cfa1089'} " go language stuff w/o vim-go
 Plug 'ray-x/guihua.lua'                     " float term, go.nvim gui support
 Plug 'rust-lang/rust.vim', {'for': 'rust'}  " rust language stuff
 Plug 'folke/neodev.nvim'                    " LSP configuration for nvim lua
