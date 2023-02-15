@@ -1,12 +1,12 @@
-
 " Bootstrap vim-plug if necessary
-if !filereadable(stdpath('data') . '/site/autoload/plug.vim')
-  silent execute '!curl -fLo ' . stdpath('data') . '/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+ endif
 
 " Set mapleader before any mappings that reference it are created.
-let mapleader = ','
+let g:mapleader = ','
 let g:nightflyTransparent = 1
 let g:nightflyUndercurls = 1
 
@@ -66,60 +66,8 @@ Plug 'scrooloose/nerdtree', {'on': ['NERDTreeToggle', 'NERDTreeFind']}
 
 call plug#end()
 
+lua require("options")
 lua require("sykesm")
-
-"=====================================================
-"===================== SETTINGS ======================
-set autoindent                            " always turn on auto indent
-set autoread                              " automatically re-read changed files
-set backspace=indent,eol,start            " allow backspacing over everything in insert mode
-set backup                                " keep a backup file (restore to previous version)
-set cursorline                            " highlight the current line
-set clipboard^=unnamed                    " yank to and paste from the system clipboard by default
-set clipboard^=unnamedplus                " yank to and paste from the system clipboard by default
-set complete-=i                           " don't search included files for completion
-set completeopt=menuone,noinsert,noselect " use popup menu for one or more matches, no selection
-set display+=lastline                     " display as much as possible of the last line
-set expandtab                             " use spaces instead of tabs in insert mode
-set foldmethod=indent                     " syntax highlighting items specify folds
-set foldlevel=20                          " folds with a higher level than this will be closed
-set formatoptions+=r                      " insert the comment leader after enter in insert mode
-set guioptions+=c                         " use console dialogs instead of popups
-set guioptions-=L                         " remove left scrollbar
-set guioptions-=r                         " remove right scrollbar
-set history=1000                          " keep 1000 lines of command line history
-set hlsearch                              " highlight the found search string
-set ignorecase                            " ignore case when matching search string
-set incsearch                             " incremental search
-set laststatus=2                          " always show a status line
-set lazyredraw                            " skip redraw when running macros
-set maxmempattern=20000                   " max memory for highlighting large files
-set modeline                              " support modelines in files
-set modelines=5                           " number of lines checked for set commands
-set mouse=a                               " enable mouse in all modes
-set number                                " turn on line numbers
-set numberwidth=5                         " minimum number columns to use for line number
-set noswapfile                            " disable swap files
-set pumheight=10                          " max size of completion popup
-set ruler                                 " show the cursor position all the time
-set shiftround                            " round indent to a multiple of shiftwidth
-set shiftwidth=4                          " number of spaces to use for each step of autoindent
-set scrolloff=2                           " minimum screen lines to keep above/below cursor
-set shortmess+=c                          " turn off completion messages
-set showcmd                               " display incomplete commands
-set showmatch                             " when bracket is inserted, briefly jump to matching bracket
-set smartcase                             " override ignorecase if search contains an upper case char
-set smartindent                           " smart indenting when starting a new line
-set smarttab                              " insrt blanks on <tab> according to shiftwidth
-set softtabstop=2                         " spaces that a <tab> counts for while editing
-set tabstop=4                             " treat a tab as 4 spaces
-set undofile                              " keep an undo file (undo changes after closing)
-set updatetime=300                        " write to swap after 300ms
-set wildmenu                              " enhanced mode of command line completion
-set wildmode=list:longest                 " tab complete file names and list conflicts for select
-if &encoding =~? 'utf-8'
-  set showbreak=↪
-endif
 
 " Keep vim gemerated artifacts in ~/.vim
 let &backupdir=stdpath('data').'/backups//'
@@ -133,11 +81,6 @@ if !isdirectory(&undodir)   | call mkdir(&undodir, 'p') | endif
 "=====================  Colors  ======================
 " Tell syntax we're using a dark background
 set background=dark
-
-" enable 24 bit colors
-if ($COLORTERM =~ 'truecolor')
-  set termguicolors
-endif
 
 " silent! colorscheme molokai
 " silent! colorscheme hybrid

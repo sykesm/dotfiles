@@ -46,33 +46,27 @@ local function on_attach(client, bufnr)
   buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
-  if client.server_capabilities.document_formatting then
-    buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.server_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+  if client.server_capabilities.documentFormattingProvider then
+    buf_set_keymap("n", "<leader>f", "<cmd>lua vim.lsp.buf.format({ async = true })<CR>", opts)
+  end
+  if client.server_capabilities.documentRangeFormattingProvider then
+    buf_set_keymap("v", "<leader>f", "<cmd>lua vim.lsp.buf.format()<CR>", opts)
   end
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
-    vim.cmd [[
-      highlight! default link LspReferenceText  Visual
-      highlight! default link LspReferenceWrite Visual
-      highlight! default link LspReferenceRead  Visual
-    ]]
-    vim.api.nvim_create_augroup('lsp_document_highlight', {
-      clear = false
-    })
-    vim.api.nvim_clear_autocmds({
-      buffer = bufnr,
-      group = 'lsp_document_highlight',
-    })
+    vim.api.nvim_set_hl(0, 'LspReferenceText', { default = true, link = 'Visual' })
+    vim.api.nvim_set_hl(0, 'LspReferenceRead', { default = true, link = 'Visual' })
+    vim.api.nvim_set_hl(0, 'LspReferenceWrite', { default = true, link = 'Visual' })
+
+    local group = vim.api.nvim_create_augroup("LSPDocumentHighlight", {})
     vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-      group = 'lsp_document_highlight',
+      group = group,
       buffer = bufnr,
       callback = vim.lsp.buf.document_highlight,
     })
     vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-      group = 'lsp_document_highlight',
+      group = group,
       buffer = bufnr,
       callback = vim.lsp.buf.clear_references,
     })
@@ -136,11 +130,14 @@ end
 local function lua_settings()
   return {
     Lua = {
-      workspace = {
-        checkThirdParty = false,
+      format = {
+        enable = false,
       },
       telemetry = {
         enable = false,
+      },
+      workspace = {
+        checkThirdParty = false,
       },
     }
   }
