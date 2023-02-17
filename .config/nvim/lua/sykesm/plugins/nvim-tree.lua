@@ -14,16 +14,23 @@ nvimtree.setup({
   diagnostics = {
     enable = true,
   },
-  -- renderer = {
-  --   icons = {
-  --     glyphs = {
-  --       folder = {
-  --         arrow_closed = "",
-  --         arrow_open = "",
-  --       },
-  --     },
-  --   },
-  -- },
+  actions = {
+    open_file = {
+      window_picker = {
+        enable = true,
+      },
+    },
+  },
+  renderer = {
+    icons = {
+      glyphs = {
+        folder = {
+          arrow_closed = "⏵",
+          arrow_open = "⏷",
+        },
+      },
+    },
+  },
 })
 
 vim.keymap.set('', '<leader>n', ':NvimTreeToggle<cr>', { noremap = true })
