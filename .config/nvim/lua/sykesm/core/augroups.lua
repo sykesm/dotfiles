@@ -41,6 +41,9 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
     if vim.bo[ev.buf].filetype == 'gitcommit' then
       return
     end
+    if vim.bo[ev.buf].filetype == 'NvimTree' then
+      return
+    end
     -- '" is the last position marker
     if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") < vim.fn.line("$") then
       vim.fn.execute('normal! g`"')
