@@ -1,5 +1,6 @@
 require('sykesm.plugins-setup')
 require('sykesm.core.options')
+require('sykesm.core.clipboard')
 require('sykesm.core.keymaps')
 require('sykesm.core.colorscheme')
 require('sykesm.core.highlight')

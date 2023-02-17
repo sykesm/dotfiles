@@ -35,3 +35,5 @@ nvimtree.setup({
 
 vim.keymap.set('', '<leader>n', ':NvimTreeToggle<cr>', { noremap = true })
 vim.keymap.set('', '<F9>', ':NvimTreeFindFile<cr>', { noremap = true })
+
+vim.cmd[[highlight NvimTreeNormal guibg=NONE ctermbg=NONE]]
