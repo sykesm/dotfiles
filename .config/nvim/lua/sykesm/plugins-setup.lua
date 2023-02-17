@@ -58,16 +58,14 @@ packer.startup(function(use)
   use { 'nvim-treesitter/playground', after = 'nvim-treesitter' } -- view treesitter info
   use { 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter' }       -- rainbow parens
 
-  use 'bling/vim-airline'                   -- improved status bar
-  use 'bluz71/vim-nightfly-guicolors'       -- color scheme that supports treesitter
-  use 'vim-airline/vim-airline-themes'      -- color schemes for vim-airline
-  -- use 'nvim-lualine/lualine.nvim' -- Fancier statusline
+  use 'bluz71/vim-nightfly-guicolors'                -- color scheme that supports treesitter
+  use 'nvim-lualine/lualine.nvim'                    -- statusline
 
-  use 'tpope/vim-commentary'                -- extended commenting of blocks and objects
-  use 'tpope/vim-fugitive'                  -- git integration
-  use 'tpope/vim-repeat'                    -- extend '.' to plugin map
-  use 'tpope/vim-surround'                  -- change surrounding quotes and tags
-  use 'lewis6991/gitsigns.nvim'             -- line markers for git changes
+  use 'tpope/vim-commentary'                         -- extended commenting of blocks and objects
+  use 'tpope/vim-fugitive'                           -- git integration
+  use 'tpope/vim-repeat'                             -- extend '.' to plugin map
+  use 'tpope/vim-surround'                           -- change surrounding quotes and tags
+  use 'lewis6991/gitsigns.nvim'                      -- line markers for git changes
   -- use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
 
   use 'andymass/vim-matchup'                         -- extended matching
@@ -92,8 +90,11 @@ packer.startup(function(use)
   use { 'rust-lang/rust.vim', ft = 'rust' }            -- rust stuff
   use { 'elixir-editors/vim-elixir', ft = 'elixir' }   -- elixir stuff
 
-  -- use { 'scrooloose/nerdtree', opt = true, cmd = {'NERDTreeToggle', 'NERDTreeFind'}}
-  use { 'scrooloose/nerdtree', cmd = {'NERDTreeToggle', 'NERDTreeFind'}}
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = { 'nvim-tree/nvim-web-devicons' }, -- optional, for file icons
+    tag = 'nightly',
+  }
 
   if is_bootstrap then
     require('packer').sync()
