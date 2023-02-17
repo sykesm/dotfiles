@@ -38,14 +38,11 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
   group = restore_position,
   pattern = '*',
   callback = function(ev)
-    if vim.bo[ev.buf].filetype == 'gitcommit' then
-      return
-    end
-    if vim.bo[ev.buf].filetype == 'NvimTree' then
+    if string.find(vim.fn.bufname(ev.buf), 'NvimTree_') == 1 then
       return
     end
     -- '" is the last position marker
-    if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") < vim.fn.line("$") then
+    if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
       vim.fn.execute('normal! g`"')
     end
   end,
@@ -53,10 +50,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
 vim.api.nvim_create_autocmd({ 'BufEnter' }, {
   group = restore_position,
   pattern = 'COMMIT_EDITMSG',
-  callback = function(ev)
-    if vim.bo[ev.buf].filetype ~= 'gitcommit' then
-      return
-    end
+  callback = function(_)
     vim.fn.setpos('.', { 0, 1, 1, 0 })
   end,
 })
