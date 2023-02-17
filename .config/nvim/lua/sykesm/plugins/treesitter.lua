@@ -1,7 +1,9 @@
----------------------------------------------------------------------
--- Treesitter
----------------------------------------------------------------------
-require('nvim-treesitter.configs').setup {
+local ts_configs_ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
+if not ts_configs_ok then
+  return
+end
+
+ts_configs.setup {
   ensure_installed = {
     "c",
     "comment",
@@ -12,6 +14,8 @@ require('nvim-treesitter.configs').setup {
     "gowork",
     "graphql",
     "lua",
+    "markdown",
+    "markdown_inline",
     "python",
     "ruby",
     "rust",

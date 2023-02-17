@@ -1,7 +1,12 @@
 -- options.lua
 
+-- set mapleader before any mappings that reference it are created.
+vim.g.mapleader = ','
+
+-- core vim options
 vim.opt.autoindent = true                         -- always turn on auto indent
 vim.opt.autoread = true                           -- automatically re-read changed files
+vim.opt.background = 'dark'                       -- tell syntax we're using a dark background
 vim.opt.backspace = 'indent,eol,start'            -- allow backspacing over everything in insert mode
 vim.opt.backup = true                             -- keep a backup file (restore to previous version)
 vim.opt.cursorline = true                         -- highlight the current line
@@ -44,7 +49,46 @@ if string.find(vim.env.COLORTERM, 'truecolor') then
   vim.opt.termguicolors = true                    -- enable 24 bit colors
 end
 vim.opt.tabstop = 4                               -- treat a tab as 4 spaces
+vim.opt.timeout = true                            -- wait timeoutlen for a key in a mapping
+vim.opt.ttimeout = true                           -- wait tor a TUI keycode character
+vim.opt.ttimeoutlen = 25                          -- wait up to 25ms for a TUI keycode
 vim.opt.undofile = true                           -- keep an undo file (undo changes after closing)
 vim.opt.updatetime = 300                          -- write to swap after 300ms
 vim.opt.wildmenu = true                           -- enhanced mode of command line completion
 vim.opt.wildmode = 'list:longest'                 -- tab complete file names and list conflicts for select
+
+-- keep backups and swaps in one place
+vim.opt.backupdir = vim.fn.stdpath('data')..'/backups//'
+vim.opt.directory = vim.fn.stdpath('data')..'/swaps//'
+vim.opt.undodir   = vim.fn.stdpath('data')..'/undo'
+for _, path in ipairs({ 'backupdir', 'directory', 'undodir' }) do
+  for _, dir in ipairs(vim.opt[path]:get()) do
+    vim.fn.mkdir(dir, 'p')
+  end
+end
+
+-- nightfly color scheme options
+vim.g.nightflyTransparent = 1
+vim.g.nightflyUndercurls = 1
+
+ -- Use tmux buffers instead GUI for clipboard integration when running in tmux.
+ -- If the tmux version is new enough, send copied text to the terminal client
+ -- with OSC 52.
+if vim.fn.empty(vim.env.TMUX) == 0 and vim.fn.executable('tmux') == 1 then
+  local load_command = { 'tmux', 'load-buffer', '-' }
+  if string.find(vim.fn.system('tmux -V'), '3%.[2-9]') ~= nil then
+    load_command = { 'tmux', 'load-buffer', '-w', '-' }
+  end
+  vim.g.clipboard = {
+    name = 'myClipboard',
+    copy = {
+      ['+'] = load_command,
+      ['*'] = load_command,
+    },
+    paste = {
+      ['+'] = { 'tmux', 'save-buffer', '-' },
+      ['*'] = { 'tmux', 'save-buffer', '-' },
+    },
+    cache_enabled = true,
+  }
+end

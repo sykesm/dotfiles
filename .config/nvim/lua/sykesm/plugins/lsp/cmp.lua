@@ -1,3 +1,4 @@
+
 -- compe was deprecated and this is the replacement.
 --
 -- The wiki has some information about getting it to work like supertab
@@ -6,7 +7,10 @@
 -- https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#vim-vsnip has
 -- outlines the configuration if I ever get around to it.
 
-local cmp = require('cmp')
+local cmp_ok, cmp = pcall(require, 'cmp')
+if not cmp_ok then
+  return
+end
 
 local function has_words_before()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
