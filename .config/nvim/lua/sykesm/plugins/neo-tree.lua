@@ -9,4 +9,4 @@ vim.g.neo_tree_remove_legacy_commands = 1
 neo_tree.setup({})
 
 vim.keymap.set('', '<leader>n', ':Neotree toggle<cr>', { noremap = true })
-vim.keymap.set('', '<F9>', ':Neotree file<cr>', { noremap = true })
+vim.keymap.set('', '<F9>', ':Neotree reveal<cr>', { noremap = true })
