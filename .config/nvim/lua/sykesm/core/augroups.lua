@@ -38,7 +38,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
   group = restore_position,
   pattern = '*',
   callback = function(ev)
-    if string.find(vim.fn.bufname(ev.buf), 'NvimTree_') == 1 then
+    if string.find(vim.fn.bufname(ev.buf), 'neo-tree ') == 1 then
       return
     end
     -- '" is the last position marker
