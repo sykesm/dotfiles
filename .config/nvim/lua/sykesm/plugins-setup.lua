@@ -36,16 +36,17 @@ packer.startup(function(use)
     },
   })
 
+  use({ 'L3MON4D3/LuaSnip', tag = 'v<CurrentMajor>.*' }) -- snippets engine
   use({
     'hrsh7th/nvim-cmp', -- auto completion plugin for neovim
     requires = {
       'hrsh7th/cmp-buffer', -- comletion from buffers
       'hrsh7th/cmp-nvim-lsp', -- LSP completion
       'hrsh7th/cmp-path', -- completion from paths
-      'hrsh7th/cmp-vsnip', -- completion from snippets
-      'hrsh7th/vim-vsnip', -- snippets engine required by nvim-cmp
+      'saadparwaiz1/cmp_luasnip', -- completion from snippets
     },
   })
+  use('rafamadriz/friendly-snippets')
   use('ray-x/lsp_signature.nvim') -- provide function signature help
 
   -- Fuzzy Finder (files, lsp, etc)
@@ -73,7 +74,7 @@ packer.startup(function(use)
   use('tpope/vim-repeat') -- extend '.' to plugin map
   use('tpope/vim-surround') -- change surrounding quotes and tags
   use('lewis6991/gitsigns.nvim') -- line markers for git changes
-  -- use 'numToStr/Comment.nvim' -- "gc" to comment visual regions/lines
+  -- use('numToStr/Comment.nvim') -- "gc" to comment visual regions/lines
 
   use('andymass/vim-matchup') -- extended matching
   use({ 'fatih/vim-nginx', ft = 'nginx' }) -- nginx config
@@ -97,7 +98,7 @@ packer.startup(function(use)
   use({ 'rust-lang/rust.vim', ft = 'rust' }) -- rust stuff
   use({ 'jose-elias-alvarez/typescript.nvim' }) -- typescript
   use({ 'jose-elias-alvarez/null-ls.nvim' }) -- typescript formatters & linters
-  use { 'jay-babu/mason-null-ls.nvim' }        -- bridges gap b/w mason & null-ls
+  use({ 'jay-babu/mason-null-ls.nvim' }) -- bridges gap b/w mason & null-ls
 
   use({
     'nvim-neo-tree/neo-tree.nvim',
