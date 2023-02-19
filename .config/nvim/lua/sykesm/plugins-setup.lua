@@ -36,7 +36,7 @@ packer.startup(function(use)
     },
   })
 
-  use({ 'L3MON4D3/LuaSnip', tag = 'v<CurrentMajor>.*' }) -- snippets engine
+  use({ 'L3MON4D3/LuaSnip', tag = 'v1.*' }) -- snippets engine
   use({
     'hrsh7th/nvim-cmp', -- auto completion plugin for neovim
     requires = {
