@@ -10,30 +10,30 @@ if not actions_ok then
   return
 end
 
-telescope.setup {
+telescope.setup({
   defaults = {
     mappings = {
       i = {
-        ["<C-u>"] = false,
-        ["<C-d>"] = false,
-        ["<C-b>"] = actions.preview_scrolling_up,
-        ["<C-f>"] = actions.preview_scrolling_down,
+        ['<C-u>'] = false,
+        ['<C-d>'] = false,
+        ['<C-b>'] = actions.preview_scrolling_up,
+        ['<C-f>'] = actions.preview_scrolling_down,
       },
     },
     vimgrep_arguments = {
       'ag',
       '--vimgrep',
     },
-    prompt_prefix = "> ",
-    selection_caret = "> ",
-    entry_prefix = "  ",
-    initial_mode = "insert",
-    selection_strategy = "reset",
-    sorting_strategy = "descending",
-    layout_strategy = "horizontal",
+    prompt_prefix = '> ',
+    selection_caret = '> ',
+    entry_prefix = '  ',
+    initial_mode = 'insert',
+    selection_strategy = 'reset',
+    sorting_strategy = 'descending',
+    layout_strategy = 'horizontal',
     layout_config = {
       preview_cutoff = 120,
-      prompt_position = "bottom",
+      prompt_position = 'bottom',
       width = 0.75,
       horizontal = {
         mirror = false,
@@ -57,24 +57,24 @@ telescope.setup {
     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
 
     -- Developer configurations: Not meant for general override
-    buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker
+    buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
   },
-  extensions = {
-  }
-}
+  extensions = {},
+})
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
 vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
 vim.keymap.set('n', '<leader>/', function()
-  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+  require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown({
     winblend = 10,
     previewer = false,
-  })
+  }))
 end, { desc = '[/] Fuzzy search in current buffer]' })
 
-vim.keymap.set('n', '<C-p>', function() require('telescope.builtin').find_files({ hidden = false }) end,
-  { desc = 'Ctrl-P' })
+vim.keymap.set('n', '<C-p>', function()
+  require('telescope.builtin').find_files({ hidden = false })
+end, { desc = 'Ctrl-P' })
 
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })

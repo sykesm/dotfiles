@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
   group = highlight_yank,
   pattern = '*',
   callback = function()
-    vim.highlight.on_yank({timeout=100})
+    vim.highlight.on_yank({ timeout = 100 })
   end,
 })
 
@@ -42,7 +42,7 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
       return
     end
     -- '" is the last position marker
-    if vim.fn.line("'\"") > 0 and vim.fn.line("'\"") <= vim.fn.line("$") then
+    if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
       vim.fn.execute('normal! g`"')
     end
   end,

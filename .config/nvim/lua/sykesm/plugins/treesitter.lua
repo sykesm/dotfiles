@@ -3,35 +3,34 @@ if not ts_configs_ok then
   return
 end
 
-ts_configs.setup {
+ts_configs.setup({
   ensure_installed = {
-    "c",
-    "comment",
-    "elixir",
-    "go",
-    "gomod",
-    "gosum",
-    "gowork",
-    "graphql",
-    "lua",
-    "markdown",
-    "markdown_inline",
-    "python",
-    "ruby",
-    "rust",
-    "toml",
-    "vim",
-    "yaml"
+    'c',
+    'comment',
+    'elixir',
+    'go',
+    'gomod',
+    'gosum',
+    'gowork',
+    'graphql',
+    'javascript',
+    'lua',
+    'markdown',
+    'markdown_inline',
+    'python',
+    'ruby',
+    'rust',
+    'toml',
+    'typescript',
+    'vim',
+    'yaml',
   },
   ignore_install = { -- List of parsers to ignore installing
-    "javascript",
   },
   highlight = {
     enable = true, -- false will disable the whole extension
     additional_vim_regex_highlighting = false,
-    disable = { -- list of languages to disabled
-      "elixir",
-    },
+    -- disable = {}, -- list of languages to disable
   },
   indent = {
     enable = false,
@@ -48,20 +47,20 @@ ts_configs.setup {
   query_linter = {
     enable = true,
     use_virtual_text = true,
-    lint_events = { "BufWrite", "CursorHold" },
+    lint_events = { 'BufWrite', 'CursorHold' },
   },
   rainbow = {
     enable = true,
     extended_mode = true,
     max_file_lines = 10000,
     colors = {
-      "#fc514e",
-      "#a1cd5e",
-      "#e3d18a",
-      "#82aaff",
-      "#c792ea",
-      "#7fdbca",
-      "#a1aab8",
+      '#fc514e',
+      '#a1cd5e',
+      '#e3d18a',
+      '#82aaff',
+      '#c792ea',
+      '#7fdbca',
+      '#a1aab8',
     },
   },
   textobjects = {
@@ -70,48 +69,48 @@ ts_configs.setup {
     lsp_interop = {
       enable = true,
       peek_definition_code = {
-        ["<leader>df"] = "@function.outer",
-        ["<leader>dF"] = "@class.outer"
-      }
+        ['<leader>df'] = '@function.outer',
+        ['<leader>dF'] = '@class.outer',
+      },
     },
     move = {
       enable = true,
       set_jumps = true, -- whether to set jumps in the jumplist
       goto_next_start = {
-        ["]m"] = "@function.outer",
-        ["]]"] = "@class.outer",
+        [']m'] = '@function.outer',
+        [']]'] = '@class.outer',
       },
       goto_next_end = {
-        ["]M"] = "@function.outer",
-        ["]["] = "@class.outer",
+        [']M'] = '@function.outer',
+        [']['] = '@class.outer',
       },
       goto_previous_start = {
-        ["[m"] = "@function.outer",
-        ["[["] = "@class.outer",
+        ['[m'] = '@function.outer',
+        ['[['] = '@class.outer',
       },
       goto_previous_end = {
-        ["[M"] = "@function.outer",
-        ["[]"] = "@class.outer",
+        ['[M'] = '@function.outer',
+        ['[]'] = '@class.outer',
       },
     },
     select = {
       enable = true,
       lookahead = true,
       keymaps = {
-        ["af"] = "@function.outer",
-        ["if"] = "@function.inner",
-        ["ac"] = "@class.outer",
-        ["ic"] = "@class.inner",
+        ['af'] = '@function.outer',
+        ['if'] = '@function.inner',
+        ['ac'] = '@class.outer',
+        ['ic'] = '@class.inner',
       },
     },
     swap = {
       enable = true,
       swap_next = {
-        ["<leader>a"] = "@parameter.inner",
+        ['<leader>a'] = '@parameter.inner',
       },
       swap_previous = {
-        ["<leader>A"] = "@parameter.inner",
+        ['<leader>A'] = '@parameter.inner',
       },
     },
   },
-}
+})

@@ -1,4 +1,3 @@
-
 -- compe was deprecated and this is the replacement.
 --
 -- The wiki has some information about getting it to work like supertab
@@ -55,7 +54,7 @@ local function cmp_mapping()
   return mapping
 end
 
-cmp.setup {
+cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noinsert,noselect',
   },
@@ -72,4 +71,4 @@ cmp.setup {
     { name = 'path' },
     { name = 'vsnip' },
   },
-}
+})

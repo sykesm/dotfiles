@@ -1,69 +1,26 @@
 -- servers.lua - LSP server configurations
 
-local serverConfigs = {
+local server_configs = {
   bashls = {},
   cssls = {},
   dockerls = {},
-  efm = {
-    filetypes = { 'elixir', 'sh' },
-    init_options = {
-      documentFormatting = true,
-      codeAction = true,
-    },
-    settings = {
-      rootMarkers = { '.git/' },
-      languages = {
-        sh = {
-          {
-            lintCommand = 'shellcheck -f gcc -x',
-            lintSource = 'shellcheck',
-            lintFormats = {
-              '%f:%l:%c: %trror: %m',
-              '%f:%l:%c: %tarning: %m',
-              '%f:%l:%c: %tote: %m',
-            },
-          },
-        },
-        elixir = {
-          {
-            lintCommand = 'MIX_ENV=test mix credo suggest --format=flycheck --read-from-stdin ${INPUT}',
-            rootMarkers = {
-              'mix.lock',
-              'mix.exs',
-            },
-            lintStdin = true,
-            lintFormats = {
-              '%f:%l:%c: %t: %m',
-              '%f:%l: %t: %m',
-            },
-            lintCategoryMap = {
-              ['R'] = 'H', -- hint
-              ['D'] = 'I', -- info
-              ['F'] = 'E', -- error
-              ['W'] = 'W', -- warning
-            },
-          },
-        },
-      },
-    },
-  },
   emmet_ls = {
     filetypes = {
-      "css",
-      "html",
-      "less",
-      "sass",
-      "scss",
-      "svelte",
+      'css',
+      'html',
+      'less',
+      'sass',
+      'scss',
+      'svelte',
     },
   },
   gopls = {
-    cmd = { "gopls", "-remote.debug=:0" }, -- share the gopls instance if there is one already
+    cmd = { 'gopls', '-remote.debug=:0' }, -- share the gopls instance if there is one already
     filetypes = {
-      "go",
-      "gomod",
-      "gohtmltmpl",
-      "gotexttmpl",
+      'go',
+      'gomod',
+      'gohtmltmpl',
+      'gotexttmpl',
     },
     settings = {
       gopls = {
@@ -84,9 +41,9 @@ local serverConfigs = {
         directoryFilters = {}, -- []string
         gofumpt = true,
         staticcheck = true, -- experimental
-        vulncheck = "Imports",
+        vulncheck = 'Imports',
         -- ['local'] = "",
-      }
+      },
     },
   },
   html = {},
@@ -101,19 +58,19 @@ local serverConfigs = {
   },
   rust_analyzer = {
     settings = {
-      ["rust-analyzer"] = {
+      ['rust-analyzer'] = {
         assist = {
-          importMergeBehavior = "last",
-          importPrefix = "by_self",
+          importMergeBehavior = 'last',
+          importPrefix = 'by_self',
         },
         cargo = {
           loadOutDirsFromCheck = true,
         },
         checkOnSave = {
-          command = "clippy",
+          command = 'clippy',
         },
         diagnostics = {
-          disabled = { "unresolved-import" },
+          disabled = { 'unresolved-import' },
         },
         lens = {
           enable = false, -- Revisit if https://github.com/simrat39/rust-tools.nvim gets configured.
@@ -122,39 +79,45 @@ local serverConfigs = {
           enabled = true,
         },
       },
-    }
+    },
   },
   tailwindcss = {},
   terraformls = {},
-  tsserver = {},
+  tsserver = function(config)
+    local typescript_ok, typescript = pcall(require, 'typescript')
+    if not typescript_ok then
+      return
+    end
+    typescript.setup({ debug = false, server = config })
+  end,
   vimls = {},
   yamlls = {
     settings = {
       redhat = {
-        telemetry = { enabled = false }
+        telemetry = { enabled = false },
       },
       yaml = {
         completion = true,
         format = { enable = true },
         hover = true,
         schemas = {
-          ["https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.25.6-standalone-strict/all.json"] = "deploy/**/*.yaml",
+          ['https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.25.6-standalone-strict/all.json'] = 'deploy/**/*.yaml',
         },
         schemaStore = {
           enable = false,
-          url = "https://www.schemastore.org/api/json/catalog.json",
+          url = 'https://www.schemastore.org/api/json/catalog.json',
         },
-        trace = { server = "debug" },
+        trace = { server = 'debug' },
         validate = true,
-      }
-    }
+      },
+    },
   },
 }
 
 local M = {}
 
 function M.servers()
-  return serverConfigs
+  return server_configs
 end
 
 return M

@@ -6,5 +6,5 @@ if not lsp_signature_ok then
 end
 
 lsp_signature.setup({
-  hint_prefix = "¦ ",
+  hint_prefix = '¦ ',
 })

@@ -9,10 +9,10 @@ vim.g.vim_markdown_strikethrough = 1
 vim.g.vim_markdown_toml_frontmatter = 1
 
 vim.g.vim_markdown_fenced_languages = {
-  "bash=sh",
-  "c++=cpp",
-  "go=go",
-  "ini=dosini",
-  "rust=rust",
-  "viml=viml",
+  'bash=sh',
+  'c++=cpp',
+  'go=go',
+  'ini=dosini',
+  'rust=rust',
+  'viml=viml',
 }
