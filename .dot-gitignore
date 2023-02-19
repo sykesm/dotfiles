@@ -8,6 +8,7 @@
 /.bundle/
 /.cache/
 /.cargo/
+/.config/nvim/plugin/packer_compiled.lua
 /.dotfiles/
 /.gem/
 /.gotools/
