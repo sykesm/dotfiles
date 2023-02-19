@@ -29,6 +29,14 @@ end
 --
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
 -- https://github.com/neovim/nvim-lspconfig/issues/115#issuecomment-849865673
+--
+-- The following looked like a promising method because it uses the
+-- builtin client to invoke the code action but it kept doing weird changes
+-- to the buffer.
+--
+-- vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+--
+-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
 ---------------------------------------------------------------------
 function _G.organize_imports(timeout_ms)
   local params = vim.lsp.util.make_range_params()
