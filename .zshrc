@@ -78,7 +78,7 @@ plugins=(
     git
     golang
     grc
-    rbenv
+    kubectl
 )
 
 source "$ZSH/oh-my-zsh.sh"
