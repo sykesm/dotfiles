@@ -2,7 +2,7 @@
 
 # add $HOME/bin if not already on the path
 if [[ ! ":$PATH:" == *":$HOME/bin:"* ]]; then
-    export PATH="$HOME/bin:$PATH"
+    export PATH="$PATH:$HOME/bin"
 fi
 
 # add /usr/local/sbin if not already on the path

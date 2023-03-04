@@ -5,11 +5,13 @@
 if [[ "$(uname)" == "Darwin" ]] && [[ -x "$(command -v brew)" ]]; then
     gnu_libexec="$(brew --prefix)/opt/coreutils/libexec"
     if [ -d "$gnu_libexec" ]; then
-        export PATH="$gnu_libexec/gnubin:$PATH"
+        if [[ ! ":$PATH:" == *":$gnu_libexec/gnubin:"* ]]; then
+            export PATH="$gnu_libexec/gnubin:$PATH"
+        fi
         alias ls='ls --color=auto'
         if [ -z "$MANPATH" ]; then
             export MANPATH="$gnu_libexec/gnuman"
-        else
+        elif [[ ! ":$MANPATH:" == *":$gnu_libexec/gnuman:"* ]]; then
             export MANPATH="$gnu_libexec/gnuman:$MANPATH"
         fi
     fi
