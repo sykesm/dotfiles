@@ -1,0 +1,16 @@
+#!/bin/bash
+
+default_image="ubuntu:22.04"
+
+# An example of starting a container to do linux-go stuff
+# docker run --privileged --rm -it -v $PWD:/workspace/$(basename $PWD) -e GOPATH=/go -w /workspace golang:1.11.4-alpine3.7 /bin/sh
+\docker run \
+    --privileged \
+    --rm \
+    -it \
+    -e TERM="$TERM" \
+    -e LANG="$LANG" \
+    -v "$PWD:/workspace/$(basename "$PWD")" \
+    -w "/workspace/$(basename "$PWD")" \
+    "${1:-$default_image}" \
+    "${2:-/bin/bash}"
