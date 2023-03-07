@@ -25,5 +25,8 @@ neo_tree.setup({
 vim.keymap.set('', '<leader>n', ':Neotree toggle<cr>', { noremap = true })
 vim.keymap.set('', '<F9>', ':Neotree reveal<cr>', { noremap = true })
 
+local title_fg = string.format('#%06x', vim.api.nvim_get_hl_by_name('BufferVisible', true)['foreground'])
+
 vim.cmd([[highlight NeoTreeNormal guibg=NONE ctermbg=NONE]])
 vim.cmd([[highlight! link NeoTreeDotfile NonText]])
+vim.cmd([[highlight NeoTreeTitleBar guifg=]] .. title_fg)
