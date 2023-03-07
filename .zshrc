@@ -65,13 +65,16 @@ DISABLE_MAGIC_FUNCTIONS=true
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM="$HOME/.oh-my-zsh-custom"
 
+if [[ -e "$ZSH_CUSTOM/plugins/custom-paths" ]]; then
+    source "$ZSH_CUSTOM/plugins/custom-paths/custom-paths.plugin.zsh"
+fi
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    custom-paths
     direnv
     docker
     gcloud

@@ -62,14 +62,22 @@ if (( $+commands[grc] )); then
         wdiff
         whois
     )
+    gnu_cmds=(
+        stat
+    )
 
-  # Set alias for available commands.
-  for cmd in ${cmds[@]}; do
-      if (( $+commands[$cmd] )) && [[ "$(whence -w $cmd)" == *"command"* ]]; then
-          alias $cmd="grc --colour=auto $cmd"
-      fi
-  done
+    # Set alias for available commands.
+    for cmd in ${cmds[@]}; do
+        if (( $+commands[$cmd] )) && [[ "$(whence -w $cmd)" == *"command"* ]]; then
+            alias $cmd="grc --colour=auto $cmd"
+        fi
+    done
+    for cmd in ${gnu_cmds[@]}; do
+        if (( $+commands[g$cmd] )) && [[ "$(whence -w g$cmd)" == *"command"* ]]; then
+            alias $cmd="grc --colour=auto g$cmd"
+        fi
+    done
 
-  # Clean up variables
-  unset cmds cmd
+    # Clean up variables
+    unset cmds cmd gnu_cmds
 fi
