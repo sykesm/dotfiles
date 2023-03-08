@@ -7,6 +7,11 @@ case $- in
     *) return;;
 esac
 
+# Source proxy environment if present
+if [ -f "${HOME}/.proxy" ]; then
+    source "${HOME}/.proxy"
+fi
+
 # Path to the bash it configuration
 export BASH_IT="$HOME/.bash_it"
 
