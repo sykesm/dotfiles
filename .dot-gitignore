@@ -14,7 +14,9 @@
 /.gotools/
 /.kube/
 /.local/
+/.m2/
 /.npm/
+/.nvm/
 /.oh-my-zsh/
 /.rbenv/
 /.rustup/
@@ -24,7 +26,9 @@
 /.vim/backups/
 /.vim/plugged/
 /.vim/undo/
+/.vscode/
 /.zcompdump*
+/.zsh_history
 /.zsh_sessions/
 /.zsh-syntax-highlighting/
 /Applications/
