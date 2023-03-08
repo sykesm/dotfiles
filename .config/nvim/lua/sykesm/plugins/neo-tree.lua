@@ -17,6 +17,15 @@ neo_tree.setup({
     window = {
       mappings = {
         ['C'] = 'set_root',
+        ['o'] = {
+          command = function(state)
+            if vim.fn.has('macunix') then
+              local node = state.tree:get_node()
+              vim.cmd('silent! !open file://' .. node.path)
+            end
+          end,
+          nowait = true,
+        },
       },
     },
   },
