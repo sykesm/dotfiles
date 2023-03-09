@@ -3,7 +3,7 @@
 #    tic -x tmux-256color to compile
 tmux-256color|tmux with 256 colors,
 	OTbs, OTpt, am, hs, km, mir, msgr, xenl, AX, G0,
-	colors#0x100, cols#80, it#8, lines#24, pairs#0x10000, U8#1,
+	colors#256, cols#80, it#8, lines#24, pairs#32767, U8#1,
 	acsc=++\,\,--..00``aaffgghhiijjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
 	bel=^G, blink=\E[5m, bold=\E[1m, cbt=\E[Z, civis=\E[?25l,
 	clear=\E[H\E[J, cnorm=\E[34h\E[?25h, cr=\r,
