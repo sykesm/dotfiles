@@ -9,6 +9,7 @@ vim.g.neo_tree_remove_legacy_commands = 1
 neo_tree.setup({
   window = {
     mappings = {
+      ['/'] = 'noop',
       ['l'] = 'noop',
       ['Z'] = 'expand_all_nodes',
     },
