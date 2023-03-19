@@ -47,6 +47,7 @@ local server_configs = {
     },
   },
   html = {},
+  jdtls = function(_) end, -- Java setup is done out of the file type plugin
   lua_ls = {
     settings = {
       Lua = {
@@ -114,10 +115,4 @@ local server_configs = {
   },
 }
 
-local M = {}
-
-function M.servers()
-  return server_configs
-end
-
-return M
+return server_configs

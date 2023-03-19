@@ -95,6 +95,7 @@ packer.startup(function(use)
     commit = 'cfa1089',
   })
 
+  use({ 'mfussenegger/nvim-jdtls' }) -- Java LSP extensions
   use({ 'rust-lang/rust.vim', ft = 'rust' }) -- rust stuff
   use({ 'jose-elias-alvarez/typescript.nvim' }) -- typescript
   use({ 'jose-elias-alvarez/null-ls.nvim' }) -- typescript formatters & linters
