@@ -42,12 +42,12 @@ packer.startup(function(use)
     requires = {
       'hrsh7th/cmp-buffer', -- comletion from buffers
       'hrsh7th/cmp-nvim-lsp', -- LSP completion
+      'hrsh7th/cmp-nvim-lsp-signature-help', -- LSP signature information
       'hrsh7th/cmp-path', -- completion from paths
       'saadparwaiz1/cmp_luasnip', -- completion from snippets
     },
   })
   use('rafamadriz/friendly-snippets')
-  use('ray-x/lsp_signature.nvim') -- provide function signature help
 
   -- Fuzzy Finder (files, lsp, etc)
   use({ 'nvim-telescope/telescope.nvim', branch = '0.1.x', requires = { 'nvim-lua/plenary.nvim' } })
