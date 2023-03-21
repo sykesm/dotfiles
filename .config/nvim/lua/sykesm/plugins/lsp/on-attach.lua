@@ -14,39 +14,56 @@ end
 local lsp_doc_highlight_group = vim.api.nvim_create_augroup('LSPDocumentHighlight', {})
 
 local function on_attach(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  local function buf_set_keymap(...)
-    vim.api.nvim_buf_set_keymap(bufnr, ...)
+  -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  local keymap = function(mode, keys, func, desc)
+    if desc then
+      desc = 'LSP: ' .. desc
+    end
+    vim.keymap.set(mode, keys, func, { buffer = bufnr, desc = desc })
+  end
+
+  local tsb_ok, tsb = pcall(require, 'telescope.builtin')
+  if not tsb_ok then
+    tsb = nil
   end
 
   -- Mappings.
-  local opts = { noremap = true, silent = true }
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', 'gh', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('v', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', '<leader>cr', '<cmd>lua vim.lsp.codelens.run()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<leader>ll', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-  buf_set_keymap('n', '<leader>qf', '<cmd>lua vim.diagnostic.setqflist()<CR>', opts)
+  keymap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
+  keymap('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+  keymap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
+  keymap('n', 'gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+  keymap('n', '<leader>si', vim.lsp.buf.signature_help, '[S][i]gnature Help')
+  keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  keymap('n', '<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+  keymap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+  keymap('n', '<leader>cr', vim.lsp.codelens.run, '[C]odelens [R]un')
+  if tsb then
+    keymap('n', 'gr', tsb.lsp_references, '[G]oto [R]eferences')
+  else
+    keymap('n', 'gr', vim.lsp.buf.references, '[G]oto [R]eferences')
+  end
+  keymap('n', '<leader>e', vim.diagnostic.open_float, '[E]rrors')
+  keymap('n', '[d', vim.diagnostic.goto_prev, 'Previous [D]iagnostic')
+  keymap('n', ']d', vim.diagnostic.goto_next, 'Next [D]iagnostic')
+  keymap('n', '<leader>ll', vim.diagnostic.setloclist, 'Set [L]ocation [L]ist')
+  keymap('n', '<leader>qf', vim.diagnostic.setqflist, 'Set [Q]uick [F]ix List')
 
-  buf_set_keymap('n', '<leader>so', [[<cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>]], opts)
-  buf_set_keymap('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<leader>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  if tsb then
+    keymap('n', '<leader>ds', tsb.lsp_document_symbols, '[D]ocument [S]ymbols')
+    keymap('n', '<leader>ws', tsb.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  end
+
+  keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+  keymap('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+  keymap('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, '[W]orkspace [List] Folders')
 
   -- Set some keybinds conditional on server capabilities
   if client.server_capabilities.documentFormattingProvider then
-    buf_set_keymap('n', '<leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+    keymap('n', '<leader>f', vim.lsp.buf.format, '[F]ormat')
     vim.api.nvim_clear_autocmds({ group = lsp_format_group, buffer = bufnr })
     vim.api.nvim_create_autocmd('BufWritePre', {
       group = lsp_format_group,
@@ -57,7 +74,7 @@ local function on_attach(client, bufnr)
     })
   end
   if client.server_capabilities.documentRangeFormattingProvider then
-    buf_set_keymap('v', '<leader>f', '<cmd>lua vim.lsp.buf.format()<CR>', opts)
+    keymap('v', '<leader>f', vim.lsp.buf.format, '[F]ormat')
   end
 
   -- Set autocommands conditional on server_capabilities
