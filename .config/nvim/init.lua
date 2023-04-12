@@ -9,7 +9,7 @@ require('sykesm.plugins.cmp')
 require('sykesm.plugins.gitsigns')
 require('sykesm.plugins.go-nvim')
 require('sykesm.plugins.lsp')
-require('sykesm.plugins.lualine') -- https://github.com/nvim-lualine/lualine.nvim/issues/773
+require('sykesm.plugins.lualine')
 require('sykesm.plugins.neo-tree')
 require('sykesm.plugins.nvim-telescope')
 require('sykesm.plugins.tagbar')
