@@ -82,7 +82,7 @@ cmp.setup({
   }),
 })
 
-cmp.setup.filetype({ 'markdown' }, {
+cmp.setup.filetype({ 'markdown', 'gitcommit' }, {
   sources = {
     { name = 'path' },
     { name = 'buffer' },
