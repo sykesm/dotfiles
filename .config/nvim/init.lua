@@ -1,3 +1,5 @@
+vim.opt.shortmess:append({ I = true }) -- avoid flashing intro screen bugs
+
 require('sykesm.plugins-setup')
 require('sykesm.core.options')
 require('sykesm.core.clipboard')

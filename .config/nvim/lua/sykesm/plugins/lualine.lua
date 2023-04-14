@@ -27,7 +27,7 @@ end
 
 lualine.setup({
   options = {
-    section_separators = { left = '', right = '' }, -- https://github.com/nvim-lualine/lualine.nvim/issues/773
+    -- section_separators = { left = '', right = '' }, -- https://github.com/nvim-lualine/lualine.nvim/issues/773
     disabled_filetypes = {},
     refresh = {
       statusline = 200,

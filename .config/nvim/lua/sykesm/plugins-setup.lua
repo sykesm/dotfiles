@@ -92,7 +92,6 @@ packer.startup(function(use)
   use({
     'ray-x/go.nvim', -- go language stuff w/o vim-go
     requires = { 'ray-x/guihua.lua' }, -- float term, go.nvim gui support
-    commit = 'cfa1089',
   })
 
   use({ 'mfussenegger/nvim-jdtls' }) -- Java LSP extensions
