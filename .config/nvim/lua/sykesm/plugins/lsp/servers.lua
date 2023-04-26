@@ -41,6 +41,10 @@ local server_configs = {
         directoryFilters = {}, -- []string
         gofumpt = true,
         staticcheck = true, -- experimental
+        templateExtensions = {
+          '.gotexttmpl',
+          '.gohtmltmpl',
+        },
         vulncheck = 'Imports',
         -- ['local'] = "",
       },
