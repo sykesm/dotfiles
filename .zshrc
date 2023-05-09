@@ -106,7 +106,8 @@ if [ -d "${HOME}/.krew/bin" ]; then
     export PATH="${PATH}:${HOME}/.krew/bin"
 fi
 
-unsetopt share_history          # keep terminal histories separate
-bindkey \^U backward-kill-line  # default is to kill the whole line
-LESS="-FRX"                     # ANSI colors, no termcap init, quit one screen
-PROMPT_EOL_MARK=''              # disable terminal mark on msising newline
+unsetopt share_history             # keep terminal histories separate
+bindkey '^U' backward-kill-line    # default is to kill the whole line
+bindkey '^[^M' self-insert-unmeta  # meta-return newline without enter
+LESS="-FRX"                        # ANSI colors, no termcap init, quit one screen
+PROMPT_EOL_MARK=''                 # disable terminal mark on msising newline
