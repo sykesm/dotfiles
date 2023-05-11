@@ -1,7 +1,12 @@
 -- diagnostics.lua
 
 -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#change-diagnostic-symbols-in-the-sign-column-gutter
-local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+local signs = {
+  Error = '󰅚 ', -- close_circle_outline
+  Warn = '󰀪 ', -- alert_outline
+  Hint = '󰌶 ', -- lightbulb_outline
+  Info = ' ', -- nf-oct-info
+}
 for type, icon in pairs(signs) do
   local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
