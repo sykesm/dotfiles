@@ -775,6 +775,78 @@ schemes:
       cyan:    '#7fdbca'
       white:   '#d6deeb'
 
+  monokai_charcoal: &monokai_charcoal
+    primary:
+      background: '#000000'
+      foreground: '#FFFFFF'
+    normal:
+      black:   '#1a1a1a'
+      red:     '#f4005f'
+      green:   '#98e024'
+      yellow:  '#fa8419'
+      blue:    '#9d65ff'
+      magenta: '#f4005f'
+      cyan:    '#58d1eb'
+      white:   '#c4c5b5'
+    bright:
+      black:   '#625e4c'
+      red:     '#f4005f'
+      green:   '#98e024'
+      yellow:  '#e0d561'
+      blue:    '#9d65ff'
+      magenta: '#f4005f'
+      cyan:    '#58d1eb'
+      white:   '#f6f6ef'
+
+  monokai_pro: &monokai_pro
+    primary:
+      background: '0x2D2A2E'
+      foreground: '0xfff1f3'
+    normal:
+      black:   '0x2c2525'
+      red:     '0xfd6883'
+      green:   '0xadda78'
+      yellow:  '0xf9cc6c'
+      blue:    '0xf38d70'
+      magenta: '0xa8a9eb'
+      cyan:    '0x85dacc'
+      white:   '0xfff1f3'
+    bright:
+      black:   '0x72696a'
+      red:     '0xfd6883'
+      green:   '0xadda78'
+      yellow:  '0xf9cc6c'
+      blue:    '0xf38d70'
+      magenta: '0xa8a9eb'
+      cyan:    '0x85dacc'
+      white:   '0xfff1f3'
+
+  moonlight_ii_vscode: &moonlight_ii_vscode
+    primary:
+      background: '0x1e2030'
+      foreground: '0x7f85a3'
+    cursor:
+      text:   '0x7f85a3'
+      cursor: '0x808080'
+    normal:
+      black:   '0x444a73'
+      red:     '0xff5370'
+      green:   '0x4fd6be'
+      yellow:  '0xffc777'
+      blue:    '0x3e68d7'
+      magenta: '0xfc7b7b'
+      cyan:    '0x86e1fc'
+      white:   '0xd0d0d0'
+    bright:
+      black:   '0x828bb8'
+      red:     '0xff98a4'
+      green:   '0xc3e88d'
+      yellow:  '0xffc777'
+      blue:    '0x82aaff'
+      magenta: '0xff966c'
+      cyan:    '0xb4f9f8'
+      white:   '0x5f8787'
+
   nord: &nord
     primary:
       background: '0x2E3440'

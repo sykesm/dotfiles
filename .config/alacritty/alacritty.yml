@@ -14,7 +14,7 @@ bell:
   duration: 10
   animation: EaseOutExpo
 window:
-  opacity: 0.9
+  opacity: 0.95
 key_bindings:
   - { key: F,      mods: Command|Control, action: ToggleFullscreen }
   - { key: Q,      mods: Control, chars: "\x11" }
