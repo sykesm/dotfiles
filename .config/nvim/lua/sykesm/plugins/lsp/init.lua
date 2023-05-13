@@ -6,6 +6,7 @@ vim.api.nvim_set_hl(0, 'LspReferenceWrite', { default = true, link = 'Visual' })
 
 require('sykesm.plugins.lsp.neodev')
 require('sykesm.plugins.lsp.mason')
+require('sykesm.plugins.lsp.mason-nvim-dap')
 
 require('sykesm.plugins.lsp.diagnostics')
 require('sykesm.plugins.lsp.fidget')

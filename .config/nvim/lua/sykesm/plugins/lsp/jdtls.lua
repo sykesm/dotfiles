@@ -53,6 +53,25 @@ local function java_runtimes()
   return runtimes
 end
 
+local function jdt_bundles()
+  local mason_registry_ok, mason_registry = pcall(require, 'mason-registry')
+  if not mason_registry_ok then
+    return {}
+  end
+
+  local bundles = {}
+  for _, package in ipairs({ 'java-debug-adapter', 'java-test' }) do
+    if mason_registry.is_installed(package) then
+      local install_dir = mason_registry.get_package(package):get_install_path()
+      for jar in vim.fn.glob(install_dir .. '/**/*.jar'):gmatch('[^\r\n]+') do
+        table.insert(bundles, jar)
+      end
+    end
+  end
+
+  return bundles
+end
+
 -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
 local function config()
   local jdtls_ok, _ = pcall(require, 'jdtls')
@@ -68,6 +87,7 @@ local function config()
     on_attach = function(client, bufnr)
       require('sykesm.plugins.lsp.on-attach')(client, bufnr)
       require('jdtls.setup').add_commands()
+      require('jdtls').setup_dap({ hotcodereplace = 'auto' })
     end,
     capabilities = require('sykesm.plugins.lsp.capabilities').create(),
     root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
@@ -123,6 +143,9 @@ local function config()
           runtimes = java_runtimes(),
         },
       },
+    },
+    init_options = {
+      bundles = jdt_bundles(),
     },
   }
 end

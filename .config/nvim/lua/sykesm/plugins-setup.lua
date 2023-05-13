@@ -84,6 +84,7 @@ packer.startup(function(use)
 
   -- playing around with dap/debug
   use('mfussenegger/nvim-dap')
+  use('jay-babu/mason-nvim-dap.nvim')
   use('rcarriga/nvim-dap-ui')
   use('theHamsta/nvim-dap-virtual-text')
 
