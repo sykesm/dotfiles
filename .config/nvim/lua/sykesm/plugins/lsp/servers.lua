@@ -1,6 +1,7 @@
 -- servers.lua - LSP server configurations
 
 local server_configs = {
+  angularls = {},
   bashls = {},
   cssls = {},
   dockerls = {},
