@@ -88,10 +88,9 @@ packer.startup(function(use)
   use('rcarriga/nvim-dap-ui')
   use('theHamsta/nvim-dap-virtual-text')
 
-  -- ray-x/go.nvim commit 470349c does something weird with defer_fn that clears the
-  -- screen during startup. It got reverted in cfa1089 and then restored in 1b3d21a.
+  -- go language stuff w/o vim-go
   use({
-    'ray-x/go.nvim', -- go language stuff w/o vim-go
+    'ray-x/go.nvim',
     requires = { 'ray-x/guihua.lua' }, -- float term, go.nvim gui support
   })
 
