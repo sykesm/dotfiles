@@ -8,6 +8,7 @@ ts_configs.setup({
     'c',
     'comment',
     'elixir',
+    'glimmer',
     'go',
     'gomod',
     'gosum',
