@@ -86,8 +86,8 @@ local function config()
     },
     on_attach = function(client, bufnr)
       require('sykesm.plugins.lsp.on-attach')(client, bufnr)
-      require('jdtls.setup').add_commands()
       require('jdtls').setup_dap({ hotcodereplace = 'auto' })
+      require('jdtls.setup').add_commands()
     end,
     capabilities = require('sykesm.plugins.lsp.capabilities').create(),
     root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
