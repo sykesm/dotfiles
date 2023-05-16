@@ -72,6 +72,37 @@ local function jdt_bundles()
   return bundles
 end
 
+local function save_modified()
+  if vim.bo.modified then
+    vim.cmd('w')
+  end
+end
+
+local function jdtls_on_attach(client, bufnr)
+  require('sykesm.plugins.lsp.on-attach')(client, bufnr)
+
+  local jdtls = require('jdtls')
+  jdtls.setup_dap({ hotcodereplace = 'auto' })
+  jdtls.setup.add_commands()
+
+  local keymap = function(mode, keys, func, desc)
+    if desc then
+      desc = 'jdtls: ' .. desc
+    end
+    vim.keymap.set(mode, keys, func, { buffer = bufnr, silent = true, desc = desc })
+  end
+
+  keymap('n', '<leader>tc', function()
+    save_modified()
+    jdtls.test_class()
+  end, '[T]est [C]lass')
+
+  keymap('n', '<leader>tn', function()
+    save_modified()
+    jdtls.test_nearest_method()
+  end, '[T]est [N]earest Method')
+end
+
 -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
 local function config()
   local jdtls_ok, _ = pcall(require, 'jdtls')
@@ -84,11 +115,7 @@ local function config()
     cmd_env = {
       JAVA_HOME = java_home_macos(),
     },
-    on_attach = function(client, bufnr)
-      require('sykesm.plugins.lsp.on-attach')(client, bufnr)
-      require('jdtls').setup_dap({ hotcodereplace = 'auto' })
-      require('jdtls.setup').add_commands()
-    end,
+    on_attach = jdtls_on_attach,
     capabilities = require('sykesm.plugins.lsp.capabilities').create(),
     root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
     settings = {
