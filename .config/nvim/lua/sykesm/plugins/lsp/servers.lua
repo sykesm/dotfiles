@@ -13,6 +13,7 @@ local server_configs = {
       'sass',
       'scss',
       'svelte',
+      'typescript',
     },
   },
   gopls = {

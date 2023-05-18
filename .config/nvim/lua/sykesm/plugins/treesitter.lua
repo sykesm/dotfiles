@@ -6,6 +6,7 @@ end
 ts_configs.setup({
   ensure_installed = {
     'c',
+    'css',
     'comment',
     'elixir',
     'glimmer',
@@ -14,6 +15,7 @@ ts_configs.setup({
     'gosum',
     'gowork',
     'graphql',
+    'html',
     'java',
     'javascript',
     'json',
@@ -25,6 +27,7 @@ ts_configs.setup({
     'ruby',
     'rust',
     'sql',
+    'query',
     'toml',
     'typescript',
     'vim',
