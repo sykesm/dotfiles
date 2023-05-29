@@ -26,6 +26,8 @@ end
 packer.startup(function(use)
   use('wbthomason/packer.nvim')
 
+  use('ojroques/nvim-osc52') -- OSC 52 clipboard utilities and commands
+
   use({
     'neovim/nvim-lspconfig', -- common config for builtin LSP client
     requires = {
