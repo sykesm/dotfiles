@@ -33,7 +33,7 @@ packer.startup(function(use)
     requires = {
       'williamboman/mason.nvim', -- installer for LSPs (and more)
       'williamboman/mason-lspconfig.nvim', -- mason extensions for LSPs
-      'j-hui/fidget.nvim', -- Useful status updates for LSP
+      { 'j-hui/fidget.nvim', { tag = 'legacy' } }, -- Useful status updates for LSP
       'folke/neodev.nvim', -- LSP config for nvim lua
     },
   })
