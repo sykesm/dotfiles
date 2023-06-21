@@ -28,7 +28,7 @@ packer.startup(function(use)
 
   use('ojroques/nvim-osc52') -- OSC 52 clipboard utilities and commands
 
-  use({ 'j-hui/fidget.nvim', tag = 'legacy' }) -- Useful status updates for LSP
+  use({ 'j-hui/fidget.nvim', branch = 'legacy' }) -- Useful status updates for LSP
   use({
     'neovim/nvim-lspconfig', -- common config for builtin LSP client
     requires = {
