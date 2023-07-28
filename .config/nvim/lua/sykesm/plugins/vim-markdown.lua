@@ -14,5 +14,6 @@ vim.g.vim_markdown_fenced_languages = {
   'go=go',
   'ini=dosini',
   'rust=rust',
+  'ts=typescript',
   'viml=viml',
 }
