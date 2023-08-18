@@ -1,7 +1,11 @@
 -- jdtls.lua
 
 local function shell_error()
-  return vim.v.shell_error ---@diagnostic disable-line: undefined-field
+  return vim.v.shell_error
+end
+
+local function root_dir()
+  return vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1])
 end
 
 local function java_home_macos(version)
@@ -41,6 +45,7 @@ local function java_runtimes()
     { name = 'JavaSE-17', version = 17 },
     { name = 'JavaSE-18', version = 18 },
     { name = 'JavaSE-19', version = 19 },
+    { name = 'JavaSE-20', version = 20 },
   }
 
   local runtimes = {}
@@ -82,8 +87,10 @@ local function jdtls_on_attach(client, bufnr)
   require('sykesm.plugins.lsp.on-attach')(client, bufnr)
 
   local jdtls = require('jdtls')
-  jdtls.setup_dap({ hotcodereplace = 'auto' })
-  jdtls.setup.add_commands()
+  jdtls.setup_dap({
+    hotcodereplace = 'auto',
+    config_overrides = {},
+  })
 
   local keymap = function(mode, keys, func, desc)
     if desc then
@@ -117,14 +124,13 @@ local function config()
     },
     on_attach = jdtls_on_attach,
     capabilities = require('sykesm.plugins.lsp.capabilities').create(),
-    root_dir = vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1]),
+    root_dir = root_dir(),
     settings = {
       java = {
         signatureHelp = { enabled = true },
         contentProvider = { preferred = 'fernflower' },
-        eclipse = {
-          downloadSources = true,
-        },
+        eclipse = { downloadSources = true },
+        format = { enabled = true },
         maven = { downloadSources = true },
         implementationsCodeLens = { enabled = true },
         referencesCodeLens = { enabled = true },
@@ -133,6 +139,7 @@ local function config()
           parameterNames = { enabled = 'all' }, -- literals, all, none
         },
         completion = {
+          enabled = true,
           favoriteStaticMembers = {
             'org.hamcrest.MatcherAssert.assertThat',
             'org.hamcrest.Matchers.*',
