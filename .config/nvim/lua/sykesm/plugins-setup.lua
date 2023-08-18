@@ -67,7 +67,6 @@ packer.startup(function(use)
   })
   use({ 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' })
   use({ 'nvim-treesitter/playground', after = 'nvim-treesitter' }) -- view treesitter info
-  use({ 'p00f/nvim-ts-rainbow', after = 'nvim-treesitter' }) -- rainbow parens
 
   use('bluz71/vim-nightfly-guicolors') -- color scheme that supports treesitter
   use('nvim-lualine/lualine.nvim') -- statusline
