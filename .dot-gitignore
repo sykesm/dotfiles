@@ -44,3 +44,5 @@
 /go/pkg/
 /projects/
 /workspace/
+
+**/spell/*.add.spl
