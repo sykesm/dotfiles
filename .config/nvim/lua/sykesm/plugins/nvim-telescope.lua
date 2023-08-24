@@ -34,7 +34,7 @@ telescope.setup({
     layout_config = {
       preview_cutoff = 120,
       prompt_position = 'bottom',
-      width = 0.75,
+      width = 0.80,
       horizontal = {
         mirror = false,
       },
@@ -45,7 +45,13 @@ telescope.setup({
     file_sorter = require('telescope.sorters').get_fuzzy_file,
     file_ignore_patterns = {},
     generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
-    path_display = {}, -- was "shorten"
+    path_display = {
+      shorten = {
+        len = 2,
+        exclude = { -1 },
+      },
+      truncate = true,
+    },
     winblend = 0,
     border = {},
     borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
@@ -60,6 +66,14 @@ telescope.setup({
     buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
   },
   extensions = {},
+  pickers = {
+    grep_string = { disable_coordinates = true },
+    live_grep = { disable_coordinates = true },
+
+    lsp_references = { fname_width = 40 },
+    lsp_document_symbols = { fname_width = 40 },
+    lsp_dynamic_workspace_symbols = { fname_width = 40 },
+  },
 })
 
 -- See `:help telescope.builtin`
