@@ -32,6 +32,7 @@ local server_configs = {
           nilness = true,
           shadow = false,
           unusedparams = true,
+          S1016 = false, -- https://staticcheck.dev/docs/checks/#S1016
         },
         buildFlags = {}, -- []string
         codelenses = {
