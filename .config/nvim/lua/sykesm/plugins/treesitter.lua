@@ -3,6 +3,7 @@ if not ts_configs_ok then
   return
 end
 
+---@diagnostic disable-next-line missing-fields
 ts_configs.setup({
   ensure_installed = {
     'c',

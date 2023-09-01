@@ -61,7 +61,9 @@ local function cmp_mapping()
   return mapping
 end
 
+---@diagnostic disable-next-line missing-fields
 cmp.setup({
+  ---@diagnostic disable-next-line missing-fields
   completion = {
     completeopt = 'menu,menuone,noinsert,noselect',
   },
@@ -82,6 +84,7 @@ cmp.setup({
   }),
 })
 
+---@diagnostic disable-next-line missing-fields
 cmp.setup.filetype({ 'markdown', 'gitcommit' }, {
   sources = {
     { name = 'path' },
