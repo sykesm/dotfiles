@@ -1,8 +1,21 @@
-Kubernetes
-GitLab
-DigitalOcean
+## Compile this with :mkspell! %
+/encoding=utf-8
+
 Ansible
-ansible
+DigitalOcean
 Ethereum
-WebSphere
+GitLab
 GraphQL
+Kubernetes
+WebSphere/?
+ansible
+config
+graphql/=
+json
+subgraph
+subgraphs
+supergraph
+supergraphs
+yaml
+yml
+JWT

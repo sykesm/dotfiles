@@ -46,6 +46,7 @@ vim.opt.smartindent = true                        -- smart indenting when starti
 vim.opt.smarttab = true                           -- insrt blanks on <tab> according to shiftwidth
 vim.opt.softtabstop = 2                           -- spaces that a <tab> counts for while editing
 vim.opt.spelllang = 'en_us'                       -- default to US English
+vim.opt.spelloptions = 'camel,noplainbuffer'      -- on syntax highlighting enabled, check camel case as separate words
 if string.find(vim.env.COLORTERM or '', 'truecolor') then
   vim.opt.termguicolors = true                    -- enable 24 bit colors
 end

@@ -67,6 +67,13 @@ packer.startup(function(use)
   })
   use({ 'nvim-treesitter/nvim-treesitter-textobjects', after = 'nvim-treesitter' })
   use({ 'nvim-treesitter/playground', after = 'nvim-treesitter' }) -- view treesitter info
+  use({
+    'sykesm/nvim-treesitter-angular', -- fork of nvim-treesitter/nvim-treesitter-angular
+    -- branch = 'patched',
+    branch = 'vim-match-injection',
+    after = 'nvim-treesitter',
+    -- run = ':TSUpdate angular',
+  })
 
   use('bluz71/vim-nightfly-guicolors') -- color scheme that supports treesitter
   use('nvim-lualine/lualine.nvim') -- statusline
