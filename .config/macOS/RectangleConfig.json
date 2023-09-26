@@ -264,13 +264,25 @@
       "keyCode" : 46,
       "modifierFlags" : 1835008
     },
+    "maximizeHeight" : {
+      "keyCode" : 126,
+      "modifierFlags" : 917504
+    },
+    "nextDisplay" : {
+      "keyCode" : 124,
+      "modifierFlags" : 1966080
+    },
+    "previousDisplay" : {
+      "keyCode" : 123,
+      "modifierFlags" : 1966080
+    },
     "reflowTodo" : {
       "keyCode" : 45,
       "modifierFlags" : 786432
     },
     "restore" : {
-      "keyCode" : 51,
-      "modifierFlags" : 786432
+      "keyCode" : 15,
+      "modifierFlags" : 1835008
     },
     "rightHalf" : {
       "keyCode" : 124,
