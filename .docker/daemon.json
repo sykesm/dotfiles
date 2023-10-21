@@ -15,8 +15,5 @@
       "size": 24
     }
   ],
-  "experimental": false,
-  "features": {
-    "buildkit": true
-  }
+  "experimental": false
 }
