@@ -101,6 +101,7 @@ packer.startup(function(use)
   use({ 'jose-elias-alvarez/typescript.nvim' }) -- typescript
   use({ 'jose-elias-alvarez/null-ls.nvim' }) -- typescript formatters & linters
   use({ 'jay-babu/mason-null-ls.nvim' }) -- bridges gap b/w mason & null-ls
+  use({ 'towolf/vim-helm' }) -- sane helm highlighting
 
   use({
     'nvim-neo-tree/neo-tree.nvim',

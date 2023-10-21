@@ -100,6 +100,17 @@ local server_configs = {
   end,
   vimls = {},
   yamlls = {
+    handlers = {
+      ['textDocument/publishDiagnostics'] = vim.lsp.with(function(_, result, ctx, config)
+        local uri = result.uri
+        local fname = vim.uri_to_fname(uri)
+        local bufnr = vim.fn.bufadd(fname)
+        if vim.bo[bufnr].filetype == 'helm' then
+          result.diagnostics = {}
+        end
+        vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
+      end, {}),
+    },
     settings = {
       redhat = {
         telemetry = { enabled = false },
