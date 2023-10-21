@@ -34,6 +34,7 @@
 [push]
 	default = current
 	recurseSubmodules = on-demand
+	followTags = true
 [status]
 	submoduleSummary = true
 [submodule]
