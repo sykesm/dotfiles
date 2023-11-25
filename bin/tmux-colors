@@ -1,6 +1,6 @@
 #!/bin/bash
 
 for i in {0..255} ; do
-    printf "\x1b[38;5;%dmcolour%-5i\x1b[0m" "${i}" "${i}"
+    printf "\x1b[38;5;%dmcolor%-5i\x1b[0m" "${i}" "${i}"
     (( (i+1) % 8 )) || echo
 done
