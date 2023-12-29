@@ -1,0 +1,29 @@
+# argonaut
+
+[colors.bright]
+black = "0x6d7070"
+blue = "0x1ba6fa"
+cyan = "0x73fbf1"
+green = "0xb8e466"
+magenta = "0xa578ea"
+red = "0xff4352"
+white = "0xfefef8"
+yellow = "0xffd750"
+
+[colors.cursor]
+cursor = "0xff261e"
+text = "0xff261e"
+
+[colors.normal]
+black = "0x0d0d0d"
+blue = "0x1ba6fa"
+cyan = "0x21deef"
+green = "0xa0e521"
+magenta = "0x8763b8"
+red = "0xff301b"
+white = "0xebebeb"
+yellow = "0xffc620"
+
+[colors.primary]
+background = "0x292c3e"
+foreground = "0xebebeb"

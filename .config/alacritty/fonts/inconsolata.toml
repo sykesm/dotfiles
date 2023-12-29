@@ -1,0 +1,12 @@
+# inconsolata
+
+[font]
+size = 14
+
+[font.bold]
+family = "InconsolataGo Nerd Font"
+style = "Bold"
+
+[font.normal]
+family = "InconsolataGo Nerd Font"
+style = "Regular"

@@ -1,0 +1,25 @@
+# ayu_dark
+
+[colors.bright]
+black = "0x686868"
+blue = "0x59c2ff"
+cyan = "0x95e6cb"
+green = "0xc2d94c"
+magenta = "0xffee99"
+red = "0xf07178"
+white = "0xffffff"
+yellow = "0xffb454"
+
+[colors.normal]
+black = "0x01060e"
+blue = "0x53bdfa"
+cyan = "0x90e1c6"
+green = "0x91b362"
+magenta = "0xfae994"
+red = "0xea6c73"
+white = "0xc7c7c7"
+yellow = "0xf9af4f"
+
+[colors.primary]
+background = "0x0a0e14"
+foreground = "0xb3b1ad"

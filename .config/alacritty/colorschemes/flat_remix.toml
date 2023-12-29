@@ -1,0 +1,25 @@
+# flat_remix
+
+[colors.bright]
+black = "0x1f2229"
+blue = "0x367bf0"
+cyan = "0x49aee6"
+green = "0x5ebdab"
+magenta = "0xbf2e5d"
+red = "0xd41919"
+white = "0xffffff"
+yellow = "0xfea44c"
+
+[colors.normal]
+black = "0x1f2229"
+blue = "0x277fff"
+cyan = "0x05a1f7"
+green = "0x47d4b9"
+magenta = "0xd71655"
+red = "0xec0101"
+white = "0xffffff"
+yellow = "0xff8a18"
+
+[colors.primary]
+background = "0x272a34"
+foreground = "0xffffff"

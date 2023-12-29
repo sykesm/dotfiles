@@ -1,0 +1,90 @@
+live_config_reload = true
+
+import = [
+  "~/.config/alacritty/colorschemes/nightfly.toml",
+  "~/.config/alacritty/fonts/jetbrains-mono.toml",
+]
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[bell]
+animation = "EaseOutExpo"
+duration = 10
+
+[cursor.style]
+shape = "block"
+
+[env]
+LC_TERMINAL = "alacritty"
+TERM = "xterm-256color"
+TERM_PROGRAM = "alacritty"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = "F"
+mods = "Command|Control"
+
+[[keyboard.bindings]]
+chars = "\u0011"
+key = "Q"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "\u001B0"
+key = "Key0"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B1"
+key = "Key1"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B2"
+key = "Key2"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B3"
+key = "Key3"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B4"
+key = "Key4"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B5"
+key = "Key5"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B6"
+key = "Key6"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B7"
+key = "Key7"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B8"
+key = "Key8"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B9"
+key = "Key9"
+mods = "Alt"
+
+[[keyboard.bindings]]
+chars = "\u001B\r"
+key = "Return"
+mods = "Alt"
+
+[window]
+blur = true
+opacity = 0.90

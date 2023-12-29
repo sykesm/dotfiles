@@ -1,0 +1,12 @@
+# fira-code-mono
+
+[font]
+size = 12
+
+[font.bold]
+family = "FiraCode Nerd Font Mono"
+style = "Bold"
+
+[font.normal]
+family = "FiraCode Nerd Font Mono"
+style = "Regular"

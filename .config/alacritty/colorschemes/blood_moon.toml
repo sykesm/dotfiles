@@ -1,0 +1,25 @@
+# blood_moon
+
+[colors.bright]
+black = "0x696969"
+blue = "0x007fff"
+cyan = "0x00cccc"
+green = "0x03c03c"
+magenta = "0xff1493"
+red = "0xff2400"
+white = "0xfffafa"
+yellow = "0xfdff00"
+
+[colors.normal]
+black = "0x10100e"
+blue = "0x0087bd"
+cyan = "0x20b2aa"
+green = "0x009f6b"
+magenta = "0x9a4eae"
+red = "0xc40233"
+white = "0xc6c6c4"
+yellow = "0xffd700"
+
+[colors.primary]
+background = "0x10100e"
+foreground = "0xc6c6c4"

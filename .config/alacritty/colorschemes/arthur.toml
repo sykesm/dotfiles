@@ -1,0 +1,32 @@
+# arthur
+
+[colors.bright]
+black = "0x685655"
+blue = "0x96d7ef"
+cyan = "0xbdcfe4"
+green = "0x98b52c"
+magenta = "0xaa7800"
+red = "0xd76a41"
+white = "0xe3d5c7"
+yellow = "0xffb56f"
+
+[colors.cursor]
+cursor = "0xe8c9f2"
+
+[colors.normal]
+black = "0x4e4437"
+blue = "0x76a8f0"
+cyan = "0xbdcfe4"
+green = "0x96bb92"
+magenta = "0xe5c498"
+red = "0xd8726e"
+white = "0xc7b8a9"
+yellow = "0xedbb6d"
+
+[colors.primary]
+background = "0x252525"
+foreground = "0xe3f0e3"
+
+[colors.selection]
+background = "0xfeffff"
+text = "0x5f5f5f"
