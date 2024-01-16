@@ -32,6 +32,7 @@ ts_configs.setup({
     'toml',
     'typescript',
     'vim',
+    'vimdoc',
     'yaml',
   },
   ignore_install = { -- List of parsers to ignore installing
@@ -40,7 +41,7 @@ ts_configs.setup({
     enable = true, -- false will disable the whole extension
     additional_vim_regex_highlighting = false,
     disable = {
-      'markdown',
+      'markdown', -- TS highlighting is good but very slow
     },
   },
   indent = {

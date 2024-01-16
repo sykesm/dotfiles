@@ -46,6 +46,7 @@ local function java_runtimes()
     { name = 'JavaSE-18', version = 18 },
     { name = 'JavaSE-19', version = 19 },
     { name = 'JavaSE-20', version = 20 },
+    { name = 'JavaSE-21', version = 21 },
   }
 
   local runtimes = {}
