@@ -39,6 +39,8 @@
 	submoduleSummary = true
 [submodule]
 	fetchJobs = 0
+[tag]
+	sort = v:refname
 [url "git@github.com:"]
 	pushInsteadOf = https://github.com/
 [user]
