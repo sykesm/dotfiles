@@ -3,7 +3,7 @@
 -- space clears search string highlighting
 vim.keymap.set('n', '<space>', ':nohl<cr><space>', { noremap = true, silent = true })
 
--- shrug ¯\_(ツ)_/¯ - ctrl-o<leader>s while in insert mode
+-- shrug ¯\_(ツ)_/¯ - ctrl-o<leader>S while in insert mode
 vim.keymap.set('n', '<leader>S', 'i¯\\_(ツ)_/¯<esc>', { noremap = true })
 
 -- make Y consistent with C and D
