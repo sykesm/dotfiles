@@ -1,1 +1,1 @@
-autocmd BufNewFile,BufRead Jenkinsfile,Jenkinsfile* setl filetype=groovy
+autocmd BufNewFile,BufRead Jenkinsfile,Jenkinsfile*,*.Jenkinsfile setl filetype=groovy

@@ -1,2 +1,2 @@
 " vim: ft=vim
-autocmd BufNewFile,BufRead Dockerfile,Dockerfile.* setl filetype=dockerfile
+autocmd BufNewFile,BufRead Dockerfile,Dockerfile.*,Dockerfile-* setl filetype=dockerfile
