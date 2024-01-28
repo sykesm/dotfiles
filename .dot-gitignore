@@ -2,13 +2,15 @@
 # sorted by `sort -f`
 
 .DS_Store
-/.Trash/
 /.bash_it/
 /.bash_sessions/
 /.bundle/
 /.cache/
 /.cargo/
+/.cocoapods/
 /.config/nvim/plugin/packer_compiled.lua
+/.docker/buildx/
+/.docker/scout/
 /.dotfiles/
 /.gem/
 /.gotools/
@@ -20,29 +22,33 @@
 /.oh-my-zsh/
 /.rbenv/
 /.rustup/
+/.stratum/registry
 /.tmux/plugins/
 /.tokens/
+/.Trash/
 /.vagrant.d/
 /.vim/backups/
 /.vim/plugged/
 /.vim/undo/
 /.vscode/
 /.zcompdump*
+/.zsh-syntax-highlighting/
 /.zsh_history
 /.zsh_sessions/
-/.zsh-syntax-highlighting/
 /Applications/
 /Desktop/
 /Documents/
 /Downloads/
+/go/bin/
+/go/pkg/
 /Library/
 /Movies/
 /Music/
+/OneDrive*
 /Pictures/
-/Public/
-/go/bin/
-/go/pkg/
 /projects/
+/Public/
+/tmp/
 /workspace/
 
 **/spell/*.add.spl
