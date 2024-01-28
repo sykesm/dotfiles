@@ -65,7 +65,11 @@ telescope.setup({
     -- Developer configurations: Not meant for general override
     buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
   },
-  extensions = {},
+  extensions = {
+    ['ui-select'] = {
+      require('telescope.themes').get_dropdown({}),
+    },
+  },
   pickers = {
     grep_string = { disable_coordinates = true },
     live_grep = { disable_coordinates = true },
@@ -75,6 +79,8 @@ telescope.setup({
     lsp_dynamic_workspace_symbols = { fname_width = 40 },
   },
 })
+
+telescope.load_extension('ui-select')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
