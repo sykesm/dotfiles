@@ -8,6 +8,17 @@ local function root_dir()
   return vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1])
 end
 
+local function java_format_settings()
+  local settings = vim.fn.expand('~/.config/java-format/eclipse-java-google-style.xml')
+  if vim.fn.filereadable(settings) then
+    return {
+      profile = 'GoogleStyle',
+      url = settings,
+    }
+  end
+  return nil
+end
+
 local function java_home_macos(version)
   local java_home = '/usr/libexec/java_home'
   if not vim.fn.has('macunix') then
@@ -131,7 +142,10 @@ local function config()
         signatureHelp = { enabled = true },
         contentProvider = { preferred = 'fernflower' },
         eclipse = { downloadSources = true },
-        format = { enabled = true },
+        format = {
+          enabled = true,
+          settings = java_format_settings(),
+        },
         maven = { downloadSources = true },
         implementationsCodeLens = { enabled = true },
         referencesCodeLens = { enabled = true },
