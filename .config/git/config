@@ -1,6 +1,6 @@
 [alias]
 	branch = branch -vv
-	# ci = duet-commit
+	ca = commit --amend
 	ci = commit -s
 	co = checkout
 	flog = log --pretty=fuller --decorate
@@ -9,6 +9,7 @@
 	lol = log --graph --decorate --oneline
 	lol = log --graph --decorate --pretty=oneline --abbrev-commit
 	lola = log --graph --decorate --oneline --all
+	mono = !git config core.fsmonitor true && git config core.untrackedcache true
 	st = status
 	untracked = ls-files --others --exclude-standard
 [color]
