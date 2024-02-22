@@ -50,3 +50,6 @@
 	prereleaseSuffix = -alpha
 	prereleaseSuffix = -beta
 	prereleaseSuffix = -rc
+[rerere]
+	enabled = true
+	autoUpdate = true
