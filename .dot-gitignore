@@ -16,7 +16,8 @@
 /.gotools/
 /.kube/
 /.local/
-/.m2/
+/.m2/build-cache/
+/.m2/repository/
 /.npm/
 /.nvm/
 /.oh-my-zsh/
