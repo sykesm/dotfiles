@@ -160,7 +160,7 @@ local function config()
         contentProvider = { preferred = 'fernflower' },
         eclipse = { downloadSources = true },
         format = {
-          enabled = true,
+          enabled = false,
           settings = java_format_settings(),
         },
         maven = { downloadSources = true },
