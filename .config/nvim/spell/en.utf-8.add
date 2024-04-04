@@ -19,3 +19,6 @@ supergraphs
 yaml
 yml
 JWT
+statsd
+noop
+subgraph
