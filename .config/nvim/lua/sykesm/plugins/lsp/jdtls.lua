@@ -5,7 +5,7 @@ local function shell_error()
 end
 
 local function root_dir()
-  return vim.fs.dirname(vim.fs.find({ 'gradlew', '.git', 'mvnw' }, { upward = true })[1])
+  return vim.fs.dirname(vim.fs.find({ 'pom.xml', 'gradlew', '.git', 'mvnw' }, { upward = true })[1])
 end
 
 local function java_format_settings()
@@ -70,6 +70,15 @@ local function java_runtimes()
   return runtimes
 end
 
+local function jdtls_install_path()
+  local mason_registry_ok, mason_registry = pcall(require, 'mason-registry')
+  if not mason_registry_ok then
+    return {}
+  end
+
+  return mason_registry.get_package('jdtls'):get_install_path()
+end
+
 local function jdt_bundles()
   local mason_registry_ok, mason_registry = pcall(require, 'mason-registry')
   if not mason_registry_ok then
@@ -96,6 +105,10 @@ local function save_modified()
 end
 
 local function jdtls_on_attach(client, bufnr)
+  -- Disable if these get to be expensive
+  -- client.server_capabilities.semanticTokensProvider = nil
+  -- client.server_capabilities.documentHighlightProvider = nil
+
   require('sykesm.plugins.lsp.on-attach')(client, bufnr)
 
   local jdtls = require('jdtls')
@@ -129,8 +142,12 @@ local function config()
     return {}
   end
 
+  local lombok = string.format('--jvm-arg=-javaagent:%s', jdtls_install_path() .. '/lombok.jar')
+  local cmd = require('lspconfig').jdtls.document_config.default_config.cmd
+  table.insert(cmd, lombok)
+
   return {
-    cmd = require('lspconfig').jdtls.document_config.default_config.cmd,
+    cmd = cmd,
     cmd_env = {
       JAVA_HOME = java_home_macos(),
     },

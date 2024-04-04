@@ -8,7 +8,6 @@ ts_configs.setup({
   ensure_installed = {
     'c',
     'css',
-    'comment',
     'elixir',
     'glimmer',
     'go',
@@ -36,12 +35,14 @@ ts_configs.setup({
     'yaml',
   },
   ignore_install = { -- List of parsers to ignore installing
+    'comment', -- Experiment to see how this chages rendering
   },
   highlight = {
     enable = true, -- false will disable the whole extension
     additional_vim_regex_highlighting = false,
     disable = {
       'markdown', -- TS highlighting is good but very slow
+      'comment', -- Experiment to see how this chages rendering
     },
   },
   indent = {
