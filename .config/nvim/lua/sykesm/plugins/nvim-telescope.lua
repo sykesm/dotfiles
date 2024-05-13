@@ -45,9 +45,10 @@ telescope.setup({
     file_sorter = require('telescope.sorters').get_fuzzy_file,
     file_ignore_patterns = {},
     generic_sorter = require('telescope.sorters').get_generic_fuzzy_sorter,
+    dynamic_preview_title = true,
     path_display = {
       shorten = {
-        len = 2,
+        len = 3,
         exclude = { -1 },
       },
       truncate = true,
