@@ -41,7 +41,6 @@ ts_configs.setup({
     enable = true, -- false will disable the whole extension
     additional_vim_regex_highlighting = false,
     disable = {
-      'markdown', -- TS highlighting is good but very slow
       'comment', -- Experiment to see how this chages rendering
     },
   },
