@@ -1,8 +1,12 @@
 #!/bin/bash
 
 # Quick test of which attributes a terminal can display.
+echo -e "\033[1mbold\033[0m"
+echo -e "\033[2mfaint\033[0m"
+echo -e "\033[3mitalic\033[0m"
 echo -e "\033[4munderline\033[0m"
 echo -e "\033[4:3mundercurl\033[0m"
-echo -e "\033[1mbold\033[0m"
-echo -e "\033[3mitalic\033[0m"
+echo -e "\033[5mslow blink\033[0m"
+echo -e "\033[6mrapid blink\033[0m"
+echo -e "\033[7mreverse\033[0m"
 echo -e "\033[9mstrikethrough\033[0m"
