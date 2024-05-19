@@ -34,7 +34,7 @@ local server_configs = {
           unusedparams = true,
           S1016 = false, -- https://staticcheck.dev/docs/checks/#S1016
         },
-        buildFlags = {}, -- []string
+        buildFlags = {}, -- example: { '-tags=unit' }
         codelenses = {
           gc_details = false, -- Show a code lens toggling the display of gc's choices.
           generate = true, -- show the `go generate` lens.
