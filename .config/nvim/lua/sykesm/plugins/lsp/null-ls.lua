@@ -5,7 +5,6 @@ if not null_ls_ok then
 end
 
 null_ls.setup({
-  -- on_attach = null_ls_on_attach,
   sources = {
     null_ls.builtins.formatting.stylua,
   },

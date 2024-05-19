@@ -5,4 +5,4 @@ if not fidget_ok then
   return
 end
 
-fidget.setup()
+fidget.setup({})
