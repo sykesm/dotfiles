@@ -18,7 +18,7 @@ local function regal_path()
   }
 
   for _, cp in ipairs(custom_paths) do
-    if vim.fn.executable(cp) then
+    if vim.fn.executable(cp) ~= 0 then
       return cp
     end
   end
