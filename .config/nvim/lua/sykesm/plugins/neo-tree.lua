@@ -18,6 +18,14 @@ neo_tree.setup({
         unstaged = '󰄱',
       },
     },
+    diagnostics = {
+      symbols = {
+        hint = '󰌶', -- lightbulb_outline
+        info = '', -- nf-oct-info
+        warn = '󰀪', -- alert_outline
+        error = '󰅚', -- close_circle_outline
+      },
+    },
   },
   document_symbols = {
     kinds = {
@@ -39,11 +47,17 @@ neo_tree.setup({
       StaticMethod = { icon = '󰠄 ', hl = 'Function' },
     },
   },
-  window = {
-    mappings = {
-      ['/'] = 'noop',
-      ['l'] = 'noop',
-      ['Z'] = 'expand_all_nodes',
+  sources = {
+    'filesystem',
+    'buffers',
+    'git_status',
+    'document_symbols',
+  },
+  source_selector = {
+    sources = {
+      { source = 'filesystem' },
+      { source = 'buffers' },
+      { source = 'document_symbols' },
     },
   },
   filesystem = {
@@ -63,6 +77,13 @@ neo_tree.setup({
           nowait = true,
         },
       },
+    },
+  },
+  window = {
+    mappings = {
+      ['/'] = 'noop',
+      ['l'] = 'noop',
+      ['Z'] = 'expand_all_nodes',
     },
   },
 })
