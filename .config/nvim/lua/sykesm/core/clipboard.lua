@@ -23,33 +23,19 @@ if vim.fn.empty(vim.env.TMUX) == 0 and vim.fn.executable('tmux') == 1 then
   return
 end
 
-local osc52_ok, osc52 = pcall(require, 'osc52')
-if osc52_ok then
-  osc52.setup({ silent = true })
-end
-
 -- Copy over SSH uses OSC 52 but paste is from the local register.
-if vim.fn.empty(vim.env.SSH_CLIENT) == 0 and osc52_ok then
-  local function copy(lines, _)
-    osc52.copy(table.concat(lines, '\n'))
-  end
-
-  local function paste()
-    return {
-      vim.fn.split(vim.fn.getreg(''), '\n'),
-      vim.fn.getregtype(''),
-    }
-  end
-
+if vim.fn.empty(vim.env.SSH_TTY) == 0 then
+  -- check for support?
+  -- https://github.com/neovim/neovim/pull/26064/files#diff-776616fe246164a7a47bb8dcca8edfcdc1d00c3a3525badb93547dde5341ffbc
   vim.g.clipboard = {
-    name = 'osc52-clipboard',
+    name = 'OSC 52',
     copy = {
-      ['+'] = copy,
-      ['*'] = copy,
+      ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
     },
     paste = {
-      ['+'] = paste,
-      ['*'] = paste,
+      ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
+      ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
     },
   }
   return

@@ -26,8 +26,6 @@ end
 packer.startup(function(use)
   use('wbthomason/packer.nvim')
 
-  use('ojroques/nvim-osc52') -- OSC 52 clipboard utilities and commands
-
   use({ 'j-hui/fidget.nvim', tag = 'v1.2.0' }) -- Useful status updates for LSP
   use({
     'neovim/nvim-lspconfig', -- common config for builtin LSP client
@@ -72,12 +70,10 @@ packer.startup(function(use)
   use('bluz71/vim-nightfly-guicolors') -- color scheme that supports treesitter
   use('nvim-lualine/lualine.nvim') -- statusline
 
-  use('tpope/vim-commentary') -- extended commenting of blocks and objects
   use('tpope/vim-fugitive') -- git integration
   use('tpope/vim-repeat') -- extend '.' to plugin map
   use('tpope/vim-surround') -- change surrounding quotes and tags
   use('lewis6991/gitsigns.nvim') -- line markers for git changes
-  -- use('numToStr/Comment.nvim') -- "gc" to comment visual regions/lines
 
   use('andymass/vim-matchup') -- extended matching
   use({ 'fatih/vim-nginx', ft = 'nginx' }) -- nginx config
