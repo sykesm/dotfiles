@@ -144,7 +144,9 @@ local function config()
 
   local lombok = string.format('--jvm-arg=-javaagent:%s', jdtls_install_path() .. '/lombok.jar')
   local cmd = require('lspconfig').jdtls.document_config.default_config.cmd
-  table.insert(cmd, lombok)
+  if not vim.list_contains(cmd, lombok) then
+    table.insert(cmd, lombok)
+  end
 
   return {
     cmd = cmd,
@@ -216,10 +218,15 @@ local function config()
   }
 end
 
+local jdtls_config = nil
+
 local M = {}
 
 function M.config()
-  return config()
+  if jdtls_config == nil then
+    jdtls_config = config()
+  end
+  return jdtls_config
 end
 
 return M
