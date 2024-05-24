@@ -31,29 +31,31 @@ local function on_attach(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   keymap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  keymap('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   keymap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
-  keymap('n', 'gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+
+  if tsb then
+    keymap('n', 'gd', tsb.lsp_definitions, '[G]oto [D]efinition')
+    keymap('n', 'gr', tsb.lsp_references, '[G]oto [R]eferences')
+    keymap('n', 'gi', tsb.lsp_implementations, '[G]oto [I]mplementation')
+    keymap('n', '<leader>D', tsb.lsp_type_definitions, 'Type [D]efinition')
+    keymap('n', '<leader>ds', tsb.lsp_document_symbols, '[D]ocument [S]ymbols')
+    keymap('n', '<leader>ws', tsb.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  else
+    keymap('n', 'gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
+    keymap('n', 'gr', vim.lsp.buf.references, '[G]oto [R]eferences')
+    keymap('n', 'gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
+    keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  end
+
   keymap('n', '<leader>si', vim.lsp.buf.signature_help, '[S][i]gnature Help')
-  keymap('n', '<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
   keymap('n', '<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   keymap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
   keymap('n', '<leader>cr', vim.lsp.codelens.run, '[C]odelens [R]un')
-  if tsb then
-    keymap('n', 'gr', tsb.lsp_references, '[G]oto [R]eferences')
-  else
-    keymap('n', 'gr', vim.lsp.buf.references, '[G]oto [R]eferences')
-  end
   keymap('n', '<leader>e', vim.diagnostic.open_float, '[E]rrors')
   keymap('n', '[d', vim.diagnostic.goto_prev, 'Previous [D]iagnostic')
   keymap('n', ']d', vim.diagnostic.goto_next, 'Next [D]iagnostic')
   keymap('n', '<leader>ll', vim.diagnostic.setloclist, 'Set [L]ocation [L]ist')
   keymap('n', '<leader>qf', vim.diagnostic.setqflist, 'Set [Q]uick [F]ix List')
-
-  if tsb then
-    keymap('n', '<leader>ds', tsb.lsp_document_symbols, '[D]ocument [S]ymbols')
-    keymap('n', '<leader>ws', tsb.lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-  end
 
   keymap('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   keymap('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')

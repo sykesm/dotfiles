@@ -1,6 +1,7 @@
 -- clipboard.lua
 
-local function term_supports_osc52() -- luacheck: unused ignore
+---@diagnostic disable-next-line unused
+local function term_supports_osc52()
   if string.find(vim.env.TERM_PROGRAM or '', 'alacritty') then
     return true
   end
