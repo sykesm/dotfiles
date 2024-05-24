@@ -1,5 +1,30 @@
 -- clipboard.lua
 
+local function term_supports_osc52() -- luacheck: unused ignore
+  if string.find(vim.env.TERM_PROGRAM or '', 'alacritty') then
+    return true
+  end
+
+  local supported = false
+  require('vim.termcap').query('Ms', function(cap, found, seq)
+    if not found then
+      return
+    else
+      assert(cap == 'Ms')
+    end
+
+    -- If the terminal reports a sequence other than OSC 52 for the Ms capability
+    -- then ignore it. We only support OSC 52 (for now)
+    if not seq:match('^\027%]52') then
+      return
+    end
+
+    supported = true
+  end)
+
+  return supported
+end
+
 -- Use tmux buffers for clipboard integration when running in tmux.
 -- If the tmux version is new enough, send copied text to the terminal client
 -- with OSC 52.
@@ -23,10 +48,8 @@ if vim.fn.empty(vim.env.TMUX) == 0 and vim.fn.executable('tmux') == 1 then
   return
 end
 
--- Copy over SSH uses OSC 52 but paste is from the local register.
+-- Copy over SSH uses OSC 52
 if vim.fn.empty(vim.env.SSH_TTY) == 0 then
-  -- check for support?
-  -- https://github.com/neovim/neovim/pull/26064/files#diff-776616fe246164a7a47bb8dcca8edfcdc1d00c3a3525badb93547dde5341ffbc
   vim.g.clipboard = {
     name = 'OSC 52',
     copy = {
@@ -37,6 +60,7 @@ if vim.fn.empty(vim.env.SSH_TTY) == 0 then
       ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
       ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
     },
+    cache_enabled = true,
   }
   return
 end
