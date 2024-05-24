@@ -26,7 +26,7 @@ end
 packer.startup(function(use)
   use('wbthomason/packer.nvim')
 
-  use({ 'j-hui/fidget.nvim', tag = 'v1.2.0' }) -- Useful status updates for LSP
+  use({ 'j-hui/fidget.nvim', tag = 'v1.4.1' }) -- Useful status updates for LSP
   use({
     'neovim/nvim-lspconfig', -- common config for builtin LSP client
     requires = {
@@ -37,7 +37,7 @@ packer.startup(function(use)
     },
   })
 
-  use({ 'L3MON4D3/LuaSnip', tag = 'v1.*' }) -- snippets engine
+  use({ 'L3MON4D3/LuaSnip', tag = 'v2.*' }) -- snippets engine
   use({
     'hrsh7th/nvim-cmp', -- auto completion plugin for neovim
     requires = {
