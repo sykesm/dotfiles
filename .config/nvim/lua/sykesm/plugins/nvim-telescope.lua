@@ -30,16 +30,20 @@ telescope.setup({
     initial_mode = 'insert',
     selection_strategy = 'reset',
     sorting_strategy = 'descending',
-    layout_strategy = 'horizontal',
+    layout_strategy = 'flex',
     layout_config = {
-      preview_cutoff = 120,
+      flip_columns = 150,
+      flip_lines = 24,
       prompt_position = 'bottom',
-      width = 0.80,
+      width = 0.90,
       horizontal = {
         mirror = false,
+        preview_cutoff = 90,
+        preview_width = { 0.65, min = 20 },
       },
       vertical = {
         mirror = false,
+        preview_cutoff = 20,
       },
     },
     file_sorter = require('telescope.sorters').get_fuzzy_file,
