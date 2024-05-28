@@ -21,6 +21,8 @@ local server_configs = {
     filetypes = {
       'go',
       'gomod',
+      'gosum',
+      'gotmpl',
       'gohtmltmpl',
       'gotexttmpl',
     },
@@ -43,6 +45,9 @@ local server_configs = {
         },
         directoryFilters = {}, -- []string
         gofumpt = true,
+        hints = {
+          constantValues = true,
+        },
         staticcheck = true, -- experimental
         templateExtensions = {
           '.gotexttmpl',
