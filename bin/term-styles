@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Quick test of which attributes a terminal can display.
+echo -e "\033[0mnormal\033[0m"
 echo -e "\033[1mbold\033[0m"
 echo -e "\033[2mfaint\033[0m"
 echo -e "\033[3mitalic\033[0m"
