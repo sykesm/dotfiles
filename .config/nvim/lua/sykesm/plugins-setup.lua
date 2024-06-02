@@ -37,7 +37,7 @@ packer.startup(function(use)
     },
   })
 
-  use({ 'L3MON4D3/LuaSnip', tag = 'v2.*' }) -- snippets engine
+  use({ 'L3MON4D3/LuaSnip', tag = 'v2.*', run = 'make install_jsregexp' }) -- snippets engine
   use({
     'hrsh7th/nvim-cmp', -- auto completion plugin for neovim
     requires = {

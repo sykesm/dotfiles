@@ -32,10 +32,12 @@ telescope.setup({
     sorting_strategy = 'descending',
     layout_strategy = 'flex',
     layout_config = {
-      flip_columns = 150,
-      flip_lines = 24,
       prompt_position = 'bottom',
       width = 0.90,
+      flex = {
+        flip_columns = 150,
+        flip_lines = 24,
+      },
       horizontal = {
         mirror = false,
         preview_cutoff = 90,
