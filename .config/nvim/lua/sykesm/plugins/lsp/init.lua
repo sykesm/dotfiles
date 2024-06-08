@@ -13,3 +13,6 @@ require('sykesm.plugins.lsp.fidget')
 require('sykesm.plugins.lsp.imports')
 require('sykesm.plugins.lsp.null-ls')
 require('sykesm.plugins.lsp.regal')
+
+-- print(vim.lsp.get_log_path())
+-- vim.lsp.set_log_level('debug')

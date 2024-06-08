@@ -13,6 +13,10 @@ end
 
 local lsp_doc_highlight_group = vim.api.nvim_create_augroup('LSPDocumentHighlight', {})
 
+--- Callback that is invoked when an LSP client is attached to a buffer.
+---
+--- @param client vim.lsp.Client
+--- @param bufnr integer
 local function on_attach(client, bufnr)
   -- vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 

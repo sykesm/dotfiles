@@ -6,5 +6,6 @@ if not go_ok then
 end
 
 go.setup({
+  -- until codelenses are fixed in neovim and the plugin
   lsp_codelens = false,
 })
