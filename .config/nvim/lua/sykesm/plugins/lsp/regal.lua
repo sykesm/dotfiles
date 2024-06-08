@@ -33,10 +33,20 @@ local function setup_regal()
     return
   end
 
+  local util = require('lspconfig.util')
+
+  local root_files = {
+    '.oparoot',
+    '*.rego',
+  }
+
   require('lspconfig').regal.setup({
     cmd = { path, 'language-server' },
     capabilities = require('sykesm.plugins.lsp.capabilities').create(),
     on_attach = regal_on_attach,
+    root_dir = function(fname)
+      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+    end,
   })
 end
 
