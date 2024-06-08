@@ -5,4 +5,6 @@ if not go_ok then
   return
 end
 
-go.setup()
+go.setup({
+  lsp_codelens = false,
+})
