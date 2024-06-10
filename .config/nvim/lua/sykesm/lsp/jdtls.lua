@@ -106,7 +106,7 @@ local function save_modified()
 end
 
 local function jdtls_on_attach(client, bufnr)
-  require('sykesm.plugins.lsp.on-attach')(client, bufnr)
+  require('sykesm.lsp.on-attach')(client, bufnr)
 
   local jdtls = require('jdtls')
   jdtls.setup_dap({
@@ -151,7 +151,7 @@ local function config()
       JAVA_HOME = java_home_macos(),
     },
     on_attach = jdtls_on_attach,
-    capabilities = require('sykesm.plugins.lsp.capabilities').create(),
+    capabilities = require('sykesm.lsp.capabilities').create(),
     root_dir = root_dir(),
     settings = {
       java = {

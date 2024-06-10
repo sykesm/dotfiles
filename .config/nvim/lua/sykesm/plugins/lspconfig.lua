@@ -17,7 +17,7 @@ function M.config()
   local servers = require('sykesm.lsp.servers')
 
   require('sykesm.lsp.diagnostics')
-  require('sykesm.lsp.regal')
+  require('sykesm.lsp.regal').setup_regal()
 
   vim.api.nvim_set_hl(0, 'LspReferenceText', { default = true, link = 'Visual' })
   vim.api.nvim_set_hl(0, 'LspReferenceRead', { default = true, link = 'Visual' })
@@ -26,7 +26,7 @@ function M.config()
   mason_lspconfig.setup_handlers({
     function(server_name)
       local config = {
-        capabilities = require('cmp_nvim_lsp').default_capabilities(),
+        capabilities = require('sykesm.lsp.capabilities').create(),
         on_attach = require('sykesm.lsp.on-attach'),
       }
       local server_opts = servers[server_name]
