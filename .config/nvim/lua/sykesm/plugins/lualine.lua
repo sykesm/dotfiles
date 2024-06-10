@@ -25,7 +25,9 @@ return {
   opts = {
     options = {
       -- section_separators = { left = '', right = '' }, -- https://github.com/nvim-lualine/lualine.nvim/issues/773
-      disabled_filetypes = {},
+      disabled_filetypes = {
+        'neo-tree',
+      },
       refresh = {
         statusline = 200,
       },
