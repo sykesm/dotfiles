@@ -4,10 +4,3 @@ setlocal softtabstop=2
 setlocal spell
 setlocal tabstop=2
 setlocal textwidth=80
-
-if has("nvim")
-  augroup NvimGoLsp
-    autocmd!
-    autocmd BufWritePre *.go lua organize_imports(1000)
-  augroup END
-endif

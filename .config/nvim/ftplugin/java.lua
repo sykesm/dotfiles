@@ -3,5 +3,5 @@ if not jdtls_ok then
   return
 end
 
-local config = require('sykesm.plugins.lsp.jdtls').config()
+local config = require('sykesm.lsp.jdtls').config()
 jdtls.start_or_attach(config)

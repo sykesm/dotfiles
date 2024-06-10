@@ -106,10 +106,6 @@ local function save_modified()
 end
 
 local function jdtls_on_attach(client, bufnr)
-  -- Disable if these get to be expensive
-  -- client.server_capabilities.semanticTokensProvider = nil
-  -- client.server_capabilities.documentHighlightProvider = nil
-
   require('sykesm.plugins.lsp.on-attach')(client, bufnr)
 
   local jdtls = require('jdtls')

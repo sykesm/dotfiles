@@ -1,5 +1,12 @@
 -- servers.lua - LSP server configurations
 
+--- Extended LSP server configuration
+--- @class ServerLSPConfig : lspconfig.Config
+---
+--- Flag that can be set to opt-out of automatic install and setup
+--- @field ensure_installed? boolean
+
+--- @type table<string, ServerLSPConfig|fun(lspconfig.Config)>
 local server_configs = {
   angularls = {},
   bashls = {},
@@ -59,7 +66,9 @@ local server_configs = {
     },
   },
   html = {},
-  jdtls = function(_) end, -- Java setup is done out of the file type plugin
+  jdtls = function(_)
+    -- Java setup is done out of the file type plugin
+  end,
   lua_ls = {
     settings = {
       Lua = {
@@ -68,6 +77,9 @@ local server_configs = {
         workspace = { checkThirdParty = false },
       },
     },
+  },
+  regal = {
+    ensure_installed = false,
   },
   rust_analyzer = {
     settings = {

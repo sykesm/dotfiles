@@ -1,3 +1,13 @@
 -- tagbar.lua
 
-vim.keymap.set('n', '<F8>', ':TagbarToggle<cr>', {})
+return {
+  'majutsushi/tagbar', -- code tree
+  cmd = {
+    'TagbarOpen',
+    'TagbarClose',
+    'TagbarToggle',
+  },
+  keys = {
+    { '<F8>', '<cmd>TagbarToggle<cr>', desc = 'Toggle TagBar' },
+  },
+}

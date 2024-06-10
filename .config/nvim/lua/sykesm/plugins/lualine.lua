@@ -1,10 +1,5 @@
 --  lualine.lua
 
-local lualine_ok, lualine = pcall(require, 'lualine')
-if not lualine_ok then
-  return
-end
-
 local symbols = {
   colnr = '\u{e0a3}:',
   linenr = '\u{e0a1}:',
@@ -25,17 +20,20 @@ local function encoding_fileformat()
   return string.format('%s[%s]', fe, ff)
 end
 
-lualine.setup({
-  options = {
-    -- section_separators = { left = '', right = '' }, -- https://github.com/nvim-lualine/lualine.nvim/issues/773
-    disabled_filetypes = {},
-    refresh = {
-      statusline = 200,
+return {
+  'nvim-lualine/lualine.nvim',
+  opts = {
+    options = {
+      -- section_separators = { left = '', right = '' }, -- https://github.com/nvim-lualine/lualine.nvim/issues/773
+      disabled_filetypes = {},
+      refresh = {
+        statusline = 200,
+      },
+    },
+    sections = {
+      lualine_x = { 'filetype', encoding_fileformat },
+      lualine_y = {},
+      lualine_z = { progress_location },
     },
   },
-  sections = {
-    lualine_x = { 'filetype', encoding_fileformat },
-    lualine_y = {},
-    lualine_z = { progress_location },
-  },
-})
+}

@@ -2,7 +2,7 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
 local lsp_format_group = vim.api.nvim_create_augroup('LspFormatting', {})
 
-local lsp_format = function(bufnr)
+local function lsp_format(bufnr)
   vim.lsp.buf.format({
     bufnr = bufnr,
     filter = function(client)
