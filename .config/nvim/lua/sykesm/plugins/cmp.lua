@@ -16,10 +16,10 @@ local M = {
       cond = vim.fn.executable('make') == 1,
       dependencies = {
         'rafamadriz/friendly-snippets',
-        config = function()
-          require('luasnip.loaders.from_vscode').lazy_load()
-        end,
       },
+      config = function()
+        require('luasnip.loaders.from_vscode').lazy_load()
+      end,
     },
   },
 }
