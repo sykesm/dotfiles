@@ -28,25 +28,21 @@ local function regal_path()
   return nil
 end
 
-function M.setup_regal()
+function M.setup()
   local path = regal_path() -- Only configure regal if it's available.
   if not path then
     return
   end
 
   local util = require('lspconfig.util')
-
-  local root_files = {
-    '.oparoot',
-    '*.rego',
-  }
+  local root_pattern = util.root_pattern('.oparoot', '*.rego')
 
   require('lspconfig').regal.setup({
     cmd = { path, 'language-server' },
     capabilities = require('sykesm.lsp.capabilities').create(),
     on_attach = M.regal_on_attach,
     root_dir = function(fname)
-      return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname)
+      return root_pattern(fname) or util.find_git_ancestor(fname)
     end,
   })
 end

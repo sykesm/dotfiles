@@ -78,9 +78,6 @@ local server_configs = {
       },
     },
   },
-  regal = {
-    ensure_installed = false,
-  },
   rust_analyzer = {
     settings = {
       ['rust-analyzer'] = {

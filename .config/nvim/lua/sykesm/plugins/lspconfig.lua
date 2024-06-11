@@ -16,8 +16,8 @@ function M.config()
   local mason_lspconfig = require('mason-lspconfig')
   local servers = require('sykesm.lsp.servers')
 
-  require('sykesm.lsp.diagnostics')
-  require('sykesm.lsp.regal').setup_regal()
+  require('sykesm.lsp.diagnostics').setup()
+  require('sykesm.lsp.regal').setup()
 
   vim.api.nvim_set_hl(0, 'LspReferenceText', { default = true, link = 'Visual' })
   vim.api.nvim_set_hl(0, 'LspReferenceRead', { default = true, link = 'Visual' })
