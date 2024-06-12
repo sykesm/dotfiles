@@ -5,7 +5,7 @@ local function shell_error()
 end
 
 local function root_dir()
-  return vim.fs.dirname(vim.fs.find({ 'pom.xml', 'gradlew', '.git', 'mvnw' }, { upward = true })[1])
+  return require('jdtls.setup').find_root({ 'pom.xml', 'gradlew', '.git', 'mvnw' })
 end
 
 local function java_format_settings()
@@ -45,18 +45,8 @@ end
 local function java_runtimes()
   local jdks = {
     { name = 'JavaSE-1.8', version = 8 },
-    { name = 'JavaSE-9', version = 9 },
-    { name = 'JavaSE-10', version = 10 },
     { name = 'JavaSE-11', version = 11 },
-    { name = 'JavaSE-12', version = 12 },
-    { name = 'JavaSE-13', version = 13 },
-    { name = 'JavaSE-14', version = 14 },
-    { name = 'JavaSE-15', version = 15 },
-    { name = 'JavaSE-16', version = 16 },
     { name = 'JavaSE-17', version = 17 },
-    { name = 'JavaSE-18', version = 18 },
-    { name = 'JavaSE-19', version = 19 },
-    { name = 'JavaSE-20', version = 20 },
     { name = 'JavaSE-21', version = 21 },
     { name = 'JavaSE-22', version = 22 },
   }
@@ -91,7 +81,9 @@ local function jdt_bundles()
     if mason_registry.is_installed(package) then
       local install_dir = mason_registry.get_package(package):get_install_path()
       for jar in vim.fn.glob(install_dir .. '/**/*.jar'):gmatch('[^\r\n]+') do
-        table.insert(bundles, jar)
+        if not vim.endswith(jar, 'com.microsoft.java.test.runner-jar-with-dependencies.jar') then
+          table.insert(bundles, jar)
+        end
       end
     end
   end
