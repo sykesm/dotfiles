@@ -67,7 +67,8 @@ local server_configs = {
   },
   html = {},
   jdtls = function(_)
-    -- Java setup is done out of the file type plugin
+    -- Empty function used to ensure that jdtls is installed
+    -- but the setup is done by the nvim-jdtls plugin config.
   end,
   lua_ls = {
     settings = {
