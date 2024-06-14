@@ -177,7 +177,7 @@ function M.opts()
   }
 end
 
-function M.setup_keymaps(_, bufnr)
+local function setup_keymaps(_, bufnr)
   local jdtls = require('jdtls')
 
   local keymap = function(mode, keys, func, desc)
@@ -218,7 +218,7 @@ function M.config(_, opts)
     require('sykesm.lsp.on-attach')(client, bufnr)
     require('jdtls').setup_dap(opts.dap)
     require('jdtls.dap').setup_dap_main_class_configs(opts.dap_main)
-    M.setup_keymaps(client, bufnr)
+    setup_keymaps(client, bufnr)
   end
 
   -- Callback invoked when as an ftplugin
