@@ -11,5 +11,5 @@ return {
 
   { 'rust-lang/rust.vim', ft = 'rust' }, -- rust stuff
   { 'jose-elias-alvarez/typescript.nvim' }, -- typescript
-  { 'towolf/vim-helm' }, -- sane helm highlighting
+  { 'towolf/vim-helm', ft = 'helm' }, -- sane helm highlighting
 }
