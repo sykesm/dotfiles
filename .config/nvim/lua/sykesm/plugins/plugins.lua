@@ -1,6 +1,5 @@
 return {
 
-  { 'tpope/vim-fugitive' }, -- git integration
   { 'tpope/vim-repeat' }, -- extend '.' to plugin map
   { 'tpope/vim-surround' }, -- change surrounding quotes and tags
 
