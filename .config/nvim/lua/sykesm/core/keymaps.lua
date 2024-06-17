@@ -20,7 +20,7 @@ vim.keymap.set('n', '<leader>o', ':only<cr>', { noremap = true })
 
 -- macOS dictionary
 if vim.fn.has('macunix') then
-  vim.keymap.set('n', '<leader>d', ':!open dict://<cword><cr><cr>')
+  vim.keymap.set('n', '<leader>D', ':!open dict://<cword><cr><cr>')
 end
 
 -- Terminal settings
