@@ -3,7 +3,7 @@
 local M = {
   'williamboman/mason-lspconfig.nvim', -- mason extensions for LSPs
   dependencies = { 'williamboman/mason.nvim' },
-  event = { 'BufReadPre', 'BufNewFile' },
+  lazy = true,
 }
 
 function M.config()

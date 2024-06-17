@@ -4,9 +4,8 @@ local M = {
   'jay-babu/mason-nvim-dap.nvim',
   dependencies = {
     'williamboman/mason.nvim',
-    'mfussenegger/nvim-dap',
   },
-  event = { 'BufReadPre', 'BufNewFile' },
+  lazy = true,
   opts = {
     ensure_installed = {
       'javadbg',

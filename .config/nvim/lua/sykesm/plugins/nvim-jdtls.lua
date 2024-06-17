@@ -2,7 +2,10 @@
 
 local M = {
   'mfussenegger/nvim-jdtls',
-  dependencies = { 'mason.nvim' },
+  dependencies = {
+    'williamboman/mason.nvim',
+    'mfussenegger/nvim-dap',
+  },
   ft = { 'java' },
 }
 
