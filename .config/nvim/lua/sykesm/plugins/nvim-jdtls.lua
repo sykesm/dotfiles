@@ -89,6 +89,10 @@ local function jdt_bundles()
 end
 
 local function project_root()
+  local top_level = vim.fs.root(0, { 'gradlew', 'mvnw', '.git' })
+  if vim.fn.filereadable(top_level .. '/pom.xml') then
+    return top_level
+  end
   return vim.fs.root(0, { 'gradlew', 'mvnw', 'pom.xml', '.git' })
 end
 
