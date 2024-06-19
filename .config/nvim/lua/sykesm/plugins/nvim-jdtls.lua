@@ -89,11 +89,14 @@ local function jdt_bundles()
 end
 
 local function project_root()
-  local top_level = vim.fs.root(0, { 'gradlew', 'mvnw', '.git' })
-  if vim.fn.filereadable(top_level .. '/pom.xml') then
+  local top_level = vim.fs.root(0, { '.git', 'mvnw', 'gradlew' })
+  if top_level and vim.fn.filereadable(top_level .. '/pom.xml') then
     return top_level
   end
-  return vim.fs.root(0, { 'gradlew', 'mvnw', 'pom.xml', '.git' })
+  if top_level and vim.fn.filereadable(top_level .. '/build.gradle') then
+    return top_level
+  end
+  return vim.fs.root(0, { '.git', 'mvnw', 'gradlew', 'pom.xml', 'build.gradle' })
 end
 
 local function jdtls_cmd(root_dir)
@@ -228,6 +231,8 @@ function M.config(_, opts)
     setup_keymaps(client, bufnr)
   end
 
+  local bundles = jdt_bundles()
+
   -- Callback invoked when as an ftplugin
   local function attach_jdtls()
     local root_dir = project_root()
@@ -240,7 +245,7 @@ function M.config(_, opts)
       },
       on_attach = lsp_on_attach,
       init_options = {
-        bundles = jdt_bundles(),
+        bundles = bundles,
       },
     })
     require('jdtls').start_or_attach(config)
