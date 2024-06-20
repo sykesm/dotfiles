@@ -12,6 +12,8 @@ local M = {
     'rcarriga/nvim-dap-ui',
     {
       'theHamsta/nvim-dap-virtual-text',
+      url = 'https://github.com/sykesm/nvim-dap-virtual-text',
+      branch = 'jdt-uri',
       opts = {},
       config = true,
     },
