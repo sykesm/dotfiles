@@ -74,6 +74,12 @@ if [[ -e "$ZSH_CUSTOM/plugins/custom-paths" ]]; then
     source "$ZSH_CUSTOM/plugins/custom-paths/custom-paths.plugin.zsh"
 fi
 
+# Lazy load nvm to reduce shell startup time
+if [[ -x "$(command -v brew)" ]]; then
+    NVM_HOMEBREW=$(brew --prefix nvm)
+fi
+zstyle ':omz:plugins:nvm' lazy yes
+
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -82,11 +88,11 @@ fi
 plugins=(
     direnv
     docker
-    gcloud
     git
     golang
     grc
     kubectl
+    nvm
 )
 
 source "$ZSH/oh-my-zsh.sh"
