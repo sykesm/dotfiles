@@ -20,4 +20,7 @@ require('lazy').setup({ import = 'sykesm.plugins' }, {
   change_detection = {
     notify = false,
   },
+  rocks = {
+    enabled = false,
+  },
 })
