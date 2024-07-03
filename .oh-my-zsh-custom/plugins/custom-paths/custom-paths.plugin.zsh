@@ -19,3 +19,7 @@ if [[ -z "${HOMEBREW_PREFIX}" ]] || [[ ! ":$PATH:" == *":$HOMEBREW_PREFIX/bin:"*
         eval $(/usr/local/Homebrew/bin/brew shellenv)
     fi
 fi
+
+if [[ -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ]]; then
+  fpath+=("$HOMEBREW_PREFIX/share/zsh/site-functions")
+fi
