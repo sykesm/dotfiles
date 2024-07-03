@@ -93,6 +93,7 @@ plugins=(
     grc
     kubectl
     nvm
+    oh-my-posh
 )
 
 source "$ZSH/oh-my-zsh.sh"
@@ -103,12 +104,6 @@ source "$ZSH/oh-my-zsh.sh"
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 alias dotfiles='git --git-dir="$HOME/.dotfiles/" --work-tree="$HOME"'
-
-# Tweak things if using oh-my-posh for the prompt command
-if [[ -x "$(command -v oh-my-posh)" ]] && [[ "$TERM_PROGRAM" != "Apple_Terminal" ]]; then
-    unset PS1 PS2 # Prevent registration of prompt async handlers
-    eval "$(oh-my-posh init zsh)"
-fi
 
 if [[ -d "$HOME/.zsh-syntax-highlighting" ]]; then
     source "$HOME/.zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"

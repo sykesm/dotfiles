@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+---
+version: 2
+final_space: true
+console_title_template: "{{ .UserName }}@{{ (.HostName | split \".\")._0 }}:{{.PWD}}"
+blocks:
+- type: prompt
+  alignment: left
+  segments:
+  - type: text
+    style: plain
+    template: "|"
+  - type: session
+    style: plain
+    foreground: magenta
+    template: "{{ (.HostName | split \".\")._0  }}"
+  - type: text
+    style: plain
+    template: "|"
+  - type: path
+    style: plain
+    foreground: cyan
+    template: " {{ .Path }} "
+    properties:
+      style: folder
+  - type: git
+    style: plain
+    foreground: red
+    template: "<b><blue>git:(</>{{ .HEAD }}<blue>)</></b>"
+    properties:
+      branch_icon: ""
+- type: prompt
+  alignment: left
+  newline: true
+  segments:
+  - type: status
+    style: plain
+    foreground_templates:
+    - "{{ if eq .Code 0 }}green{{ else }}red{{ end }}"
+    template: <b>➜</b>
+    properties:
+      always_enabled: true
