@@ -12,4 +12,6 @@ if [[ -x "$(command -v oh-my-posh)" ]] && [[ "$TERM_PROGRAM" != "Apple_Terminal"
     else
         eval "$(oh-my-posh init zsh)"
     fi
+
+    source <(oh-my-posh completion zsh)
 fi
