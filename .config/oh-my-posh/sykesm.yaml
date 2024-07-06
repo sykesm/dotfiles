@@ -7,7 +7,7 @@ shell_integration: true
 blocks:
 - type: prompt
   alignment: left
-  newline: true
+  newline: false # enable if using transient_prompt
   segments:
   - type: text
     style: plain
@@ -64,9 +64,9 @@ blocks:
     template: <b>➜</b>
     properties:
       always_enabled: true
-transient_prompt:
-  background: transparent
-  foreground_templates:
-  - "{{ if eq .Code 0 }}green{{ else }}red{{ end }}"
-  final_space:
-  template: <b>➜ </b>
+# transient_prompt:
+#   background: transparent
+#   foreground_templates:
+#   - "{{ if eq .Code 0 }}green{{ else }}red{{ end }}"
+#   final_space:
+#   template: <b>➜ </b>
