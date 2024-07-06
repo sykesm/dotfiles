@@ -32,9 +32,9 @@ ssh-agent, the following will clone the dotfiles, populate `$HOME`, install
         git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.zsh-syntax-highlighting
     fi
 
-    if [ ! -d ~/.tmux/plugins/tpm ]; then
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-        ~/.tmux/plugins/tpm/bin/install_plugins
+    if [ ! -d ~/.config/tmux/plugins/tpm ]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+        ~/.config/tmux/plugins/tpm/bin/install_plugins
     fi
 
     if [[ "$(uname)" == "Darwin" ]] && [[ ! -x ~/.cargo/bin/rustup ]]; then
