@@ -1,0 +1,120 @@
+# vim: ft=tmux
+
+# enable 256 color mode
+set-option -g default-terminal "screen-256color"
+if-shell "infocmp tmux-256color >/dev/null 2>&1" {
+    set-option -g default-terminal "tmux-256color"
+}
+
+# enable 24 bit color when advertised
+%if "#{==:#{COLORTERM},truecolor}"
+    set-option -ag terminal-overrides ",xterm-256color:Tc"
+    set-option -ag terminal-overrides ",alacritty*:Tc"
+%endif
+
+# enable undercurl support for alacritty
+%if "#{==:#{LC_TERMINAL},alacritty}"
+    set-option -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'  # undercurl support
+    set-option -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'  # underscore colors
+%endif
+
+# remap prefix from 'C-b' to 'C-q'
+unbind C-b
+set-option -g prefix C-q
+bind-key C-q send-prefix
+
+set-option -g status on
+set-option -g status-interval 5
+set-option -g status-position top
+
+set-option -g set-clipboard on
+set-option -g mouse on
+set-option -g history-limit 100000
+
+set-option -g escape-time 10  # wait no more than 10ms for an escape sequence
+set-option -g repeat-time 250 # max of 250ms between repeat commands (default is 500)
+
+# Set parent terminal title to reflect current window in tmux session
+set-option -g set-titles on
+set-option -g set-titles-string "#I:#W"
+
+# set vi bindings in copy mode
+set-option -g mode-keys vi
+set-window-option -g mode-keys vi
+
+# Start windows and panes at 1, not 0
+set-option -g base-index 1
+set-option -g pane-base-index 1
+set-window-option -g pane-base-index 1
+set-option -g renumber-windows on
+
+# new window retains cwd
+bind c new-window -c "#{pane_current_path}"
+
+# vi style pane selection
+bind-key h select-pane -L
+bind-key j select-pane -D 
+bind-key k select-pane -U
+bind-key l select-pane -R
+bind-key > swap-pane -D
+bind-key < swap-pane -U
+
+# cycle thru MRU tabs
+bind-key -r Tab last-window
+
+# split panes with | and -
+bind-key | split-window -h -c "#{pane_current_path}"
+bind-key - split-window -v -c "#{pane_current_path}"
+
+# pane resizing
+bind-key -r H resize-pane -L 2
+bind-key -r J resize-pane -D 2
+bind-key -r K resize-pane -U 2
+bind-key -r L resize-pane -R 2
+
+# copy mode keybindings
+bind-key Escape copy-mode
+unbind-key -T copy-mode-vi v
+bind-key   -T copy-mode-vi v        send-keys -X begin-selection
+bind-key   -T copy-mode-vi C-v      send-keys -X rectangle-toggle
+bind-key   -T copy-mode-vi y        send-keys -X copy-selection-and-cancel
+bind-key   -T copy-mode-vi Escape   send-keys -X cancel
+bind-key   -T copy-mode-vi Space    send-keys -X clear-selection
+bind-key   -T copy-mode-vi PageDown send-keys -X page-down
+bind-key   -T copy-mode-vi PageUp   send-keys -X page-up
+bind-key   -T copy-mode-vi M-n      send-keys -X next-prompt
+bind-key   -T copy-mode-vi M-p      send-keys -X previous-prompt
+bind-key   -T copy-mode-vi / command-prompt -i -p "search down" "send -X search-forward-incremental \"%%%\""
+bind-key   -T copy-mode-vi ? command-prompt -i -p "search up" "send -X search-backward-incremental \"%%%\""
+
+bind-key -T root F10  \
+    set-option prefix None \;\
+    set-option key-table off \;\
+    set-option -q @tmux_disabled_message "[F10] tmux prefix disabled" \;\
+    set-option status-style "fg=colour245,bg=colour238" \;\
+    set-option status-format "#[align=right]#{@tmux_disabled_message}" \;\
+    if -F '#{pane_in_mode}' 'send-keys -X cancel' \;\
+    refresh-client -S \;\
+
+bind-key -T off F10 \
+  set-option -u prefix \;\
+  set-option -u key-table \;\
+  set-option -u @tmux_disabled_msg \;\
+  set-option -u status-style \;\
+  set-option -u status-format \;\
+  refresh-client -S
+
+# renew environment values
+set-option -g  update-environment 'DISPLAY'
+set-option -ga update-environment 'LC_TERMINAL'
+set-option -ga update-environment 'SSH_ASKPASS'
+set-option -ga update-environment 'SSH_AUTH_SOCK'
+set-option -ga update-environment 'SSH_AGENT_PID'
+set-option -ga update-environment 'SSH_CONNECTION'
+set-option -ga update-environment 'SSH_TTY'
+set-option -ga update-environment 'WINDOWID'
+set-option -ga update-environment 'XAUTHORITY'
+bind-key '$' run "#{d:@tmux_conf}/renew_env.sh"
+
+# reload configuration file
+bind-key r source-file -F "#{@tmux_conf}" \; display -p "#{@tmux_conf} reloaded"
