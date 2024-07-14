@@ -4,10 +4,10 @@ local M = {}
 
 -- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#change-diagnostic-symbols-in-the-sign-column-gutter
 local signs = {
-  Error = '󰅚 ', -- close_circle_outline
-  Warn = '󰀪 ', -- alert_outline
-  Hint = '󰌶 ', -- lightbulb_outline
-  Info = ' ', -- nf-oct-info
+  Error = '',
+  Hint = '',
+  Info = '',
+  Warn = '',
 }
 
 local setup_done = false

@@ -20,12 +20,13 @@ local function encoding_fileformat()
   return string.format('%s[%s]', fe, ff)
 end
 
-return {
+local M = {
   'nvim-lualine/lualine.nvim',
   opts = {
     options = {
       -- section_separators = { left = '', right = '' }, -- https://github.com/nvim-lualine/lualine.nvim/issues/773
       disabled_filetypes = {
+        'NvimTree',
         'neo-tree',
       },
       refresh = {
@@ -33,9 +34,23 @@ return {
       },
     },
     sections = {
+      lualine_b = {
+        'branch',
+        'diff',
+        {
+          'diagnostics',
+          symbols = { error = ' ', hint = ' ', info = ' ', warn = ' ' },
+        },
+      },
       lualine_x = { 'filetype', encoding_fileformat },
       lualine_y = {},
       lualine_z = { progress_location },
     },
   },
 }
+
+function M.config(_, opts)
+  require('lualine').setup(opts)
+end
+
+return M
