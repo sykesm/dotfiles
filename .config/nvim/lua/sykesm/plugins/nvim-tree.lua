@@ -130,6 +130,13 @@ local M = {
       indent_markers = {
         enable = true,
       },
+      icons = {
+        glyphs = {
+          git = {
+            untracked = '󰄱',
+          },
+        },
+      },
     },
     on_attach = function(bufnr)
       local nvim_tree = require('nvim-tree.api')
