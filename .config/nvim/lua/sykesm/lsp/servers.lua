@@ -135,7 +135,7 @@ local server_configs = {
         format = { enable = true },
         hover = true,
         schemas = {
-          ['https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.25.6-standalone-strict/all.json'] = 'deploy/**/*.yaml',
+          ['https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.29.6-standalone-strict/all.json'] = 'deploy/**/*.yaml',
         },
         schemaStore = {
           enable = false,
