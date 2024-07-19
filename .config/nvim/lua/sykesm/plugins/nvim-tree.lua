@@ -131,6 +131,7 @@ local M = {
         enable = true,
       },
       icons = {
+        git_placement = 'after',
         glyphs = {
           git = {
             untracked = '󰄱',
