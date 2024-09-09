@@ -27,7 +27,7 @@ function M.setup()
   end
 
   local util = require('lspconfig.util')
-  local root_pattern = util.root_pattern('.oparoot', '.manifest', '*.rego')
+  local root_pattern = util.root_pattern('.regal', '.oparoot', '.manifest', '*.rego')
 
   require('lspconfig').regal.setup({
     cmd = { path, 'language-server' },
