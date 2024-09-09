@@ -6,7 +6,7 @@ local function lsp_format(bufnr)
   vim.lsp.buf.format({
     bufnr = bufnr,
     filter = function(client)
-      return client.name ~= 'tsserver'
+      return client.name ~= 'ts_ls'
     end,
   })
 end

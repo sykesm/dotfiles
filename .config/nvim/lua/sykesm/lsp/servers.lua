@@ -106,13 +106,7 @@ local server_configs = {
   },
   tailwindcss = {},
   terraformls = {},
-  tsserver = function(config)
-    local typescript_ok, typescript = pcall(require, 'typescript')
-    if not typescript_ok then
-      return
-    end
-    typescript.setup({ debug = false, server = config })
-  end,
+  ts_ls = {},
   vimls = {},
   yamlls = {
     handlers = {
