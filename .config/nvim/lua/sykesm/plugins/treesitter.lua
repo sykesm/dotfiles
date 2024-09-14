@@ -33,6 +33,7 @@ local M = {
         'java',
         'javascript',
         'json',
+        'jsonc',
         'kotlin',
         'lua',
         'markdown',

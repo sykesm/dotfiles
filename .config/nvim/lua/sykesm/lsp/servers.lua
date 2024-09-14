@@ -106,7 +106,10 @@ local server_configs = {
   },
   tailwindcss = {},
   terraformls = {},
-  ts_ls = {},
+  ts_ls = function(_)
+    -- Empty function used to ensure that the typescript server is
+    -- installed but the setup is done by typescript-tools.
+  end,
   vimls = {},
   yamlls = {
     handlers = {

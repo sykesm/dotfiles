@@ -5,9 +5,9 @@ local lsp_format_group = vim.api.nvim_create_augroup('LspFormatting', {})
 local function lsp_format(bufnr)
   vim.lsp.buf.format({
     bufnr = bufnr,
-    filter = function(client)
-      return client.name ~= 'ts_ls'
-    end,
+    -- filter = function(client)
+    --   return client.name ~= 'typescript-tools'
+    -- end,
   })
 end
 
