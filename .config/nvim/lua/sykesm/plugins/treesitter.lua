@@ -40,6 +40,7 @@ local M = {
         'markdown_inline',
         'python',
         'ruby',
+        'rego',
         'rust',
         'sql',
         'query',
