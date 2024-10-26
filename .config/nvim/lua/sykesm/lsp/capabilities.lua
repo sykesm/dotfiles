@@ -9,7 +9,7 @@ function M.create()
   -- nvim-cmp supports additional completion capabilities
   local has_cmp_nvim_lsp, cmp_nvim_lsp = pcall(require, 'cmp_nvim_lsp')
   if has_cmp_nvim_lsp then
-    capabilities = cmp_nvim_lsp.default_capabilities()
+    capabilities = vim.tbl_deep_extend('force', capabilities, cmp_nvim_lsp.default_capabilities())
   end
 
   return capabilities
