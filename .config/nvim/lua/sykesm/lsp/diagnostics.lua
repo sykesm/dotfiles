@@ -23,6 +23,14 @@ function M.setup()
     vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
   end
 
+  vim.diagnostic.config({
+    float = {
+      header = '',
+      border = 'rounded',
+      source = true,
+    },
+  })
+
   function _G.lsp_toggle_diagnostics()
     vim.diagnostic.enable(not vim.diagnostic.is_enabled())
   end
