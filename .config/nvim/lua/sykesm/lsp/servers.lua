@@ -50,7 +50,10 @@ local server_configs = {
           test = true,
           tidy = true,
         },
-        directoryFilters = {}, -- []string
+        completeFunctionCalls = false, -- prevent paren insertion on completion
+        directoryFilters = {
+          '-**/node_modules',
+        },
         gofumpt = true,
         hints = {
           constantValues = true,
