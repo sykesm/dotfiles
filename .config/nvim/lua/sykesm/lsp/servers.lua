@@ -50,6 +50,7 @@ local server_configs = {
           test = true,
           tidy = true,
         },
+        completeUnimported = true,
         completeFunctionCalls = false, -- prevent paren insertion on completion
         directoryFilters = {
           '-**/node_modules',
@@ -63,6 +64,7 @@ local server_configs = {
           '.gotexttmpl',
           '.gohtmltmpl',
         },
+        usePlaceholders = true,
         vulncheck = 'Imports',
         -- ['local'] = "",
       },
