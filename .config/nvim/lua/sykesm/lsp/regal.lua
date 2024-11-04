@@ -3,7 +3,7 @@
 
 local M = {}
 
-local function regal_path()
+function M.regal_path()
   -- Look for a custom build before falling back to a version that's
   -- on the path.
   local custom_paths = {
@@ -21,7 +21,7 @@ local function regal_path()
 end
 
 function M.setup()
-  local path = regal_path() -- Only configure regal if it's available.
+  local path = M.regal_path() -- Only configure regal if it's available.
   if not path then
     return
   end
