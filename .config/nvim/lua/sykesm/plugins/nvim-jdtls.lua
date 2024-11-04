@@ -43,6 +43,7 @@ local function java_runtimes()
     { name = 'JavaSE-17', version = 17 },
     { name = 'JavaSE-21', version = 21 },
     { name = 'JavaSE-22', version = 22 },
+    { name = 'JavaSE-23', version = 23 },
   }
 
   local runtimes = {}
@@ -241,7 +242,7 @@ function M.config(_, opts)
       root_dir = root_dir,
       cmd = jdtls_cmd(root_dir),
       cmd_env = {
-        JAVA_HOME = java_home_macos(),
+        JAVA_HOME = java_home_macos(21),
       },
       on_attach = lsp_on_attach,
       init_options = {
