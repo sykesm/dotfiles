@@ -30,17 +30,35 @@ function M.config()
 
   luasnip.config.setup({})
 
+  local function has_words_before()
+    unpack = unpack or table.unpack
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+  end
+
   local function cmp_mapping()
-    local cmp_select = { behavior = cmp.SelectBehavior.Select }
+    local select_opts = { behavior = cmp.SelectBehavior.Insert }
     local mapping = {
-      ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-      ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-n>'] = cmp.mapping.select_next_item(select_opts),
+      ['<C-p>'] = cmp.mapping.select_prev_item(select_opts),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-e>'] = cmp.mapping.abort(),
       ['<C-y>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-e>'] = cmp.mapping.close(),
-      ['<C-Space>'] = cmp.mapping.complete({}),
+      ['<C-Space>'] = cmp.mapping.complete(),
     }
+
+    mapping['<CR>'] = cmp.mapping({
+      i = function(fallback)
+        if cmp.visible() and cmp.get_active_entry() then
+          cmp.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = false })
+        else
+          fallback()
+        end
+      end,
+      s = cmp.mapping.confirm({ select = true }),
+      c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
+    })
 
     mapping['<C-l>'] = cmp.mapping(function()
       if luasnip.expand_or_locally_jumpable() then
@@ -53,29 +71,22 @@ function M.config()
       end
     end, { 'i', 's' })
 
-    mapping['<CR>'] = cmp.mapping({
-      i = function(fallback)
-        if cmp.visible() and cmp.get_active_entry() then
-          cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-        else
-          fallback()
-        end
-      end,
-      s = cmp.mapping.confirm({ select = true }),
-      c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-    })
-
     mapping['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item(cmp_select)
+        cmp.select_next_item(select_opts)
+      elseif luasnip.expand_or_locally_jumpable() then
+        luasnip.expand_or_jump()
+      elseif has_words_before then
+        cmp.complete()
       else
         fallback()
       end
     end, { 'i', 's' })
-
     mapping['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item(cmp_select)
+        cmp.select_prev_item(select_opts)
+      elseif luasnip.locally_jumpable(-1) then
+        luasnip.jump(-1)
       else
         fallback()
       end
@@ -86,19 +97,31 @@ function M.config()
 
   cmp.setup({
     completion = {
-      completeopt = 'menu,menuone,noinsert,noselect',
+      completeopt = 'menu,menuone,noselect',
     },
     confirmation = {
       default_behavior = cmp.ConfirmBehavior.Insert,
       get_commit_characters = function(commit_characters)
-        if vim.bo.ft == 'go' then
-          return vim.fn.extend({ '.', ',', '(', '[', ' ' }, commit_characters or {})
-        end
         return commit_characters
       end,
     },
     experimental = {
       ghost_text = false,
+    },
+    formatting = {
+      expandable_indicator = true,
+      fields = { 'menu', 'abbr', 'kind' },
+      format = function(entry, item)
+        local menu_icon = {
+          nvim_lsp = 'λ',
+          luasnip = '⋗',
+          buffer = 'Ω',
+          path = '🖫',
+        }
+
+        item.menu = menu_icon[entry.source.name]
+        return item
+      end,
     },
     mapping = cmp.mapping.preset.insert(cmp_mapping()),
     preselect = cmp.PreselectMode.None,
@@ -108,13 +131,16 @@ function M.config()
       end,
     },
     sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
+      { name = 'nvim_lsp', keyword_length = 1 },
       { name = 'nvim_lsp_signature_help' },
-      { name = 'luasnip' },
+      { name = 'luasnip', keyword_length = 2 },
     }, {
       { name = 'buffer', keyword_length = 5, max_item_count = 10 },
       { name = 'path' },
     }),
+    window = {
+      documentation = cmp.config.window.bordered(),
+    },
   })
 
   cmp.setup.filetype({ 'markdown', 'gitcommit' }, {
