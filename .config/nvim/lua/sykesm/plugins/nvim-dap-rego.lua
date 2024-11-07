@@ -5,12 +5,14 @@ local M = {
   dependencies = {
     'mfussenegger/nvim-dap',
   },
-  opts = {
-    regal = {
-      path = require('sykesm.lsp.regal').regal_path(),
-      args = { 'debug' },
-    },
-  },
+  opts = function(_, _)
+    return {
+      regal = {
+        path = require('sykesm.lsp.regal').regal_path(),
+        args = { 'debug' },
+      },
+    }
+  end,
   ft = {
     'rego',
   },
