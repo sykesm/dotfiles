@@ -12,7 +12,7 @@ vim.opt.backup = true                             -- keep a backup file (restore
 vim.opt.cursorline = true                         -- highlight the current line
 vim.opt.clipboard:prepend('unnamed')              -- yank to and paste from the system clipboard by default
 vim.opt.clipboard:prepend('unnamedplus')          -- yank to and paste from the system clipboard by default
-vim.opt.cmdheight = 0                             -- turn of command area
+vim.opt.cmdheight = 1                             -- height of cmd line area (0 is experimental and disables)
 vim.opt.complete:remove('i')                      -- don't search included files for completion
 vim.opt.completeopt = 'menuone,noinsert,noselect' -- use popup menu for one or more matches, no selection
 vim.opt.display:append('lastline')                -- display as much as possible of the last line
