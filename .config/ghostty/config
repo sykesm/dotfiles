@@ -1,0 +1,13 @@
+theme = nightfly
+config-file = fonts/jetbrains-mono
+
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = true
+cursor-style = block
+cursor-style-blink = false
+link-url = true
+shell-integration-features = no-cursor
+quit-after-last-window-closed = true
+window-height = 43
+window-width = 132
