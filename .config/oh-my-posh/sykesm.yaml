@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 ---
-version: 2
+version: 3
 final_space: true
 console_title_template: "{{ .UserName }}@{{ (.HostName | split \".\")._0 }}:{{.PWD}}"
 shell_integration: true
