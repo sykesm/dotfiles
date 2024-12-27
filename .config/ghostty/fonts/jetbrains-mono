@@ -1,2 +1,10 @@
-font-family = "JetBrainsMono Nerd Font Mono"
+font-family = JetBrainsMono Nerd Font
+font-style = Regular
+font-style-bold = ExtraBold
+font-style-italic = Italic
+font-style-bold-italic = ExtraBold Italic
+
 font-size = 14
+font-thicken = true
+
+adjust-cell-height = 1

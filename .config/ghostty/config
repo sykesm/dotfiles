@@ -1,13 +1,26 @@
 theme = nightfly
 config-file = fonts/jetbrains-mono
 
+# Setup new window dimensions
+window-height = 43
+window-width = 132
+
+# Setup OSC-52 clipboard features
 clipboard-read = allow
 clipboard-write = allow
 clipboard-paste-protection = true
+
+# Solid block cursor by default
 cursor-style = block
 cursor-style-blink = false
-link-url = true
+
+# Disable cursor integration so the default
+# behavior doesn't get replaced with a bar
 shell-integration-features = no-cursor
+
+# URLs are links
+link-url = true
+
+# Quit the program when all of the windows
+# are gone
 quit-after-last-window-closed = true
-window-height = 43
-window-width = 132
