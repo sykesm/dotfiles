@@ -5,6 +5,6 @@ font-style-italic = Italic
 font-style-bold-italic = ExtraBold Italic
 
 font-size = 14
-font-thicken = true
+font-thicken = false
 
 adjust-cell-height = 1

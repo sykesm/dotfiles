@@ -14,13 +14,12 @@ clipboard-paste-protection = true
 cursor-style = block
 cursor-style-blink = false
 
-# Disable cursor integration so the default
-# behavior doesn't get replaced with a bar
+# Disable cursor integration so the default behavior
+# doesn't get replaced with a bar
 shell-integration-features = no-cursor
 
 # URLs are links
 link-url = true
 
-# Quit the program when all of the windows
-# are gone
+# Quit the program when all of the windows are gone
 quit-after-last-window-closed = true
