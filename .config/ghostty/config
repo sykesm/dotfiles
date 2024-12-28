@@ -5,6 +5,8 @@ config-file = fonts/jetbrains-mono
 window-height = 43
 window-width = 132
 
+window-padding-color = background
+
 # Setup OSC-52 clipboard features
 clipboard-read = allow
 clipboard-write = allow
