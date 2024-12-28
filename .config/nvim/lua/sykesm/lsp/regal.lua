@@ -34,7 +34,7 @@ function M.setup()
     capabilities = require('sykesm.lsp.capabilities').create(),
     on_attach = require('sykesm.lsp.on-attach'),
     root_dir = function(fname)
-      return root_pattern(fname) or util.find_git_ancestor(fname)
+      return root_pattern(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
     end,
   })
 end

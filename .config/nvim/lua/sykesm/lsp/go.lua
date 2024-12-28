@@ -23,7 +23,7 @@ local function get_lsp_client()
   return nil
 end
 
----------------------------------------------------------------------
+-----------------------------------------------------------------------
 -- Try to invoke the source.organizeImports action on save.
 --
 -- This was cobbled together with some help from these links and
@@ -36,10 +36,13 @@ end
 -- builtin client to invoke the code action but it kept doing weird changes
 -- to the buffer.
 --
--- vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+-- vim.lsp.buf.code_action({
+--   context = { only = { 'source.organizeImports' } },
+--   apply = true,
+-- })
 --
 -- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#imports
----------------------------------------------------------------------
+-----------------------------------------------------------------------
 function M.organize_imports(timeout_ms)
   local params = vim.lsp.util.make_range_params()
   params.context = { only = { 'source.organizeImports' } }

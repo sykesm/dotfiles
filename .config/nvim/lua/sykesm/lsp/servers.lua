@@ -6,7 +6,7 @@
 --- Flag that can be set to opt-out of automatic install and setup
 --- @field ensure_installed? boolean
 
---- @type table<string, ServerLSPConfig|fun(lspconfig.Config)>
+--- @type table<string, [ServerLSPConfig]|fun(lspconfig.Config)>
 local server_configs = {
   angularls = {},
   bashls = {},
