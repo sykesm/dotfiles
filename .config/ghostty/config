@@ -1,6 +1,11 @@
 theme = nightfly
 config-file = fonts/jetbrains-mono
 
+# Disable ligatures
+font-feature = -calt
+font-feature = -liga
+font-feature = -dlig
+
 # Setup new window dimensions
 window-height = 43
 window-width = 132
