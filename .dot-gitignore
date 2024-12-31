@@ -11,10 +11,20 @@
 /.config/nvim/plugin/packer_compiled.lua
 /.config/tmux/plugins/
 /.docker/buildx/
+/.docker/cli-plugins/
 /.docker/scout/
 /.dotfiles/
 /.gem/
 /.gotools/
+/.gradle/.tmp/
+/.gradle/build-scan-data/
+/.gradle/caches/
+/.gradle/daemon/
+/.gradle/kotlin-profile/
+/.gradle/native/
+/.gradle/notifications/
+/.gradle/wrapper/
+/.ivy2/cache/
 /.kube/
 /.local/
 /.m2/build-cache/
@@ -23,6 +33,7 @@
 /.nvm/
 /.oh-my-zsh/
 /.rbenv/
+/.rover/bin/
 /.rustup/
 /.stratum/registry
 /.tmux/plugins/
@@ -41,6 +52,7 @@
 /Desktop/
 /Documents/
 /Downloads/
+/eclipse-workspace/.metadata/
 /go/bin/
 /go/pkg/
 /Library/
