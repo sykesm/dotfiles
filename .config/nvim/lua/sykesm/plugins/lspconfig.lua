@@ -23,6 +23,14 @@ function M.config()
   vim.api.nvim_set_hl(0, 'LspReferenceRead', { default = true, link = 'Visual' })
   vim.api.nvim_set_hl(0, 'LspReferenceWrite', { default = true, link = 'Visual' })
 
+  ---@diagnostic disable:duplicate-set-field,inject-field
+  local open_floating_preview = vim.lsp.util.open_floating_preview
+  function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+    opts = opts or {}
+    opts.border = opts.border or 'single' -- single, double, rounded, solid, shadow
+    return open_floating_preview(contents, syntax, opts, ...)
+  end
+
   mason_lspconfig.setup_handlers({
     function(server_name)
       local config = {
