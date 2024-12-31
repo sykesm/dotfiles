@@ -7,6 +7,21 @@ local M = {
     'mfussenegger/nvim-dap',
   },
   ft = { 'java' },
+  cmd = {
+    'JdtBytecode',
+    'JdtCompile',
+    'JdtJol',
+    'JdtJshell',
+    'JdtRestart',
+    'JdtSetRuntime',
+    'JdtShowLogs',
+    'JdtShowMavenActiveProfiles',
+    'JdtUpdateConfig',
+    'JdtUpdateDebugConfig',
+    'JdtUpdateHotcode',
+    'JdtUpdateMavenActiveProfiles',
+    'JdtWipeDataAndRestart',
+  },
 }
 
 local function shell_error()
@@ -79,7 +94,10 @@ local function jdt_bundles()
     if mason_registry.is_installed(package) then
       local install_dir = mason_registry.get_package(package):get_install_path()
       for jar in vim.fn.glob(install_dir .. '/**/*.jar'):gmatch('[^\r\n]+') do
-        if not vim.endswith(jar, 'com.microsoft.java.test.runner-jar-with-dependencies.jar') then
+        if
+          not vim.endswith(jar, 'com.microsoft.java.test.runner-jar-with-dependencies.jar')
+          and not vim.endswith(jar, 'jacocoagent.jar')
+        then
           table.insert(bundles, jar)
         end
       end
