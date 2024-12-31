@@ -1,5 +1,7 @@
 theme = nightfly
+
 config-file = fonts/jetbrains-mono
+font-size = 14
 
 # Disable ligatures
 font-feature = -calt
@@ -10,6 +12,8 @@ font-feature = -dlig
 window-height = 43
 window-width = 132
 
+# Window decorations
+macos-titlebar-style = hidden
 window-padding-color = background
 
 # Setup OSC-52 clipboard features
