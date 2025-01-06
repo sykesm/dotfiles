@@ -8,6 +8,7 @@
 #
 # Some adapted from https://github.com/arcticicestudio/nord-dircolors
 
+COLORTERM ?*
 TERM Eterm
 TERM ansi
 TERM *color*
@@ -15,6 +16,7 @@ TERM con[0-9]*x[0-9]*
 TERM cons25
 TERM console
 TERM cygwin
+TERM *direct*
 TERM dtterm
 TERM gnome
 TERM hurd
