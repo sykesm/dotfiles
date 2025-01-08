@@ -12,7 +12,8 @@ if [ -n "$TERM" ] && [ -t 1 ] && [ "$(tput colors)" -ge "8" ]; then
     # us=begin underline
     # ue=end underline
     man() {
-        \env LESS_TERMCAP_mb="$(tput bold; tput setaf 6)" \
+        \env GROFF_NO_SGR="true" \
+            LESS_TERMCAP_mb="$(tput bold; tput setaf 6)" \
             LESS_TERMCAP_md="$(tput bold; tput setaf 6)" \
             LESS_TERMCAP_me="$(tput sgr0)" \
             LESS_TERMCAP_so="$(tput smso)" \
