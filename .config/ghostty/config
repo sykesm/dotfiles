@@ -1,7 +1,7 @@
 theme = nightfly
 
 config-file = fonts/jetbrains-mono
-font-size = 14
+font-size = 13
 
 # Disable ligatures
 font-feature = -calt
