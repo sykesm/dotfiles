@@ -25,9 +25,9 @@ elif [[ -x "$(command -v gdircolors)" ]]; then
 fi
 
 if test_ls_args gls --color; then
-    alias ls='gls --color'
+    alias ls='gls --color=auto'
 elif test_ls_args ls --color; then
-    alias ls='ls --color'
+    alias ls='ls --color=auto'
 fi
 
 unset -f setup_dircolors
