@@ -12,6 +12,8 @@
 	mono = !git config core.fsmonitor true && git config core.untrackedcache true
 	st = status
 	untracked = ls-files --others --exclude-standard
+[branch]
+	sort = committerdate
 [color]
 	ui = true
 [color "diff"]
@@ -20,10 +22,16 @@
 	meta = cyan
 	new = green
 	old = red
+[commit]
+	verbose = true
 [core]
 	autocrlf = input
 [diff]
+	algorithm = histogram
+	colorMoved = plain
 	compactionHeuristic = true
+	mnemonicPrefix = true
+	renames = true
 [format]
 	pretty = full
 [github]
@@ -32,10 +40,14 @@
 	followRedirects = true
 [init]
 	defaultBranch = main
+[merge]
+	conflictstyle = zdiff3
 [push]
 	default = current
 	recurseSubmodules = on-demand
 	followTags = true
+[rebase]
+	updateRefs = true
 [status]
 	submoduleSummary = true
 [submodule]
