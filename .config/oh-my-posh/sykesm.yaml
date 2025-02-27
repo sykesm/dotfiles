@@ -50,7 +50,8 @@ blocks:
     # \uF594:  (no_commits_icon)
     template: " {{ if .UpstreamURL }}{{ url .UpstreamIcon .UpstreamURL }} {{ end }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}"
     properties:
-      branch_max_length: 32
+      branch_max_length: 32 # replaced by branch_template in v25.0.0
+      branch_template: "{{ truncE 32 .Branch }}"
       fetch_status: true
       fetch_upstream_icon: true
 - type: prompt
