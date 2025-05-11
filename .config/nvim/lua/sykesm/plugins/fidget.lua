@@ -3,7 +3,7 @@
 -- Useful status updates for LSP
 return {
   'j-hui/fidget.nvim',
-  version = '~1.4.1',
+  version = '^2.0.0',
   lazy = true,
   opts = {
     integration = {

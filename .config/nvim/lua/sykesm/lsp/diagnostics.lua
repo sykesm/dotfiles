@@ -2,14 +2,6 @@
 
 local M = {}
 
--- https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization#change-diagnostic-symbols-in-the-sign-column-gutter
-local signs = {
-  Error = '',
-  Hint = '',
-  Info = '',
-  Warn = '',
-}
-
 local setup_done = false
 
 function M.setup()
@@ -18,16 +10,20 @@ function M.setup()
   end
   setup_done = true
 
-  for type, icon in pairs(signs) do
-    local hl = 'DiagnosticSign' .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  end
-
   vim.diagnostic.config({
     float = {
       header = '',
       border = 'rounded',
       source = true,
+    },
+    severity_sort = true,
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = '',
+        [vim.diagnostic.severity.WARN] = '',
+        [vim.diagnostic.severity.INFO] = '',
+        [vim.diagnostic.severity.HINT] = '',
+      },
     },
   })
 

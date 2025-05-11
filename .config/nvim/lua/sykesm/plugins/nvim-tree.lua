@@ -94,6 +94,9 @@ end
 local function window_picker()
   local tabid = vim.api.nvim_get_current_tabpage()
   local prev_windows = previous_windows_by_tabpage[tabid]
+  if not prev_windows then
+    return nil
+  end
   local window = prev_windows[#prev_windows]
   return window
 end

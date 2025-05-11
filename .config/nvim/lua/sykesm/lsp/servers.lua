@@ -6,7 +6,7 @@
 --- Flag that can be set to opt-out of automatic install and setup
 --- @field ensure_installed? boolean
 
---- @type table<string, [ServerLSPConfig]|fun(lspconfig.Config)>
+--- @type table<string, [ServerLSPConfig]|fun(lspconfig.Config)|boolean>
 local server_configs = {
   angularls = {},
   bashls = {},
@@ -71,10 +71,7 @@ local server_configs = {
     },
   },
   html = {},
-  jdtls = function(_)
-    -- Empty function used to ensure that jdtls is installed
-    -- but the setup is done by the nvim-jdtls plugin config.
-  end,
+  jdtls = false, -- Install, but don't enable
   lua_ls = {
     settings = {
       Lua = {
@@ -118,15 +115,17 @@ local server_configs = {
   vimls = {},
   yamlls = {
     handlers = {
-      ['textDocument/publishDiagnostics'] = vim.lsp.with(function(_, result, ctx, config)
+      -- err, result, ctx
+      ['textDocument/publishDiagnostics'] = function(_, result, ctx)
         local uri = result.uri
         local fname = vim.uri_to_fname(uri)
         local bufnr = vim.fn.bufadd(fname)
         if vim.bo[bufnr].filetype == 'helm' then
           result.diagnostics = {}
         end
-        vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx, config)
-      end, {}),
+        vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
+      end,
+      {},
     },
     settings = {
       redhat = {

@@ -22,3 +22,4 @@ JWT
 statsd
 noop
 subgraph
+Tailscale

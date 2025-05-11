@@ -37,6 +37,12 @@ local function on_attach(client, bufnr)
   keymap('n', 'gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
   keymap('n', 'K', vim.lsp.buf.hover, 'Hover Documentation')
 
+  local vim_diag_jump = function(count)
+    return function()
+      vim.diagnostics.jump({ count = count, float = true })
+    end
+  end
+
   if tsb then
     keymap('n', 'gd', tsb.lsp_definitions, '[G]oto [D]efinition')
     keymap('n', 'gr', tsb.lsp_references, '[G]oto [R]eferences')
@@ -56,8 +62,8 @@ local function on_attach(client, bufnr)
   keymap('n', '<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
   keymap('n', '<leader>cr', vim.lsp.codelens.run, '[C]odelens [R]un')
   keymap('n', '<leader>e', vim.diagnostic.open_float, '[E]rrors')
-  keymap('n', '[d', vim.diagnostic.goto_prev, 'Previous [D]iagnostic')
-  keymap('n', ']d', vim.diagnostic.goto_next, 'Next [D]iagnostic')
+  keymap('n', '[d', vim_diag_jump(-1), 'Previous [D]iagnostic')
+  keymap('n', ']d', vim_diag_jump(1), 'Next [D]iagnostic')
   keymap('n', '<leader>ll', vim.diagnostic.setloclist, 'Set [L]ocation [L]ist')
   keymap('n', '<leader>qf', vim.diagnostic.setqflist, 'Set [Q]uick [F]ix List')
 

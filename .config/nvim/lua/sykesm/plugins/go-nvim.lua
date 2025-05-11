@@ -6,6 +6,7 @@ return {
     'ray-x/guihua.lua', -- float term, go.nvim gui support
   },
   opts = {
+    diagnostic = false,
     lsp_codelens = true,
   },
   ft = {

@@ -3,7 +3,6 @@
 local M = {
   'mfussenegger/nvim-jdtls',
   dependencies = {
-    'williamboman/mason.nvim',
     'mfussenegger/nvim-dap',
   },
   ft = { 'java' },
@@ -82,17 +81,31 @@ local function java_format_settings()
   return nil
 end
 
+--- Gets a path to a package managed by Mason.
+---@param pkg string
+---@param path? string
+local function get_mason_package_path(pkg, path)
+  local root = vim.env.MASON or (vim.fn.stdpath('data') .. '/mason')
+  local ret = root .. '/packages/' .. pkg
+  if path then
+    ret = ret .. '/' .. path
+  end
+  if not vim.uv.fs_stat(ret) then ---@diagnostic disable-line: undefined-field
+    return nil
+  end
+  return ret
+end
+
 local function jdtls_install_path()
-  return require('mason-registry').get_package('jdtls'):get_install_path()
+  return get_mason_package_path('jdtls')
 end
 
 local function jdt_bundles()
   local bundles = {}
 
-  local mason_registry = require('mason-registry')
   for _, package in ipairs({ 'java-debug-adapter', 'java-test' }) do
-    if mason_registry.is_installed(package) then
-      local install_dir = mason_registry.get_package(package):get_install_path()
+    local install_dir = get_mason_package_path(package)
+    if install_dir then
       for jar in vim.fn.glob(install_dir .. '/**/*.jar'):gmatch('[^\r\n]+') do
         if
           not vim.endswith(jar, 'com.microsoft.java.test.runner-jar-with-dependencies.jar')
@@ -240,6 +253,18 @@ local function setup_keymaps(_, bufnr)
   -- keymap('v', '<leader>cxv', jdtls.extract_variable_all(true), 'Extract Variable')
   -- keymap('v', '<leader>cxc', jdtls.extract_constant(true), 'Extract Constant')
 end
+
+-- May 11, 2025
+-- There's an ASM compatibiltiy issue across jdtls and java test.
+-- This shows up as a BundleException during startup:
+--
+--   org.osgi.framework.BundleException: Could not resolve module: com.microsoft.java.test.plugin [208]
+--     Unresolved requirement: Require-Bundle: org.jacoco.core; bundle-version="0.8.12"
+--       -> Bundle-SymbolicName: org.jacoco.core; bundle-version="0.8.12.202403310830"
+--          org.jacoco.core [224]
+--            Unresolved requirement: Import-Package: org.objectweb.asm; version="[9.7.0,9.8.0)"
+--
+-- https://open-vsx.org/extension/vscjava/vscode-java-test
 
 function M.config(_, opts)
   local function lsp_on_attach(client, bufnr)
