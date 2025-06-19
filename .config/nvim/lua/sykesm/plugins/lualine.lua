@@ -1,9 +1,9 @@
 --  lualine.lua
 
 local symbols = {
-  colnr = '\u{e0a3}:',
-  linenr = '\u{e0a1}:',
-  maxlinenr = '\u{2630} ',
+  colnr = '\u{e0a3}:', -- 
+  linenr = '\u{e0a1}:', -- 
+  maxlinenr = '\u{2261} ', -- ☰
 }
 
 local function progress_location()
