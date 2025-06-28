@@ -12,12 +12,10 @@ if [ -z "$XDG_CACHE_HOME" ]; then
     export XDG_CACHE_HOME="$HOME/.cache"
 fi
 
-if [[ -z "${HOMEBREW_PREFIX}" ]] || [[ ! ":$PATH:" == *":$HOMEBREW_PREFIX/bin:"* ]]; then
-    if [[ -x /opt/homebrew/bin/brew ]]; then
-        eval $(/opt/homebrew/bin/brew shellenv)
-    elif [[ -x /usr/local/Homebrew/bin ]]; then
-        eval $(/usr/local/Homebrew/bin/brew shellenv)
-    fi
+if [[ -x /opt/homebrew/bin/brew ]]; then
+    eval $(/opt/homebrew/bin/brew shellenv)
+elif [[ -x /usr/local/Homebrew/bin ]]; then
+    eval $(/usr/local/Homebrew/bin/brew shellenv)
 fi
 
 if [[ -d "$HOMEBREW_PREFIX/share/zsh/site-functions" ]]; then
