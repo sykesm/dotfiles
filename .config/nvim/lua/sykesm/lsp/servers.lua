@@ -42,6 +42,7 @@ local server_configs = {
           shadow = false,
           unusedparams = true,
           S1016 = false, -- https://staticcheck.dev/docs/checks/#S1016
+          ST1000 = false, -- https://staticcheck.dev/docs/checks/#ST1000
         },
         buildFlags = { '-tags=unit,integration' }, -- example: { '-tags=unit' }
         codelenses = {
