@@ -1,7 +1,7 @@
 -- servers.lua - LSP server configurations
 
 --- Extended LSP server configuration
---- @class ServerLSPConfig : lspconfig.Config
+--- @class ServerLSPConfig : vim.lsp.Config
 ---
 --- Flag that can be set to opt-out of automatic install and setup
 --- @field ensure_installed? boolean
