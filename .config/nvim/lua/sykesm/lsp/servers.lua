@@ -85,16 +85,10 @@ local server_configs = {
   rust_analyzer = {
     settings = {
       ['rust-analyzer'] = {
-        assist = {
-          importMergeBehavior = 'last',
-          importPrefix = 'by_self',
-        },
         cargo = {
           loadOutDirsFromCheck = true,
         },
-        checkOnSave = {
-          command = 'clippy',
-        },
+        checkOnSave = true,
         diagnostics = {
           disabled = { 'unresolved-import' },
         },
