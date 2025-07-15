@@ -17,8 +17,9 @@ vim.opt.complete:remove('i')                      -- don't search included files
 vim.opt.completeopt = 'menuone,noinsert,noselect' -- use popup menu for one or more matches, no selection
 vim.opt.display:append('lastline')                -- display as much as possible of the last line
 vim.opt.expandtab = true                          -- use spaces instead of tabs in insert mode
-vim.opt.foldmethod = 'indent'                     -- syntax highlighting items specify folds
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- treesitter determines fold level
 vim.opt.foldlevel = 20                            -- folds with a higher level than this will be closed
+vim.opt.foldmethod = 'expr'                       -- foldexpr determines fold level
 vim.opt.formatoptions:append('r')                 -- insert the comment leader after enter in insert mode
 vim.opt.history = 1000                            -- keep 1000 lines of command line history
 vim.opt.hlsearch = true                           -- highlight the found search string
