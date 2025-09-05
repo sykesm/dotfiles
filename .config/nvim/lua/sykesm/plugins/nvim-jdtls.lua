@@ -52,12 +52,10 @@ end
 
 local function java_runtimes()
   local jdks = {
-    { name = 'JavaSE-1.8', version = 8 },
     { name = 'JavaSE-11', version = 11 },
     { name = 'JavaSE-17', version = 17 },
     { name = 'JavaSE-21', version = 21 },
-    { name = 'JavaSE-22', version = 22 },
-    { name = 'JavaSE-23', version = 23 },
+    { name = 'JavaSE-24', version = 24 },
   }
 
   local runtimes = {}
