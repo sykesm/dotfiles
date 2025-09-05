@@ -276,6 +276,7 @@ function M.config(_, opts)
     require('sykesm.lsp.on-attach')(client, bufnr)
     require('jdtls').setup_dap(opts.dap)
     require('jdtls.dap').setup_dap_main_class_configs(opts.dap_main)
+    require('jdtls').settings.jdt_uri_timeout_ms = 15000
     setup_keymaps(client, bufnr)
   end
 
