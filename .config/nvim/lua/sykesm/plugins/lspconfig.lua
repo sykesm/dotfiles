@@ -11,7 +11,6 @@ local M = {
 }
 
 function M.config()
-  require('lspconfig')
   require('sykesm.lsp.diagnostics').setup()
   require('sykesm.lsp.regal').setup()
 
