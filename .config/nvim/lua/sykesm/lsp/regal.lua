@@ -29,14 +29,17 @@ function M.setup()
   local util = require('lspconfig.util')
   local root_pattern = util.root_pattern('.regal', '.oparoot', '.manifest', '*.rego')
 
-  require('lspconfig').regal.setup({
+  vim.lsp.config('regal', {
     cmd = { path, 'language-server' },
     capabilities = require('sykesm.lsp.capabilities').create(),
     on_attach = require('sykesm.lsp.on-attach'),
-    root_dir = function(fname)
-      return root_pattern(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+    root_dir = function(bufnr, on_dir)
+      local fname = vim.api.nvim_buf_get_name(bufnr)
+      local activate = root_pattern(fname) or vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+      return on_dir(activate)
     end,
   })
+  vim.lsp.enable('regal')
 end
 
 return M
