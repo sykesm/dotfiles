@@ -142,6 +142,12 @@ local M = {
         },
       },
     },
+    view = {
+      width = {
+        min = 30,
+        max = '50%',
+      },
+    },
     on_attach = function(bufnr)
       local nvim_tree = require('nvim-tree.api')
       local function opts(desc)

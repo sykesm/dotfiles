@@ -22,9 +22,11 @@ end
 
 local M = {
   'nvim-lualine/lualine.nvim',
+  dependencies = {
+    'nvim-tree/nvim-web-devicons',
+  },
   opts = {
     options = {
-      -- section_separators = { left = '', right = '' }, -- https://github.com/nvim-lualine/lualine.nvim/issues/773
       disabled_filetypes = {
         'NvimTree',
         'neo-tree',
@@ -48,9 +50,5 @@ local M = {
     },
   },
 }
-
-function M.config(_, opts)
-  require('lualine').setup(opts)
-end
 
 return M

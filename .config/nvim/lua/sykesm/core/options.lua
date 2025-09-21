@@ -15,6 +15,7 @@ vim.opt.clipboard:prepend('unnamedplus')          -- yank to and paste from the 
 vim.opt.cmdheight = 1                             -- height of cmd line area (0 is experimental and disables)
 vim.opt.complete:remove('i')                      -- don't search included files for completion
 vim.opt.completeopt = 'menuone,noinsert,noselect' -- use popup menu for one or more matches, no selection
+vim.opt.diffopt:append('algorithm:patience')      -- use patience diff algorithm instead of myers
 vim.opt.display:append('lastline')                -- display as much as possible of the last line
 vim.opt.expandtab = true                          -- use spaces instead of tabs in insert mode
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- treesitter determines fold level

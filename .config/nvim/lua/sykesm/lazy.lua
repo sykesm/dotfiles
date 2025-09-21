@@ -21,6 +21,14 @@ require('lazy').setup({ import = 'sykesm.plugins' }, {
   change_detection = {
     notify = false,
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'netrw',
+        'netrwPlugin',
+      },
+    },
+  },
   rocks = {
     enabled = false,
   },

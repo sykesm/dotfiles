@@ -75,8 +75,6 @@ local M = {
 
 function M.opts()
   local actions = require('telescope.actions')
-  local previewers = require('telescope.previewers')
-  local sorters = require('telescope.sorters')
 
   return {
     defaults = {
@@ -116,9 +114,7 @@ function M.opts()
           preview_cutoff = 20,
         },
       },
-      file_sorter = sorters.get_fuzzy_file,
       file_ignore_patterns = {},
-      generic_sorter = sorters.get_generic_fuzzy_sorter,
       dynamic_preview_title = true,
       path_display = {
         shorten = {
@@ -133,12 +129,6 @@ function M.opts()
       color_devicons = true,
       use_less = true,
       set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
-      file_previewer = previewers.vim_buffer_cat.new,
-      grep_previewer = previewers.vim_buffer_vimgrep.new,
-      qflist_previewer = previewers.vim_buffer_qflist.new,
-
-      -- Developer configurations: Not meant for general override
-      buffer_previewer_maker = previewers.buffer_previewer_maker,
     },
     extensions = {
       ['ui-select'] = {

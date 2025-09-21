@@ -11,7 +11,7 @@ local M = {
     'saadparwaiz1/cmp_luasnip', -- completion from snippets
     {
       'L3MON4D3/LuaSnip', -- snippets engine
-      version = '~2.0',
+      version = '*',
       build = 'make install_jsregexp',
       cond = vim.fn.executable('make') == 1,
       dependencies = {

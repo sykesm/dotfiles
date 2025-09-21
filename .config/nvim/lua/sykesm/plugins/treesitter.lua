@@ -21,6 +21,7 @@ local M = {
         'bash',
         'c',
         'css',
+        'diff',
         'elixir',
         'glimmer',
         'go',
