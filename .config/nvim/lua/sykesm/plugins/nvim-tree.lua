@@ -145,7 +145,7 @@ local M = {
     view = {
       width = {
         min = 30,
-        max = '50%',
+        max = '25%',
       },
     },
     on_attach = function(bufnr)

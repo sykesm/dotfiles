@@ -44,6 +44,7 @@ vim.opt.shortmess:append('c')                     -- turn off completion message
 vim.opt.showbreak = '↪'                           -- show at start of wrapped lines
 vim.opt.showcmd = true                            -- display incomplete commands
 vim.opt.showmatch = true                          -- when bracket is inserted, briefly jump to matching bracket
+vim.opt.sidescrolloff = 3                         -- minimum screen columns to keep above/below cursor
 vim.opt.smartcase = true                          -- override ignorecase if search contains an upper case char
 vim.opt.smartindent = true                        -- smart indenting when starting a new line
 vim.opt.smarttab = true                           -- insrt blanks on <tab> according to shiftwidth
