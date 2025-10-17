@@ -7,3 +7,5 @@ elif [[ -x "$(command -v vim)" ]]; then
 elif [[ -x "$(command -v vi)" ]]; then
     export VISUAL=vi
 fi
+
+export EDITOR="$VISUAL"
