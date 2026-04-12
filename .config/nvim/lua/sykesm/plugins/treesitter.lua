@@ -1,156 +1,119 @@
 -- treesitter.lua
 
+local ensure_installed = {
+  'bash',
+  'c',
+  'css',
+  'diff',
+  'elixir',
+  'glimmer',
+  'go',
+  'gomod',
+  'gosum',
+  'gowork',
+  'graphql',
+  'hcl',
+  'html',
+  'java',
+  'javascript',
+  'json',
+  'kotlin',
+  'lua',
+  'markdown',
+  'markdown_inline',
+  'python',
+  'rego',
+  'ruby',
+  'rust',
+  'sql',
+  'toml',
+  'typescript',
+  'vim',
+  'vimdoc',
+  'yaml',
+}
+
+local function missing_parsers()
+  local installed = require('nvim-treesitter.config').get_installed()
+  return vim
+    .iter(ensure_installed)
+    :filter(function(p)
+      return not vim.tbl_contains(installed, p)
+    end)
+    :totable()
+end
+
+---@return boolean
+local function install_treesitter_cli()
+  if vim.fn.exepath('tree-sitter') ~= '' then
+    return true
+  end
+
+  local pkg = require('mason-registry').get_package('tree-sitter-cli')
+  if not pkg:is_installed() then
+    local completed = nil
+    pkg:install(nil, function(success, _)
+      completed = success
+    end)
+    vim.wait(10 * 1000, function()
+      return completed ~= nil
+    end, 100)
+    return completed == true
+  end
+  return false
+end
+
+local function install_missing_parsers()
+  local missing = missing_parsers()
+  if #missing == 0 then
+    return
+  end
+  if not install_treesitter_cli() then
+    print('tree-sitter-cli is not available')
+    return
+  end
+  require('nvim-treesitter').install(missing):wait(60 * 1000)
+end
+
 local M = {
   {
     'nvim-treesitter/nvim-treesitter', -- AST based syntax highlighting and navigation
-    build = function()
-      require('nvim-treesitter.install').update({
-        with_sync = true,
-      })
+    branch = 'main',
+    dependencies = { 'mason-org/mason.nvim' },
+    event = { 'BufReadPost', 'BufNewFile', 'VeryLazy' },
+
+    ---@param _ LazyPlugin
+    build = function(_)
+      require('nvim-treesitter').update({ summary = true })
     end,
-    event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
-    lazy = vim.fn.argc(-1) == 0,
-    init = function(plugin)
-      -- This is needed because a bunch of plugins no longer `require("nvim-treesitter")`, which
-      -- no longer triggers the **nvim-treesitter** module to be loaded in time.
-      require('lazy.core.loader').add_to_rtp(plugin)
-      require('nvim-treesitter.query_predicates')
-    end,
-    opts = {
-      ensure_installed = {
-        'bash',
-        'c',
-        'css',
-        'diff',
-        'elixir',
-        'glimmer',
-        'go',
-        'gomod',
-        'gosum',
-        'gowork',
-        'graphql',
-        'hcl',
-        'html',
-        'java',
-        'javascript',
-        'json',
-        'jsonc',
-        'kotlin',
-        'lua',
-        'markdown',
-        'markdown_inline',
-        'python',
-        'ruby',
-        'rego',
-        'rust',
-        'sql',
-        'query',
-        'toml',
-        'typescript',
-        'vim',
-        'vimdoc',
-        'yaml',
-      },
-      ignore_install = { -- List of parsers to ignore installing
-        'comment', -- Experiment to see how this chages rendering
-      },
-      highlight = {
-        enable = true, -- false will disable the whole extension
-        additional_vim_regex_highlighting = false,
-        disable = {
-          'comment', -- Experiment to see how this chages rendering
-        },
-      },
-      indent = {
-        enable = false,
-      },
-      matchup = {
-        enable = true,
-        disable = {}, -- "c", "ruby"
-        disable_virtual_text = false,
-        include_match_words = false,
-      },
-      playground = {
-        enable = true,
-      },
-      query_linter = {
-        enable = true,
-        use_virtual_text = true,
-        lint_events = { 'BufWrite', 'CursorHold' },
-      },
-      rainbow = {
-        enable = true,
-        extended_mode = true,
-        max_file_lines = 10000,
-        colors = {
-          '#fc514e',
-          '#a1cd5e',
-          '#e3d18a',
-          '#82aaff',
-          '#c792ea',
-          '#7fdbca',
-          '#a1aab8',
-        },
-      },
-      textobjects = { -- syntax-aware textobjects
-        enable = true,
-        lsp_interop = {
-          enable = true,
-          peek_definition_code = {
-            ['<leader>df'] = '@function.outer',
-            ['<leader>dF'] = '@class.outer',
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            [']m'] = '@function.outer',
-            [']]'] = '@class.outer',
-          },
-          goto_next_end = {
-            [']M'] = '@function.outer',
-            [']['] = '@class.outer',
-          },
-          goto_previous_start = {
-            ['[m'] = '@function.outer',
-            ['[['] = '@class.outer',
-          },
-          goto_previous_end = {
-            ['[M'] = '@function.outer',
-            ['[]'] = '@class.outer',
-          },
-        },
-        select = {
-          enable = true,
-          lookahead = true,
-          keymaps = {
-            ['af'] = '@function.outer',
-            ['if'] = '@function.inner',
-            ['ac'] = '@class.outer',
-            ['ic'] = '@class.inner',
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            ['<leader>a'] = '@parameter.inner',
-          },
-          swap_previous = {
-            ['<leader>A'] = '@parameter.inner',
-          },
-        },
-      },
-    },
+
+    ---@param _ LazyPlugin
     ---@param opts TSConfig
+    ---@diagnostic disable-next-line: unused-local
     config = function(_, opts)
-      require('nvim-treesitter.configs').setup(opts)
+      install_missing_parsers()
+
+      local group = vim.api.nvim_create_augroup('TreesitterSetup', { clear = true })
+      vim.api.nvim_create_autocmd('FileType', {
+        group = group,
+        desc = 'Enable Treesitter highlighting',
+        pattern = '*',
+        callback = function(args)
+          local ft = vim.bo[args.buf].filetype
+          local lang = vim.treesitter.language.get_lang(ft) or ft
+          pcall(vim.treesitter.start, args.buf, lang)
+        end,
+      })
+      local ts = require('nvim-treesitter')
+      ts.setup(opts)
     end,
   },
   {
     'nvim-treesitter/nvim-treesitter-textobjects',
+    branch = 'main',
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     event = { 'BufReadPre', 'BufNewFile', 'VeryLazy' },
+    opts = {},
   },
 }
 
