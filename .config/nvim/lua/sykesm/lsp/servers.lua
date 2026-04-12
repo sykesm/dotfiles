@@ -114,15 +114,17 @@ local server_configs = {
   vimls = {},
   yamlls = {
     handlers = {
-      -- err, result, ctx
-      ['textDocument/publishDiagnostics'] = function(_, result, ctx)
-        local uri = result.uri
+      ---@param err lsp.ResponseError?
+      ---@param params lsp.PublishDiagnosticsParams
+      ---@param ctx lsp.HandlerContext
+      ['textDocument/publishDiagnostics'] = function(err, params, ctx)
+        local uri = params.uri
         local fname = vim.uri_to_fname(uri)
         local bufnr = vim.fn.bufadd(fname)
         if vim.bo[bufnr].filetype == 'helm' then
-          result.diagnostics = {}
+          params.diagnostics = {}
         end
-        vim.lsp.diagnostic.on_publish_diagnostics(_, result, ctx)
+        vim.lsp.diagnostic.on_publish_diagnostics(err, params, ctx)
       end,
       {},
     },
