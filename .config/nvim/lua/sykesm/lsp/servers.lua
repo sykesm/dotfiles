@@ -9,7 +9,11 @@
 --- @type table<string, [ServerLSPConfig]|fun(lspconfig.Config)|boolean>
 local server_configs = {
   angularls = {},
-  bashls = {},
+  bashls = {
+    settings = {
+      shfmt = { path = '' }, -- disable formatting
+    },
+  },
   cssls = {},
   dockerls = {},
   emmet_ls = {
