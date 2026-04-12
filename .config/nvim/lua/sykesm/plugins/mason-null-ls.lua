@@ -3,7 +3,7 @@
 local M = {
   'jay-babu/mason-null-ls.nvim', -- bridges gap between mason & null-ls
   dependencies = {
-    'williamboman/mason.nvim',
+    'mason-org/mason.nvim',
     'nvimtools/none-ls.nvim',
   },
   event = { 'BufReadPre', 'BufNewFile' },
