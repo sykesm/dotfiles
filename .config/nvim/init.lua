@@ -7,10 +7,13 @@ require('sykesm.core.clipboard')
 require('sykesm.core.highlight')
 require('sykesm.core.keymaps')
 
+if vim.fn.has('nvim-0.12.1') == 1 then
+  require('vim._core.ui2').enable({})
+end
+
 if vim.env.NVIM_LSP_DEBUG then
-  vim.lsp.set_log_level('debug')
+  local llog = require('vim.lsp.log')
   vim.print(require('sykesm.lsp.capabilities').create())
-  if vim.fn.has('nvim-0.5.1') == 1 then
-    require('vim.lsp.log').set_format_func(vim.inspect)
-  end
+  llog.set_level('debug')
+  llog.set_format_func(vim.inspect)
 end
