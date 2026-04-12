@@ -57,7 +57,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter' }, {
 
 -- pom.xml
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-  pattern = 'pom.xml',
+  pattern = { 'pom.xml', '**/pom.xml' },
   command = 'setlocal noexpandtab shiftwidth=4 tabstop=4',
 })
--- autocmd BufNewFile,BufRead pom.xml,**/pom.xml setl noexpandtab shiftwidth=4 tabstop=4
