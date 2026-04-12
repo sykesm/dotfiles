@@ -40,7 +40,7 @@ end
 
 local M = {
   'nvim-telescope/telescope.nvim',
-  branch = 'master',
+  version = '*',
   cmd = 'Telescope',
   dependencies = {
     'nvim-lua/plenary.nvim',
