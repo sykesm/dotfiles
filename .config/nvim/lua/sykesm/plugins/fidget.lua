@@ -6,9 +6,9 @@ return {
   version = '^2.0.0',
   lazy = true,
   opts = {
-    integration = {
-      ['nvim-tree'] = {
-        enable = false,
+    notification = {
+      window = {
+        avoid = { 'NvimTree' },
       },
     },
   },
