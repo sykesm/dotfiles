@@ -3,10 +3,10 @@
 -- Most of the code that's in here exists to try to make nvim-tree behave
 -- like NerdTree and neo-tree when opening a file after a split. Out of the
 -- box, the window needs to be manually selected. If that's disabled, the
--- picker uses the window caused the file tree to open, not the window that
--- was active before entering the file tree.
+-- picker uses the window that caused the file tree to open, not the window
+-- that was active before entering the file tree.
 --
--- This uses a somewhat hacky solution that's cobled together from GitHub
+-- This uses a somewhat hacky solution that's cobbled together from GitHub
 -- issues and code that lives in neo-tree. The idea is to register an autocmd
 -- for WinLeave and use that to maintain a list of the last several windows
 -- that have been used. When it's time to select one, the most recently visited
@@ -154,7 +154,7 @@ local M = {
         return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
       end
 
-      nvim_tree.config.mappings.default_on_attach(bufnr)
+      nvim_tree.map.on_attach.default(bufnr)
       vim.keymap.set('n', '?', nvim_tree.tree.toggle_help, opts('Help'))
     end,
   },
