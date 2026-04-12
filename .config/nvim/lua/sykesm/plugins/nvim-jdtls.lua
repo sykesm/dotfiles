@@ -197,6 +197,11 @@ function M.opts()
             'sun.*',
           },
         },
+        diagnostic = {
+          filter = {
+            '**/generated-sources/**/*',
+          },
+        },
         sources = {
           organizeImports = {
             starThreshold = 9999,
