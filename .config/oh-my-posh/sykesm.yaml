@@ -1,13 +1,13 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 ---
-version: 3
+version: 4
 final_space: true
-console_title_template: "{{ .UserName }}@{{ (.HostName | split \".\")._0 }}:{{.PWD}}"
+console_title_template: '{{ .UserName }}@{{ (.HostName | split ".")._0 }}:{{.PWD}}'
 shell_integration: true
 blocks:
 - type: prompt
   alignment: left
-  newline: false # enable if using transient_prompt
+  newline: false
   segments:
   - type: text
     style: plain
@@ -15,7 +15,7 @@ blocks:
   - type: session
     style: plain
     foreground: magenta
-    template: "{{ (.HostName | split \".\")._0  }}"
+    template: '{{ (.HostName | split ".")._0  }}'
   - type: text
     style: plain
     template: "|"
@@ -23,7 +23,7 @@ blocks:
     style: plain
     foreground: cyan
     template: " {{ .Path }}"
-    properties:
+    options:
       style: folder
   - type: git
     style: plain
@@ -49,8 +49,7 @@ blocks:
     # \uF417:  (commit_icon)
     # \uF594:  (no_commits_icon)
     template: " {{ if .UpstreamURL }}{{ url .UpstreamIcon .UpstreamURL }} {{ end }}{{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}"
-    properties:
-      branch_max_length: 32 # replaced by branch_template in v25.0.0
+    options:
       branch_template: "{{ truncE 32 .Branch }}"
       fetch_status: true
       fetch_upstream_icon: true
@@ -63,11 +62,5 @@ blocks:
     foreground_templates:
     - "{{ if eq .Code 0 }}green{{ else }}red{{ end }}"
     template: <b>➜</b>
-    properties:
+    options:
       always_enabled: true
-# transient_prompt:
-#   background: transparent
-#   foreground_templates:
-#   - "{{ if eq .Code 0 }}green{{ else }}red{{ end }}"
-#   final_space:
-#   template: <b>➜ </b>
