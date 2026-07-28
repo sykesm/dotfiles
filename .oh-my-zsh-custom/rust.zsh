@@ -1,6 +1,8 @@
 # vi: set ft=zsh:
 
-if [[ -f "$HOME/.cargo/env" ]]; then
+if [[ "$(uname)" == "Darwin" ]] && [[ -x "$(command -v brew)" ]] && brew --prefix --installed rustup >/dev/null 2>&1; then
+    export PATH="$(brew --prefix rustup)/bin:$PATH"
+elif [[ -f "$HOME/.cargo/env" ]]; then
     source "$HOME/.cargo/env"
 fi
 
