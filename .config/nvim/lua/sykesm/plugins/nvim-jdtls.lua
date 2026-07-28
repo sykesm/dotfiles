@@ -136,6 +136,7 @@ end
 local function jdtls_cmd(root_dir)
   local cmd = {
     'jdtls',
+    '--jvm-arg=-Djava.import.generatesMetadataFilesAtProjectRoot=false',
     string.format('--jvm-arg=-javaagent:%s', jdtls_install_path() .. '/lombok.jar'),
   }
 
