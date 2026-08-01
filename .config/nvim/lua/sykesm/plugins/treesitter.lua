@@ -100,7 +100,7 @@ local M = {
         pattern = '*',
         callback = function(args)
           local ft = vim.bo[args.buf].filetype
-          local lang = vim.treesitter.language.get_lang(ft) or ft
+          local lang = vim.treesitter.language.get_lang(ft)
           pcall(vim.treesitter.start, args.buf, lang)
         end,
       })
