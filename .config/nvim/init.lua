@@ -4,6 +4,7 @@ require('sykesm.core.options')
 require('sykesm.lazy')
 require('sykesm.core.augroups')
 require('sykesm.core.clipboard')
+require('sykesm.core.filetypes')
 require('sykesm.core.highlight')
 require('sykesm.core.keymaps')
 
