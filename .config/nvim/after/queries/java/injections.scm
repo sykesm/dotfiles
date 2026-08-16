@@ -1,9 +1,17 @@
 ; extends
 
-;; Common JDBC methods
+;; Common database query methods
 (method_invocation
   name: (identifier) @method_name
-  (#any-of? @method_name "prepareStatement" "executeQuery" "executeUpdate")
+  (#any-of? @method_name
+   ; Core JDBC
+   "executeQuery" "executeUpdate" "prepareCall" "prepareStatement"
+   ; JPA / EntityManager
+   "createNativeQuery" "createNamedNativeQuery"
+   ; Spring JdbcTemplate
+   "batchUpdate" "query" "queryForList" "queryForMap" "queryForObject"
+   ; Spring Boot JdbcClient / DatabaseClient
+   "sql")
   arguments: (argument_list
     (string_literal
       [(string_fragment) (multiline_string_fragment)] @injection.content))
