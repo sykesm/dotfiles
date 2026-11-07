@@ -69,7 +69,8 @@ let s:jes2 = [
       \ 'SETUP', 'SIGNOFF', 'SIGNON', 'XEQ', 'XMIT',
       \ ]
 exe 'syn match jclJes3 /^\/\/\*' . s:Alt(s:jes3) . '\>.*/'
-syn match jclJes3 /^\/\/\*\*.*/
+" JES3 command statement: //** followed by the command verb
+syn match jclJes3 /^\/\/\*\*[A-Z].*/
 syn match jclDelim /^\/\*\%(\s.*\)\?$/
 exe 'syn match jclJes2 /^\/\*' . s:Alt(s:jes2) . '\>.*/'
 syn match jclJes2 /^\/\*\$.*/
@@ -267,12 +268,13 @@ syn match jclExecPgm  /PGM=/  contained nextgroup=jclUtility,jclPgm,jclOperands,
 syn match jclExecProc /PROC=/ contained nextgroup=jclUtility,jclProcRef,jclOperands,jclOperandsC
 syn match jclOp /EXEC\%(\s\|$\)\@=/ contained nextgroup=jclOperands,jclOperandsC,jclProcRef,jclUtility,jclExecPgm,jclExecProc skipwhite
 
-" card layout, over everything except comment statements and data
-" (in-stream data uses all 80 columns; control statements only 1-72)
+" card layout: the col 72 mark only means something on statements; cols 73-80
+" look the same on every line (data may use them, but they are usually
+" sequence numbers there too)
 let s:noCard = 'jclCommentStmt,jclJes2,jclJes3,jclDataS,jclDataT,jclDlmS,jclDlmT'
 let s:ctl = join(s:langGroups + ['jclUCmtC', 'jclUCmtDash', 'jclUCmtStar'], ',')
 exe 'syn match jclCol72   /\%72v\S/  containedin=ALLBUT,' . s:noCard . ',' . s:ctl . ',jclCol72Mark'
-exe 'syn match jclSeqArea /\%>72v.*/ containedin=ALLBUT,' . s:noCard
+syn match jclSeqArea /\%>72v.*/ containedin=ALL
 
 hi def link jclIdent Delimiter
 hi def link jclName Identifier
