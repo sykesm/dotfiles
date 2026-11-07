@@ -290,7 +290,8 @@ function M.config(_, opts)
   local function attach_jdtls()
     local root_dir = project_root()
 
-    local config = vim.tbl_deep_extend('force', opts, {
+    local project = require('sykesm.project').lsp(root_dir, 'jdtls')
+    local config = vim.tbl_deep_extend('force', opts, project, {
       root_dir = root_dir,
       cmd = jdtls_cmd(root_dir),
       cmd_env = {

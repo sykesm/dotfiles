@@ -37,6 +37,7 @@ function M.config()
     callback = function(args)
       local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
       require('sykesm.lsp.on-attach')(client, args.buf)
+      require('sykesm.project').apply(client)
     end,
   })
 
