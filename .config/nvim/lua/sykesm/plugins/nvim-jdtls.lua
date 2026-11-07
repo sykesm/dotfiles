@@ -294,7 +294,7 @@ function M.config(_, opts)
       root_dir = root_dir,
       cmd = jdtls_cmd(root_dir),
       cmd_env = {
-        JAVA_HOME = java_home_macos(21),
+        JAVA_HOME = java_home_macos(25), -- jdtls 1.63 requires JavaSE-25
       },
       on_attach = lsp_on_attach,
       init_options = {
