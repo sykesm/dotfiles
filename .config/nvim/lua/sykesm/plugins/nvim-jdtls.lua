@@ -140,7 +140,8 @@ local function jdtls_cmd(root_dir)
     string.format('--jvm-arg=-javaagent:%s', jdtls_install_path() .. '/lombok.jar'),
   }
 
-  local project_name = root_dir and vim.fs.basename(root_dir)
+  -- The hash keeps same-named checkouts from sharing a workspace.
+  local project_name = root_dir and (vim.fs.basename(root_dir) .. '-' .. vim.fn.sha256(root_dir):sub(1, 8))
   if project_name then
     vim.list_extend(cmd, {
       '-configuration',
