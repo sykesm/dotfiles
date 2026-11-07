@@ -238,11 +238,11 @@ local function setup_keymaps(_, bufnr)
   end
 
   local function save_and(f, ...)
-    if vim.bo.modified then
-      vim.cmd('w')
-    end
     local args = { ... }
     return function()
+      if vim.bo.modified then
+        vim.cmd('w')
+      end
       f(unpack(args))
     end
   end
