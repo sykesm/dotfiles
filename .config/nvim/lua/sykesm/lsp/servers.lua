@@ -5,6 +5,9 @@
 ---
 --- Flag that can be set to opt-out of automatic install and setup
 --- @field ensure_installed? boolean
+---
+--- Flag that can be set to false to format on request only, not on save
+--- @field format_on_save? boolean
 
 --- @type table<string, [ServerLSPConfig]|fun(lspconfig.Config)|boolean>
 local server_configs = {
@@ -113,6 +116,7 @@ local server_configs = {
   end,
   vimls = {},
   yamlls = {
+    format_on_save = false,
     handlers = {
       ---@param err lsp.ResponseError?
       ---@param params lsp.PublishDiagnosticsParams

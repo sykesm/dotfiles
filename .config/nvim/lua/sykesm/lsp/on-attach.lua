@@ -2,13 +2,18 @@
 -- https://github.com/jose-elias-alvarez/null-ls.nvim/wiki/Avoiding-LSP-formatting-conflicts
 local lsp_format_group = vim.api.nvim_create_augroup('LspFormatting', {})
 
+local function format_on_save(client)
+  return client.config.format_on_save ~= false
+end
+
 local function lsp_format(bufnr)
-  vim.lsp.buf.format({
-    bufnr = bufnr,
-    -- filter = function(client)
-    --   return client.name ~= 'typescript-tools'
-    -- end,
-  })
+  -- Checked at write time: servers such as jdtls register formatting
+  -- dynamically, after on_attach has already run.
+  local clients = vim.lsp.get_clients({ bufnr = bufnr, method = 'textDocument/formatting' })
+  if not vim.iter(clients):any(format_on_save) then
+    return
+  end
+  vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 3000, filter = format_on_save })
 end
 
 local lsp_doc_highlight_group = vim.api.nvim_create_augroup('LSPDocumentHighlight', {})
@@ -73,21 +78,15 @@ local function on_attach(client, bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [List] Folders')
 
-  -- Set some keybinds conditional on server capabilities
-  if client.server_capabilities.documentFormattingProvider then
-    keymap('n', '<leader>f', vim.lsp.buf.format, '[F]ormat')
-    vim.api.nvim_clear_autocmds({ group = lsp_format_group, buffer = bufnr })
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = lsp_format_group,
-      buffer = bufnr,
-      callback = function()
-        lsp_format(bufnr)
-      end,
-    })
-  end
-  if client.server_capabilities.documentRangeFormattingProvider then
-    keymap('v', '<leader>f', vim.lsp.buf.format, '[F]ormat')
-  end
+  keymap({ 'n', 'v' }, '<leader>f', vim.lsp.buf.format, '[F]ormat')
+  vim.api.nvim_clear_autocmds({ group = lsp_format_group, buffer = bufnr })
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = lsp_format_group,
+    buffer = bufnr,
+    callback = function()
+      lsp_format(bufnr)
+    end,
+  })
 
   -- Set autocommands conditional on server_capabilities
   if client.server_capabilities.documentHighlightProvider then
