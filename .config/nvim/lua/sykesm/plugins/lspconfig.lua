@@ -28,7 +28,16 @@ function M.config()
 
   vim.lsp.config('*', {
     capabilities = require('sykesm.lsp.capabilities').create(),
-    on_attach = require('sykesm.lsp.on-attach'),
+  })
+
+  -- An autocmd rather than on_attach in the '*' config: an on_attach in a
+  -- server's lsp/<name>.lua (rust_analyzer has one) replaces the '*' one.
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('SykesmLspAttach', { clear = true }),
+    callback = function(args)
+      local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+      require('sykesm.lsp.on-attach')(client, args.buf)
+    end,
   })
 
   local servers = require('sykesm.lsp.servers')

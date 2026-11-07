@@ -16,7 +16,6 @@ local M = {
 
 function M.opts()
   return {
-    on_attach = require('sykesm.lsp.on-attach'),
     capabilities = require('sykesm.lsp.capabilities').create(),
     settings = {
       jsx_close_tag = {

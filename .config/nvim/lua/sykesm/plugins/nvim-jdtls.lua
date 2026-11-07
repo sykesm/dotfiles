@@ -278,7 +278,6 @@ end
 function M.config(_, opts)
   local function lsp_on_attach(client, bufnr)
     -- custom init for Java debugger
-    require('sykesm.lsp.on-attach')(client, bufnr)
     require('jdtls').setup_dap(opts.dap)
     require('jdtls.dap').setup_dap_main_class_configs(opts.dap_main)
     require('jdtls').settings.jdt_uri_timeout_ms = 15000
