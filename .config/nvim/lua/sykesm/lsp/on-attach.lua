@@ -39,7 +39,7 @@ local function on_attach(client, bufnr)
 
   local vim_diag_jump = function(count)
     return function()
-      vim.diagnostics.jump({ count = count, float = true })
+      vim.diagnostic.jump({ count = count, float = true })
     end
   end
 
