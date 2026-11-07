@@ -1,7 +1,7 @@
 setlocal colorcolumn=72
 setlocal foldexpr=v:lua.require'sykesm.jcl'.foldexpr()
-setlocal foldlevel=1
 setlocal foldmethod=expr
+setlocal foldtext=
 setlocal iskeyword+=$,#,@-@
 setlocal nowrap
 
