@@ -19,7 +19,7 @@ vim.keymap.set('n', '<c-l>', '<c-w>l', { noremap = true, silent = true })
 vim.keymap.set('n', '<leader>o', ':only<cr>', { noremap = true })
 
 -- macOS dictionary
-if vim.fn.has('macunix') then
+if vim.fn.has('macunix') == 1 then
   vim.keymap.set('n', '<leader>D', ':!open dict://<cword><cr><cr>')
 end
 

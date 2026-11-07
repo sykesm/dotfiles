@@ -29,10 +29,10 @@ end
 
 local function java_home_macos(version)
   local java_home = '/usr/libexec/java_home'
-  if not vim.fn.has('macunix') then
+  if vim.fn.has('macunix') == 0 then
     return nil
   end
-  if not vim.fn.executable(java_home) then
+  if vim.fn.executable(java_home) == 0 then
     return nil
   end
 
@@ -70,7 +70,7 @@ end
 
 local function java_format_settings()
   local settings = vim.fn.expand('~/.config/java-format/eclipse-java-google-style.xml')
-  if vim.fn.filereadable(settings) then
+  if vim.fn.filereadable(settings) == 1 then
     return {
       profile = 'GoogleStyle',
       url = settings,
@@ -120,14 +120,14 @@ end
 
 local function project_root()
   local explicit_root = vim.fs.root(0, '.jdtroot')
-  if explicit_root and vim.fn.filereadable(explicit_root .. '/pom.xml') then
+  if explicit_root and vim.fn.filereadable(explicit_root .. '/pom.xml') == 1 then
     return explicit_root
   end
   local top_level = vim.fs.root(0, { '.git', 'mvnw', 'gradlew' })
-  if top_level and vim.fn.filereadable(top_level .. '/pom.xml') then
+  if top_level and vim.fn.filereadable(top_level .. '/pom.xml') == 1 then
     return top_level
   end
-  if top_level and vim.fn.filereadable(top_level .. '/build.gradle') then
+  if top_level and vim.fn.filereadable(top_level .. '/build.gradle') == 1 then
     return top_level
   end
   return vim.fs.root(0, { '.git', 'mvnw', 'gradlew', 'pom.xml', 'build.gradle' })
