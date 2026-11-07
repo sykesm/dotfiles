@@ -138,7 +138,13 @@ local server_configs = {
       },
       yaml = {
         completion = true,
-        format = { enable = true },
+        format = {
+          enable = true,
+          bracketSpacing = true,
+          printWidth = 120,
+          proseWrap = 'preserve', -- preserve, never, always
+          singleQuote = false,
+        },
         hover = true,
         schemas = {
           ['https://raw.githubusercontent.com/yannh/kubernetes-json-schema/master/v1.29.6-standalone-strict/all.json'] = 'deploy/**/*.yaml',
