@@ -10,6 +10,8 @@
 /.cocoapods/
 /.config/nvim/plugin/packer_compiled.lua
 /.config/tmux/plugins/
+/.copilot/logs/
+/.docker/bin/
 /.docker/buildx/
 /.docker/cli-plugins/
 /.docker/scout/
@@ -29,9 +31,11 @@
 /.local/
 /.m2/build-cache/
 /.m2/repository/
+/.m2/wrapper/
 /.npm/
 /.nvm/
 /.oh-my-zsh/
+/.pub-cache/
 /.rbenv/
 /.rover/bin/
 /.rustup/
