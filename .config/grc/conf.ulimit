@@ -1,0 +1,20 @@
+# (  )
+regexp=\((?:([^,)]+),\s)?(-\w)\)
+colours=default,magenta,cyan
+-
+# unlimited
+regexp=\sunlimited
+colours=bold red
+-
+# number
+regexp=\s\d+
+colours=yellow
+-
+# zsh's ulimit builtin prints "-t: cpu time (seconds)   unlimited" instead
+# of bash's "cpu time   (seconds, -t) unlimited". These rules only match
+# lines starting with a flag, so bash output is unaffected.
+regexp=^-\w(?: \d+)?:.*?\(([^)]+)\)
+colours=unchanged,magenta
+-
+regexp=^(-\w(?: \d+)?):
+colours=unchanged,cyan

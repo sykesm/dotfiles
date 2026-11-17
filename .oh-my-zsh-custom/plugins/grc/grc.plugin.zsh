@@ -1,9 +1,20 @@
 # vi: set ft=zsh:
 
-# setup grc if the config file exists
-if (( $+commands[grc] )); then
-    # Commands
-    cmds=(
+# setup colorizer
+_grc_setup_aliases() {
+    add-zsh-hook -d precmd _grc_setup_aliases
+
+    # prioritize gogrc over grc
+    local wrapper
+    if (( $+commands[gogrc] )); then
+        wrapper="gogrc --color=auto"
+    elif (( $+commands[grc] )); then
+        wrapper="grc --colour=auto"
+    else
+        return
+    fi
+
+    local -a cmds=(
         as
         blkid
         cc
@@ -56,28 +67,52 @@ if (( $+commands[grc] )); then
         tcpdump
         traceroute
         traceroute6
-        ulimit
         uptime
         vmstat
         wdiff
         whois
     )
-    gnu_cmds=(
+    local -a gnu_cmds=(
         stat
     )
 
     # Set alias for available commands.
+    local cmd
     for cmd in ${cmds[@]}; do
         if (( $+commands[$cmd] )) && [[ "$(whence -w $cmd)" == *"command"* ]]; then
-            alias $cmd="grc --colour=auto $cmd"
+            alias $cmd="$wrapper $cmd"
         fi
     done
     for cmd in ${gnu_cmds[@]}; do
         if (( $+commands[g$cmd] )) && [[ "$(whence -w g$cmd)" == *"command"* ]]; then
-            alias $cmd="grc --colour=auto g$cmd"
+            alias $cmd="$wrapper g$cmd"
         fi
     done
+}
 
-    # Clean up variables
-    unset cmds cmd gnu_cmds
-fi
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd _grc_setup_aliases
+
+# ulimit is a shell builtin, so it can't be aliased like the commands above:
+# a wrapper would set limits in a child process. Instead, color the output of
+# queries such as "ulimit -a" and run the builtin directly to set a limit.
+ulimit() {
+    local arg
+    for arg in "$@"; do
+        if [[ $arg != -* ]]; then
+            builtin ulimit "$@"
+            return
+        fi
+    done
+    if [[ ! -t 1 ]]; then
+        builtin ulimit "$@"
+    elif (( $+commands[gogrc] )); then
+        builtin ulimit "$@" | gogrc --cat conf.ulimit
+        return $pipestatus[1]
+    elif (( $+commands[grcat] )); then
+        builtin ulimit "$@" | grcat conf.ulimit
+        return $pipestatus[1]
+    else
+        builtin ulimit "$@"
+    fi
+}

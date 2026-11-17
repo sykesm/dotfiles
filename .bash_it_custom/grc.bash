@@ -1,9 +1,14 @@
 # shellcheck shell=bash disable=SC1090,SC1091,SC2139
 # vi: set ft=sh:
 
-# setup grc if the config file exists
-if [[ -x "$(command -v grc)" ]]; then
-    GRC="$(command -v grc)"
+# configure colorizer, prioritizing gogrc over grc
+if [[ -x "$(command -v gogrc)" ]]; then
+    GRC_WRAPPER="gogrc --color=auto"
+elif [[ -x "$(command -v grc)" ]]; then
+    GRC_WRAPPER="grc --colour=auto"
+fi
+
+if [[ -n "${GRC_WRAPPER:-}" ]]; then
     cmds=(
         as
         blkid
@@ -57,7 +62,6 @@ if [[ -x "$(command -v grc)" ]]; then
         tcpdump
         traceroute
         traceroute6
-        ulimit
         uptime
         vmstat
         wdiff
@@ -67,17 +71,43 @@ if [[ -x "$(command -v grc)" ]]; then
         stat
     )
 
-    alias colourify="$GRC -es --colour=auto"
+    alias colourify="$GRC_WRAPPER -es"
 
     # Set alias for available commands.
     for cmd in "${cmds[@]}"; do
         if [ -x "$(command -v "$cmd" 2>>/dev/null)" ]; then
-            alias "$cmd=grc --colour=auto $cmd"
+            alias "$cmd=$GRC_WRAPPER $cmd"
         fi
     done
     for cmd in "${gnu_cmds[@]}"; do
-        if [[ -x "g${cmd}" ]] && [[ "$(whence -w "g$cmd")" == *"command"* ]]; then
-            alias "$cmd=grc --colour=auto g$cmd"
+        if [[ "$(type -t "g$cmd")" == "file" ]]; then
+            alias "$cmd=$GRC_WRAPPER g$cmd"
         fi
     done
+    unset cmds gnu_cmds cmd
 fi
+unset GRC_WRAPPER
+
+# ulimit is a shell builtin, so it can't be aliased like the commands above:
+# a wrapper would set limits in a child process. Instead, color the output of
+# queries such as "ulimit -a" and run the builtin directly to set a limit.
+ulimit() {
+    local arg
+    for arg in "$@"; do
+        if [[ $arg != -* ]]; then
+            builtin ulimit "$@"
+            return
+        fi
+    done
+    if [[ ! -t 1 ]]; then
+        builtin ulimit "$@"
+    elif [[ -x "$(command -v gogrc)" ]]; then
+        builtin ulimit "$@" | gogrc --cat conf.ulimit
+        return "${PIPESTATUS[0]}"
+    elif [[ -x "$(command -v grcat)" ]]; then
+        builtin ulimit "$@" | grcat conf.ulimit
+        return "${PIPESTATUS[0]}"
+    else
+        builtin ulimit "$@"
+    fi
+}

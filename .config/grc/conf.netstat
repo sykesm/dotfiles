@@ -41,7 +41,6 @@ colours=bold red
 # status
 regexp=CLOS(E(_WAIT)?|ING)
 colours=red
-skip=yes
 =======
 # status
 regexp=LAST_ACK
@@ -74,3 +73,61 @@ colours=green
 # path
 regexp=(\@)?/[\S/-]+$
 colours=green, bold green
+=======
+# ---- macOS ----
+# The rules below only match macOS output, which writes address.port where
+# Linux writes address:port, so Linux output is unaffected. They come last
+# so they paint over the Linux host:port rules on macOS lines.
+#
+# Local and foreign address.port on tcp/udp lines (IPv4, IPv6, names, *)
+regexp=^(?:tcp|udp)\S*\s+\d+\s+\d+\s+(\S+)(\.)([^\s.:]+)\s+(\S+)(\.)([^\s.:]+)(?:\s|$)
+colours=unchanged,bold green,yellow,bold red,bold green,yellow,bold red
+=======
+# Named services (netstat -a): local, then foreign
+regexp=^(?:tcp|udp)\S*\s+\d+\s+\d+\s+\S+\.([A-Za-z][\w\-]*)\s
+colours=unchanged,bold yellow
+=======
+regexp=^(?:tcp|udp)\S*\s+\d+\s+\d+\s+\S+\s+\S+\.([A-Za-z][\w\-]*)(?:\s|$)
+colours=unchanged,bold yellow
+=======
+# Wildcard address or port: *.22, *.*
+regexp=(?:^|\s)(\*)\.
+colours=unchanged,blue
+=======
+regexp=\.(\*)(?:\s|$)
+colours=unchanged,blue
+=======
+# IPv6 addresses in routing and interface tables (netstat -rn, netstat -i):
+# first and second address on a line that is not a connection line
+regexp=^(?!tcp|udp)\s*(?:\S+\s+)*?([0-9a-fA-F]*:[0-9a-fA-F:]*:[0-9a-fA-F]*(?:%\w+)?(?:/\d+)?)(?=\s|$)
+colours=unchanged,magenta
+=======
+regexp=^(?!tcp|udp)\s*(?:\S+\s+)*?[0-9a-fA-F]*:[0-9a-fA-F:]*:[0-9a-fA-F]*(?:%\w+)?(?:/\d+)?\s+(?:\S+\s+)*?([0-9a-fA-F]*:[0-9a-fA-F:]*:[0-9a-fA-F]*(?:%\w+)?(?:/\d+)?)(?=\s|$)
+colours=unchanged,magenta
+=======
+# Routing table rows (netstat -r): destination, gateway, flags, interface.
+# Linux rows have more columns, so they don't match.
+regexp=^(\S+)\s+(\S+)\s+(U[A-Za-z0-9]*)\s+([a-z]+\d+)(?:\s+\S+)?\s*$
+colours=unchanged,magenta,magenta,yellow,blue
+=======
+# Link-level interfaces and their MAC addresses (netstat -i, netstat -rn)
+regexp=<?[Ll]ink#\d+>?
+colours=bright_black
+=======
+regexp=<Link#\d+>\s+([0-9a-fA-F]{1,2}(?::[0-9a-fA-F]{1,2}){5})\b
+colours=unchanged,cyan
+=======
+# Routing tables: the default route
+regexp=^default\b
+colours=bold magenta
+=======
+# Routing tables: hardware address gateways (2:0:0:0:0:0, 5e.e9.1e.ae.35.64)
+regexp=^\S+\s+([0-9a-fA-F]{1,2}(?:[:.][0-9a-fA-F]{1,2}){5})\s+U
+colours=unchanged,cyan
+=======
+# Routing tables: section and column headings
+regexp=^(?:Routing tables|Internet6?:)$
+colours=bold
+=======
+regexp=^Destination\s+Gateway\s+Flags\s+Netif.*$
+colours=underline
